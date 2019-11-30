@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="car">
         <div class="content">
              <div class="img">
@@ -14,6 +15,11 @@
          </div>
       </div>
     </div>
+=======
+  <div class="about">
+    <h1>这是about。。。。。。。。。。。。。</h1>
+  </div>
+>>>>>>> 3a905a92c468192499d1d5e0612d3ec4a5711bf6
 </template>
 <script>
 import axios from "axios"
