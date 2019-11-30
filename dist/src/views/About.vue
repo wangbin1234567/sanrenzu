@@ -1,4 +1,6 @@
 <template>
+
+
     <div class="car">
         <div class="content">
              <div class="img">
@@ -16,6 +18,8 @@
     </div>
 </template>
 <script>
+
+
 import axios from "axios"
 export default {
     props:{
