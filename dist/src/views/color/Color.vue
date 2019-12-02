@@ -3,7 +3,7 @@
     <p>全部颜色</p>
     <div>
       <p class="c-type">
-        <span v-for="(item, index, key) of list" :key="index" @click="handleC(item)" :class="{active: curIndex==key}">{{index}}</span>
+        <span v-for="(item, index, key) of list" :key="index" @click="handleC(item,key)" :class="{active: curIndex==key}">{{index}}</span>
       </p>
       <ul>
         <li v-for="(v,i) in colorData" :key="i">
@@ -22,18 +22,26 @@ export default {
      return {
        list: {},
        colorData: [],
-       curIndex: 0
+       curIndex: 0,//年份下标
+       arr: []
      }
   },
    mounted(){
     axios.get("http://baojia.chelun.com/v2-car-getModelImageYearColor.html?SerialID=2593&_1575200950346").then(res=>{
+      // window.console.log(res.data.data)
       this.list=res.data.data
-    }
+      let obj=JSON.parse(JSON.stringify(this.list))
+      let arr=Object.values(obj)
+      this.handleC(arr[0],0)
+     }
     )
   },
   methods: {
-    handleC(item){
+    //点击年份切换高亮并切换数据
+    handleC(item,key){
       this.colorData=item
+      this.curIndex=key
+      
     }
   }
 
