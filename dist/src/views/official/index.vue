@@ -15,9 +15,11 @@
 <script>
 
 import axios from "axios"
+import {mapActions} from "vuex"
 import OfficialLeft from "@/components/officialleft.vue"
 import OfficialFixe from "@/components/officialfixe.vue"
 import OfficialRight from "@/components/officialright.vue"
+
 
 export default {
   name: 'home',
@@ -30,7 +32,9 @@ export default {
     // ...mapState(["dataList"])
   },
   methods:{
-    // ...mapActions(["getDate"]),
+    ...mapActions({
+      getDate:'home/getDate'
+    }),
     addlist(MasterID){
       this.colorlist=true
       axios.get("https://baojia.chelun.com/v2-car-getMakeListByMasterBrandId.html",{params:{MasterID}}).then(res=>{
@@ -71,7 +75,8 @@ export default {
     }
   },
   mounted(){
-
+    this.getDate()
+    console.log(this.getDate)
    
         axios.get("https://baojia.chelun.com/v2-car-getMasterBrandList.html").then(res=>{
       if(res.data.code===1){
@@ -99,7 +104,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  
+  font-size: 16px;
   flex-direction: column;
 }
 .home_content{

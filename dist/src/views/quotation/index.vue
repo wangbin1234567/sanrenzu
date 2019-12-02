@@ -3,7 +3,7 @@
     <header>
         <p>可向多个商家咨询最低价，商家及时回复</p>
     </header>
-    <div class="q-tip">
+    <!-- <div class="q-tip"> -->
         <div>
             <div class="flex-row">
                 <li>
@@ -23,7 +23,7 @@
                 <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
     <div class="content">
         <div class="q-info">
             <img :src="list.CoverPhoto" />
@@ -45,7 +45,8 @@
             </li>
             <li @click="getcity">
                 <span>城市</span>
-                <span>北京</span>
+                <span>{{name}}</span>
+                
             </li>
             </ul>
             <div class="quotation">
@@ -54,6 +55,7 @@
         </div>
         <!-- !!!!!!!! -->
         <Dealer :dealer="dealerList"/>
+        
     </div>
   </div>
 </template>
@@ -68,7 +70,8 @@ export default {
     data() {
         return {
             list: [],
-            dealerList:[]
+            dealerList:[],
+            name:this.$route.query.CityName
         };
     },
     methods:{
@@ -77,14 +80,13 @@ export default {
         
     }
     },
-    created() {
+    mounted() {
+        console.log(this.$route)
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
-            console.log(this.list);
         });
         axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_ 1575199616353`).then(res => {
             this.dealerList = res.data.data.list
-            console.log(this.dealerList);
         })
     }
 };

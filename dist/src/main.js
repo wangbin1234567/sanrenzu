@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import VueLazyload from "vue-lazyload"
+import "lib-flexible/flexible.js"
 Vue.config.productionTip = false
 // Vue.use(VueLazyload)
 

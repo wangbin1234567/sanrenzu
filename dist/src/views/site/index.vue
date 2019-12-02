@@ -46,7 +46,10 @@ export default {
         })
         },
         siteitemlist(CityName){
-            // this.$router.push("/official/car",{params:{CityName}})
+            console.log(CityName)
+            
+             this.$router.push({path:"/quotation",query:{CityName}})
+            // this.$router.push(`/quotation?CityName=${CityName}`)
         },
         removelist(){
             this.flag=false

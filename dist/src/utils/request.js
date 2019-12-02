@@ -1,9 +1,9 @@
 import axios from "axios"
-axios.create({
+const instance=axios.create({
     baseURL:"https://baojia.chelun.com",
     timeout: 1000
 })
-axios.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function (config) {
     // Do something before request is sent
     return config;
   }, function (error) {
@@ -12,11 +12,16 @@ axios.interceptors.request.use(function (config) {
   });
  
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
     // Do something with response data
-    return response;
+    // console.log(response)
+    if(response.status==200){
+      return response.data
+    }
+   
   }, function (error) {
     // Do something with response error
     return Promise.reject(error);
   });
-  export default axios
+
+  export default instance 
