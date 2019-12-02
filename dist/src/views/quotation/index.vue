@@ -43,7 +43,7 @@
                 <span>手机</span>
                 <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" />
             </li>
-            <li>
+            <li @click="getcity">
                 <span>城市</span>
                 <span>北京</span>
             </li>
@@ -70,6 +70,12 @@ export default {
             list: [],
             dealerList:[]
         };
+    },
+    methods:{
+        getcity(){
+        this.$router.push("/site")
+        
+    }
     },
     created() {
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
