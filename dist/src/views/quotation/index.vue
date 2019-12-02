@@ -3,7 +3,7 @@
     <header>
         <p>可向多个商家咨询最低价，商家及时回复</p>
     </header>
-    <div class="q-tip">
+    <!-- <div class="q-tip">
         <div>
             <div class="flex-row">
                 <li>
@@ -23,7 +23,7 @@
                 <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="content">
         <div class="q-info">
             <img :src="list.CoverPhoto" />
