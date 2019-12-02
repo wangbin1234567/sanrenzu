@@ -29,11 +29,12 @@ import axios from "axios"
 export default {
  data(){
      return {
-       list: []
+       list: [],
+       SerialID:this.$route.query.SerialID
      }
   },
   mounted(){
-      axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593').then(res=>{
+      axios.get(`http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
           console.log(res.data.data.list)
           this.list=res.data.data.list
       })

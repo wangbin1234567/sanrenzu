@@ -14,7 +14,8 @@ const routes = [
     component: () => import('../views/color/Color.vue')
   },
    {
-    path: '/type',
+    path: '/type/?',
+    name:"type",
     component: () => import('../views/type/Type.vue')
   },
   {
