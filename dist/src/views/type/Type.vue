@@ -3,7 +3,7 @@
     <p>全部车款</p>
     <div>
       <p class="c-type">
-         <span v-for="(v,i) in list" :key="i">{{v.market_attribute.year}}</span>
+         <span v-for="(v,i) in year" :key="i" :class="{active:yearNum==i}" @click="tab(i,v)">{{v}}</span>
       </p>
       <div v-for="(item,index) in list" :key="index">
           <p class="tip">{{item.exhaust_str}}/{{item.max_power_str}} {{item.inhale_type}}</p>
@@ -33,10 +33,23 @@ export default {
        SerialID:this.$route.query.SerialID
      }
   },
+  methods:{
+      tab(i,v){
+        this.yearNum=i
+         axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{       
+          this.list=res.data.data.list.filter(item => item.market_attribute.year==v);
+      })
+      }
+  },
   mounted(){
       axios.get(`http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
           console.log(res.data.data.list)
           this.list=res.data.data.list
+            let arr=[];//存放年份
+            this.list.forEach(item => {
+                 arr.push(item.market_attribute.year)               
+                 this.year=Array.from(new Set(arr))
+             });
       })
   }
 }
@@ -66,6 +79,9 @@ export default {
 .type .c-type span {
   font-size: 15px;
   padding: 0 21px 0 0;
+}
+.type .c-type span.active{
+  color:#06f;
 }
 .tip{
    line-height: 25px;
