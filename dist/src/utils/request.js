@@ -20,14 +20,20 @@ instance.interceptors.request.use(function (config) {
 // 响应拦截器
 instance.interceptors.response.use(function (response) {
     // Do something with response data
-    // return response;
-    if (response.status == 200){
-        return response.data;
+    if(response.status==200){
+      if(response.data.code===1){
+        return response.data.data
+      }else{
+        return {
+          mes:"数据错误"
+        }
+      }
+     
     }else{
-        this.$notify({
-            type: 'warning',
-            message: response.text
-        });
+      this.$notify({
+        type: 'warning',
+        message: response.type
+    });
     }
   }, function (error) {
     // Do something with response error

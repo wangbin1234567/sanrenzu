@@ -3,65 +3,45 @@
         <div class="main">
             <p class="ps_city">省市</p>
         <div class="wrap_quotation_left">
-            <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item" @revealCitys="revealCitys"/>
+            <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item"/>
         </div>
         <div class="wrap_quotation_right" v-if="flag" @click="removelist">
             <div class="left">
-
             </div>
             <div class="right">
-                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
+                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item"/>
             </div>
         </div>
         </div>
-       
     </div>
 </template>
-
 <script>
+import {mapActions,mapState} from "vuex"
 import CityListLeft from "@/components/citylistleft.vue"
 import CityListRight from "@/components/citylistright.vue"
-import axios from "axios"
 export default {
     components:{
-         CityListLeft,
-         CityListRight,
-        
+        CityListLeft,
+        CityListRight,
     },
-    data(){
-        return {
-            cityData:[],
-            provinceidData:[],
-             flag:false
-        }
-    },
-    methods:{
-        revealCitys(CityID){
-            this.flag=true
-            axios.get("https://baojia.chelun.com/v1-city-alllist.html",{params:{provinceid:CityID}}).then(res=>{
-            if(res.data.code===1){
-                this.provinceidData=res.data.data
-            }
-            
+    computed:{
+        ...mapState({
+            cityData:state=>state.stair.cityData,
+            provinceidData:state=>state.site.provinceidData,
+            flag:state=>state.site.flag
         })
-        },
-        siteitemlist(CityName){
-            console.log(CityName)
-            
-             this.$router.push({path:"/quotation",query:{CityName}})
-            // this.$router.push(`/quotation?CityName=${CityName}`)
-          
-        },
+    },
+    
+    methods:{
+        ...mapActions({
+            getMasterStair:'stair/getMasterStair'
+        }),
         removelist(){
             this.flag=false
         }
     },
     mounted(){
-        axios.get("https://baojia.chelun.com/v1-city-alllist.html").then(res=>{
-            if(res.data.code===1){
-                this.cityData=res.data.data
-            }
-        })
+        this.getMasterStair()
     }
 }
 </script>

@@ -25,7 +25,7 @@
                 <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
             </div>
         </div>
-    <!-- </div> -->
+    </div>
     <div class="content">
         <div class="q-info" @click="typeClick(SerialID)">
             <img :src="list.CoverPhoto" />
@@ -45,7 +45,7 @@
                 <span>手机</span>
                 <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
             </li>
-            <li>
+            <li @click="getcity">
                 <span>城市</span>
                 <span>{{name}}</span>
                 
@@ -64,12 +64,14 @@
 
 
 <script>
+import {mapMutations} from "vuex"
 import axios from "axios";
 import Dealer from '../../components/dealer'
 export default {
     components:{
         Dealer
     },
+    
     data() {
         return {
             list: [],
@@ -85,26 +87,37 @@ export default {
         };
     },
     methods: {
+         ...mapMutations({
+            ctxfalg:'site/ctxfalg'
+        }),
+        getcity(){
+        this.$router.push("/site")
+        this.ctxfalg()
+        },
         Tclick(){
             this.flog = !this.flog
         },
-        // typeClick(SerialID){
-        //     console.log(SerialID);
+        typeClick(SerialID){
+            console.log(SerialID);
             
-        //     this.$router.push({
-        //         path:"type",
-        //         query:{
-        //             SerialID:SerialID
-        //         }
-        //     })
-        // },
+            this.$router.push({
+                path:"type",
+                query:{
+                    SerialID:SerialID
+                }
+            })
+        },
         btnList(){
             if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
                 alert("请输入正确的手机号或名字")
             }else{
                 alert("输入正确")
             }
-        }
+        },
+  
+       
+        
+    
     },
     mounted() {
         console.log(this.$route)

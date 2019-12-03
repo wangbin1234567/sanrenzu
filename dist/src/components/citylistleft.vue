@@ -1,7 +1,6 @@
 
 <template>
     <div class="Citylist">
-        
         <li @click="revealCity(item.CityID)">
             {{item.CityName}}
         </li>
@@ -9,21 +8,21 @@
 </template>
 
 <script>
-
+import {mapActions,mapMutations} from "vuex"
 export default {
-props:["item"],
-data(){
-    return {
-      
+    props:["item"],
+    methods:{
+        ...mapMutations({
+            falg:'site/falg'
+        }),
+        ...mapActions({
+            getMasterStairSite:'site/getMasterStairSite'
+        }),
+        revealCity(CityID){
+            this.falg()
+            this.getMasterStairSite(CityID)  
+        }
     }
-},
-methods:{
-    revealCity(CityID){
-        this.$emit("revealCitys",CityID)
-     
-        
-    }
-}
 }
 </script>
 
