@@ -75,6 +75,7 @@ export default {
     },
     created(){
          axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res=>{
+             console.log("res----------------",res)
             window.console.log(res.data.data.list)
              this.pic_group_count=res.data.data.pic_group_count
              this.CoverPhoto=res.data.data.CoverPhoto

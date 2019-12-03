@@ -3,18 +3,16 @@
         {{item.CityName}}
     </li>
 </template>
-
 <script>
 export default {
     props:["item"],
     methods:{
         siteitem(CityName){
-            this.$emit("siteitemlist",CityName)
+            this.$router.push({path:"/quotation",query:{CityName}})
         }
     }
 }   
 </script>
-
 <style lang="scss" scoped>
 li{
     width: 100%;

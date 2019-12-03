@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex"
 import axios from "axios";
 import Dealer from '../../components/dealer'
 export default {
@@ -75,8 +76,12 @@ export default {
         };
     },
     methods:{
+        ...mapMutations({
+            ctxfalg:'site/ctxfalg'
+        }),
         getcity(){
         this.$router.push("/site")
+        this.ctxfalg()
         
     }
     },

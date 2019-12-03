@@ -14,9 +14,20 @@ instance.interceptors.request.use(function (config) {
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
     // Do something with response data
-    // console.log(response)
     if(response.status==200){
-      return response.data
+      if(response.data.code===1){
+        return response.data.data
+      }else{
+        return {
+          mes:"数据错误"
+        }
+      }
+     
+    }else{
+      this.$notify({
+        type: 'warning',
+        message: response.type
+    });
     }
    
   }, function (error) {
