@@ -124,7 +124,7 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: static;
+        position: sticky;
         top: 0;
         p{
             color: #fff;
@@ -203,7 +203,7 @@ export default {
     .content {
         width: 100%;
         height: 100%;
-        overflow: auto;
+        overflow-y: scroll;
     }
     .q-info {
         width: 100%;
