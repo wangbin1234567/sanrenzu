@@ -44,13 +44,13 @@
                 <span>手机</span>
                 <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
             </li>
-            <li @click="getcity">
+            <li>
                 <span>城市</span>
                 <span>北京</span>
             </li>
             </ul>
             <div class="quotation">
-            <button data-hover="hover" @click="btnList">询最低价</button>
+            <button data-hover="hover" @click="btnList()">询最低价</button>
             </div>
         </div>
         <!-- !!!!!!!! -->
@@ -58,6 +58,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -73,32 +74,55 @@ export default {
             flog: false,
             phone:"",
             username:"",
-            SerialID:""
+            SerialID:"",
+            id: this.$route.params.id,
+            cityId: "",
+            timestamp: ""
         };
     },
-    methods:{
-        getcity(){
-        this.$router.push("/site")
-        
-    }
+    methods: {
+        Tclick(){
+            this.flog = !this.flog
+        },
+        // typeClick(SerialID){
+        //     console.log(SerialID);
+            
+        //     this.$router.push({
+        //         path:"type",
+        //         query:{
+        //             SerialID:SerialID
+        //         }
+        //     })
+        // },
+        btnList(){
+            if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
+                alert("请输入正确的手机号或名字")
+            }else{
+                alert("输入正确")
+            }
+        }
     },
     created() {
-        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
+        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
             this.list = res.data.data;
-            this.SerialID=res.data.data.SerialID
+            // this.SerialID=res.data.data.SerialID
             console.log(res);
         });
-        axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575199616353`).then(res => {
+       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
             this.dealerList = res.data.data.list
             // console.log(this.dealerList);
+        })
+        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
+            
+            this.cityId = res.data.data.CityID;
+            this.timestamp=res.data.data.timestamp
+            console.log(this.cityId,"============>");
         })
     }
 };
 </script>
-
-
 <style lang="scss" scoped>
- .wrap-q {
+    .wrap-q {
         width: 100%;
         height: 100%;
     }
@@ -152,8 +176,19 @@ export default {
         right: 16px;
         top: -5px;
     }
-
-   .flex-row{
+    .q-tip>div:before {
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 2;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 5px solid #fff;
+        right: 16px;
+        top: -5px;
+    }
+    .flex-row{
         display: flex;
         height: 79px;
         padding: 15px 0;

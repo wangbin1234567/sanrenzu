@@ -19,6 +19,7 @@ const routes = [
   },
   {
     path:"/quotation",
+    name: "quotation",
     component:()=>import("../views/quotation/index.vue")
   },{
     path:"/site",
