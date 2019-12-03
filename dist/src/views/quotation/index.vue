@@ -91,7 +91,6 @@ export default {
             })
         },
         btnList(){
-            
             if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
                 alert("请输入正确的手机号或名字")
             }else{
@@ -102,7 +101,7 @@ export default {
     created() {
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
-            this.SerialID=res.data.data.SerialID
+            this.SerialID = res.data.data.SerialID
             console.log(res);
         });
         axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575199616353`).then(res => {
@@ -125,7 +124,7 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: relative;
+        position: static;
         top: 0;
         p{
             color: #fff;
