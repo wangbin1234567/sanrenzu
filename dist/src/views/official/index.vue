@@ -1,26 +1,21 @@
 <template>
   <div class="home" @touchstart="touche($event)" @touchend="touchend($event)">
          <div class="home_content">
-           <OfficialLeft v-for="(item,key) in dataList" :key="key" :item="item" @addlist="addlist"/>
+           <OfficialLeft v-for="(item,key) in list" :key="key" :item="item" @addlist="addlist"/>
          </div>
-          <OfficialFixe :dataList="dataList"/>
+          <OfficialFixe :dataList="list"/>
           <div :class="colorlist?'car-type active':''" v-show="colorlist">
 
             <OfficialRight v-for="item in listMasterID" :key="item.GroupId" :items="item" @occludes="occludes"/>
           </div>
-
   </div>
 </template>
 
 <script>
-
-import axios from "axios"
-import {mapActions} from "vuex"
 import OfficialLeft from "@/components/officialleft.vue"
 import OfficialFixe from "@/components/officialfixe.vue"
 import OfficialRight from "@/components/officialright.vue"
-
-
+import {mapActions,mapState} from "vuex"
 export default {
   name: 'home',
   components: {
@@ -28,22 +23,26 @@ export default {
     OfficialFixe,
     OfficialRight
   },
+   data(){
+    return {
+      colorlist:false,
+      pageXleft:'',
+      pageXtop:'',
+      clientYleft:'',
+      clientYTop:''
+    }
+  },
   computed:{
-    // ...mapState(["dataList"])
+   ...mapState({
+     list: state=>state.home.list,
+     listMasterID: state=>state.rightnavigation.listMasterID
+   })
   },
   methods:{
-    ...mapActions({
-      getDate:'home/getDate'
-    }),
     addlist(MasterID){
-      this.colorlist=true
-      axios.get("https://baojia.chelun.com/v2-car-getMakeListByMasterBrandId.html",{params:{MasterID}}).then(res=>{
-        
-               if(res.data.code===1){
-                   this.listMasterID=res.data.data
-               }
-
-           })
+      this.colorlist=true,
+      console.log(MasterID)
+      this.rightList(MasterID)
     },
     occludes(){
       this.colorlist=false
@@ -61,41 +60,17 @@ export default {
         this.colorlist=false
       }
 
-    }
-  },
-  data(){
-    return {
-      dataList:[],
-      listMasterID:[],
-      colorlist:false,
-      pageXleft:'',
-      pageXtop:'',
-      clientYleft:'',
-      clientYTop:''
-    }
-  },
-  mounted(){
-    this.getDate()
-    console.log(this.getDate)
-   
-        axios.get("https://baojia.chelun.com/v2-car-getMasterBrandList.html").then(res=>{
-      if(res.data.code===1){
-        let data=res.data.data
-
-        data.map(item=>{
-          let lets=item.Spelling[0]
-          let newArr = data.filter(
-              item => item.Spelling[0] == lets
-            );
-            if (this.dataList.findIndex(item => item.lets == lets) == -1) {
-              this.dataList.push({ lets, children: newArr });
-            }
-         
-        })
-      }
-
+    },
+      ...mapActions({
+      getMasterBrandList: 'home/getMasterBrandList',
+      rightList: 'rightnavigation/rightList'
     })
-    
+  },
+ 
+   created() {
+    // 获取首页的数据 
+    console.log('$store...', this.$store);
+    this.getMasterBrandList();
   }
 }
 </script>

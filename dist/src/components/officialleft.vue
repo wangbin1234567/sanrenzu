@@ -2,7 +2,6 @@
     <div class="wrap">
         <!-- <img v-lazy="'/static/imgs/timg.jpg'+item.tagurl" alt=""> -->
         <div class="wrap_comtext">
-            
             <h2 :id="item.lets">{{item.lets}}</h2>
             <!-- 点击listitem显示链表 -->
             <div v-for="(listitem,index) in item.children" :key="index" class="item_list" @click="listitemclick(listitem.MasterID)"><img v-lazy="listitem.CoverPhoto" alt=""><span>{{listitem.Name}}</span></div>
@@ -21,8 +20,8 @@ export default {
     },
     methods:{
         listitemclick(MasterID){
-            this.$emit("addlist",MasterID)
-        //    
+            // window.console.log(MasterID)
+            this.$emit("addlist",MasterID)   
         }
     }
 }
@@ -32,9 +31,7 @@ export default {
 .wrap{
    flex: 1;
 }
-.wrap_comtext{
-    // flex: 1;
-}
+
 .item_list{
     height: 50px;
     text-align: center;

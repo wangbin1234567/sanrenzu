@@ -1,9 +1,11 @@
 <template>
   <div class="wrap-q">
-    <header>
+    <header @click="Tclick()">
         <p>可向多个商家咨询最低价，商家及时回复</p>
+        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
     <!-- <div class="q-tip"> -->
+    <div class="q-tip" v-if="flog" @click="Tclick()">
         <div>
             <div class="flex-row">
                 <li>
@@ -25,7 +27,7 @@
         </div>
     <!-- </div> -->
     <div class="content">
-        <div class="q-info">
+        <div class="q-info" @click="typeClick(SerialID)">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
@@ -37,20 +39,20 @@
             <ul>
             <li>
                 <span>姓名</span>
-                <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" />
+                <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" v-model="username"/>
             </li>
             <li>
                 <span>手机</span>
-                <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" />
+                <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
             </li>
-            <li @click="getcity">
+            <li>
                 <span>城市</span>
                 <span>{{name}}</span>
                 
             </li>
             </ul>
             <div class="quotation">
-            <button data-hover="hover">询最低价</button>
+            <button data-hover="hover" @click="btnList()">询最低价</button>
             </div>
         </div>
         <!-- !!!!!!!! -->
@@ -59,6 +61,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -71,43 +74,86 @@ export default {
         return {
             list: [],
             dealerList:[],
-            name:this.$route.query.CityName
+            name:this.$route.query.CityName,
+            flog: false,
+            phone:"",
+            username:"",
+            SerialID:"",
+            id: this.$route.params.id,
+            cityId: "",
+            timestamp: ""
         };
     },
-    methods:{
-        getcity(){
-        this.$router.push("/site")
-        
-    }
+    methods: {
+        Tclick(){
+            this.flog = !this.flog
+        },
+        // typeClick(SerialID){
+        //     console.log(SerialID);
+            
+        //     this.$router.push({
+        //         path:"type",
+        //         query:{
+        //             SerialID:SerialID
+        //         }
+        //     })
+        // },
+        btnList(){
+            if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
+                alert("请输入正确的手机号或名字")
+            }else{
+                alert("输入正确")
+            }
+        }
     },
     mounted() {
         console.log(this.$route)
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
-        });
-        axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_ 1575199616353`).then(res => {
+        }),
+        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
+            this.list = res.data.data;
+            // this.SerialID=res.data.data.SerialID
+            console.log(res);
+        }),
+       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
             this.dealerList = res.data.data.list
+            // console.log(this.dealerList);
+        }),
+        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
+            
+            this.cityId = res.data.data.CityID;
+            this.timestamp=res.data.data.timestamp
+            console.log(this.cityId,"============>");
         })
     }
-};
+}
 </script>
-
 <style lang="scss" scoped>
     .wrap-q {
         width: 100%;
         height: 100%;
     }
     header {
+        height: 32.8px;
+        line-height: 32.8px;
         width: 100%;
-        height: 32px;
-        line-height: 32px;
         background: #79cd92;
         text-align: center;
-        color: #fff;
         z-index: 99;
-        position: sticky;
         position: relative;
         top: 0;
+        p{
+            color: #fff;
+            font-size: 15px;
+            display: inline-block
+        }
+        img{
+            width: 16.55px;
+            height: 16.55px;
+            vertical-align: -9%;
+            margin-left: 5px;
+        }
     }
     .q-tip {
         position: fixed;
@@ -125,6 +171,18 @@ export default {
         background: #fff;
         border-radius: 10px;
         margin-top: 38px;
+    }
+    .q-tip>div:before {
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 2;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 5px solid #fff;
+        right: 16px;
+        top: -5px;
     }
     .q-tip>div:before {
         position: absolute;
@@ -181,6 +239,7 @@ export default {
         height: 100px;
         padding: 10px;
         display: flex;
+        position: relative;
         img {
             width: 127px;
             height: 77px;
@@ -192,15 +251,27 @@ export default {
             margin-left: 10px;
         }
         .flex-column p:first-child {
-            font-size: 20px;
+            font-size: 18px;
             line-height: 2;
-            font-weight: bold;
         }
         .flex-column p:nth-child(2) {
-            font-size: 18px;
+            font-size: 16px;
             line-height: 2.2;
             color: #333;
         }
+    }
+    .q-info:before {
+        content: "";
+        display: inline-block;
+        padding-top: 8px;
+        padding-right: 8px;
+        border-top: 2px solid #ccc;
+        border-right: 2px solid #ccc;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: absolute;
+        right: 13px;
+        top: 40px;
     }
     .self-info {
         width: 100%;
@@ -241,13 +312,13 @@ export default {
             }
             span:nth-child(2):after {
                 content: "";
-                width: 8px;
-                height: 8px;
+                width: 6px;
+                height: 6px;
                 display: inline-block;
-                padding-top: 0.16rem;
-                padding-right: 0.16rem;
-                border-top: 2px solid silver;
-                border-right: 2px solid silver;
+                padding-top: 5px;
+                padding-right: 5px;
+                border-top: 1px solid silver;
+                border-right: 1px solid silver;
                 -webkit-transform: rotate(45deg);
                 transform: rotate(45deg);
             }

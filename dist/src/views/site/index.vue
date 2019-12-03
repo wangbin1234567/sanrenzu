@@ -50,6 +50,7 @@ export default {
             
              this.$router.push({path:"/quotation",query:{CityName}})
             // this.$router.push(`/quotation?CityName=${CityName}`)
+          
         },
         removelist(){
             this.flag=false

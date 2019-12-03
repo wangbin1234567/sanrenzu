@@ -7,21 +7,22 @@
              <span>{{pic_group_count}}张图片</span>
          </div>
          <div class="info">
-             <p>{{dealer_price}}</p>
+             <div class="text">
+                 <p>{{dealer_price}}</p>
              <p>指导价{{official_refer_price}}</p>
-             <div class="action ">
-                 <button @click="chelun(SerialID)">{{BottomEntranceTitle}}</button>
+             </div>
+             <div class="action">
+                 <button @click="chelun">{{BottomEntranceTitle}}</button>
              </div>
          </div>       
       </div>
-       <div class="c-type">
-           <span>全部</span>
-           <span v-for="(item,index) in year" :key="index">
+       <div class="c-type">        
+           <span v-for="(item,index) in year" :key="index" @click="tab(item)" :class="{active:yearNum==item}">
                {{item}}
            </span>
        </div>
-        <List :list="list" :year="year" :dataList="dataList"></List>
-        <div class="inquiry-btn" @click="chelun(SerialID)">
+        <List :list="list" ></List>
+        <div class="inquiry-btn" @click="chelun">
             <li>
                 {{BottomEntranceTitle}}               
             </li>    
@@ -46,36 +47,46 @@ export default {
     },
     data(){
         return {
-           SerialID:this.$route.query.SerialID,
           CoverPhoto:"",//图片
           pic_group_count:"",//个数
           dealer_price:"",//价格
           official_refer_price:"",//指导价
           BottomEntranceTitle:"",//询问底价
-          list:"",
+          list:"",//数据
           year:"",//年份
-        //   guide_price:"",//指导价格
-        //   reality_price:"",//实际价格
           BottomEntranceSubTitle:"",
-          dataList:"",
+          yearNum:"全部",//年份下标,
+          SerialID:this.$route.query.id
         }
     },
     computed:{
 
     },
     methods:{
-        chelun(SerialID){
+        chelun(){
             this.$router.push({
-                path:"/quotation",  
-                query:{
-                    SerialID:SerialID
-                }            
+                name:"quotation",    
+                params: {
+                    id: this.SerialID
+                }                     
+            })           
+        },
+        tab(item){
+             this.yearNum=item
+             axios.get(`http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{       
+             this.list=res.data.data.list.filter(i => i.market_attribute.year==item);
+            if(this.yearNum=="全部"){
+                    axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
+                        this.list=res.data.data.list
+                    })
+                }
             })
-        }
+        },       
     },
     created(){
-         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res=>{
+         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
             window.console.log(res.data.data.list)
+            // this.SerialID=res.data.data.
              this.pic_group_count=res.data.data.pic_group_count
              this.CoverPhoto=res.data.data.CoverPhoto
              this.dealer_price=res.data.data.market_attribute.dealer_price
@@ -83,24 +94,14 @@ export default {
              this.BottomEntranceTitle=res.data.data.BottomEntranceTitle
              this.BottomEntranceSubTitle=res.data.data.BottomEntranceSubTitle
              this.list=res.data.data.list
-             //获取年份,指导价,实际价格
+             //获取年份
              let arr=[];//存放年份
-                //  guide=[],//存放指导价
-                //  reality=[];//存放实际价格
             this.list.forEach(item => {
-                 arr.push(item.market_attribute.year)
-                //  guide.push(item.market_attribute.dealer_price_max)
-                //  reality.push(item.market_attribute.dealer_price_min)
+                 arr.push(item.market_attribute.year)  
+                 arr.unshift(this.yearNum)             
                  this.year=Array.from(new Set(arr))
-                //  this.guide_price=Array.from(new Set(guide))
-                //  console.log(this.guide_price)
-                //  this.reality_price=Array.from(new Set(reality))
-             });   
-              this.dataList=this.list.filter(item=>{
-                 return item.market_attribute.year==2019
-             })  
-            
-                    
+                
+             });              
          })
     },
     mounted(){
@@ -112,48 +113,41 @@ export default {
 .car{
     width:100%;
     height:100%;
-    background:#c4c4c4;
+    background: #f4f4f4;
      overflow-x: hidden;
-    overflow-y: scroll;
-   
-}
-
-$font-size:37.5px;
-@function pxTorem($px) {
-    @return $px/$font-size*1rem;
+    overflow-y: scroll;  
 }
 .inquiry-btn{
     position: absolute;
     bottom:0;
     width:100%;
-    height:pxTorem(110px);
+    height:55px;
     background:#09f;
     li{
       
         width:100%;
-        height:pxTorem(55px);
+        height:50%;
         color:#fff;
     }
     li:nth-of-type(1){
-        font-size:pxTorem(30px);
+        font-size:16px;
           display: flex;
         justify-content: center;
         align-items: flex-end;
     }
      li:nth-of-type(2){
-        font-size:pxTorem(20px);
+        font-size:10px;
           display: flex;
         justify-content: center;
-
     }
 }
 .content{
     width:100%;
-    height:pxTorem(480px);
+    height:260px;
     background: #fff;  
     .img{
         width:100%;
-        height:pxTorem(330px);
+        height:176px;
         position: relative;
         overflow: hidden;
         img{
@@ -165,43 +159,45 @@ $font-size:37.5px;
         span{
             background:rgba(0,0,0,.5);
             color:#fff;
-            font-size:pxTorem(24px);
-            padding:0 pxTorem(10px);
-            border-radius:pxTorem(16px) ;
+            font-size:12px;
+            padding:0 5px;
+            border-radius:8px ;
             position: absolute;
-            right:pxTorem(34px);
-            bottom:pxTorem(32px);
+            right:17px;
+            bottom:16px;
         }
     }
     .info{
         width:100%;
-        height:pxTorem(50px);
-        position: relative;
-        margin:pxTorem(35px) 0;
-        p{
-            padding-left:pxTorem(14px);
-        }
+        position: relative;      
+        .text{
+           margin-top:18px;
+           padding-left:14px;
         p:nth-of-type(1){
-            font-size:pxTorem(36px);
+            font-size:18px;
+            height:24px;
             color:red;
         }
         p:nth-of-type(2){
-            font-size:pxTorem(28px);
+            font-size:14px;
+            height:16.8px;
             color:#c5c5c5;
         }
+        }
         .action{
-            width:pxTorem(370px);
-            height:pxTorem(70px);
-            margin-right:pxTorem(10px);
+            width:187px;
+            height:35px;
+            margin-right:5px;
             position: absolute;
             right:0;
-            bottom:pxTorem(-22px);
+            bottom:3px;
             button{
                 width:100%;
                 height:100%;
                 outline: none;
                 border:none;
-                border-radius: pxTorem(14px);
+                font-size:16px;
+                border-radius: 7px;
                 background:#00afff;
                 color:#fff;
             }
@@ -210,14 +206,20 @@ $font-size:37.5px;
 }
 .c-type{
     width:100%;
-    height:pxTorem(92px);
-    margin:pxTorem(14px) 0;
+    height:46px;
+    padding:7px 0;
     background:#fff;
     display: flex;
     align-items: center;
     span{
-        font-size: pxTorem(32px);
-        margin:0 pxTorem(20px);
+        font-size: 16px;
+        margin:0 10px;
+    }
+    // span:nth-of-type(1){
+    //     color:#04f;
+    // }
+    span.active{
+       color:#04f;
     }
 }
 
