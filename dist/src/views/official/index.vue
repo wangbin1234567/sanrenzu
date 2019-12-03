@@ -32,6 +32,7 @@ export default {
   methods:{
     // ...mapActions(["getDate"]),
     addlist(MasterID){
+      // window.console.log(MasterID)
       this.colorlist=true
       axios.get("https://baojia.chelun.com/v2-car-getMakeListByMasterBrandId.html",{params:{MasterID}}).then(res=>{
         

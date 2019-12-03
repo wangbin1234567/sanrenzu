@@ -16,7 +16,7 @@ export default {
             this.$emit("occludes")
         },
         particularsitem(SerialID){
-            // console.log(SerialID)
+            window.console.log(SerialID)
             this.$router.push(`/car?id=${SerialID}`)
         }
     }

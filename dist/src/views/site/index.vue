@@ -46,7 +46,7 @@ export default {
         })
         },
         siteitemlist(CityName){
-            // this.$router.push("/official/car",{params:{CityName}})
+            this.$router.push("/official/car",{params:{CityName}})
         },
         removelist(){
             this.flag=false

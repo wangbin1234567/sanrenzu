@@ -21,8 +21,8 @@ export default {
     },
     methods:{
         listitemclick(MasterID){
-            this.$emit("addlist",MasterID)
-        //    
+            // window.console.log(MasterID)
+            this.$emit("addlist",MasterID)   
         }
     }
 }
@@ -32,9 +32,7 @@ export default {
 .wrap{
    flex: 1;
 }
-.wrap_comtext{
-    // flex: 1;
-}
+
 .item_list{
     height: 50px;
     text-align: center;
