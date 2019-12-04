@@ -5,27 +5,29 @@
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
     <!-- <div class="q-tip"> -->
-    <div class="q-tip" v-if="flog" @click="Tclick()">
-        <div>
-            <div class="flex-row">
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png">
-                    <span>安全高效</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
-                    <span>省心省力</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
-                    <span>贴心服务</span>
-                </li>
-            </div> 
+     <transition name="hehe">
+        <div class="q-tip" v-if="flog" @click="Tclick()">
             <div>
-                <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
+                <div class="flex-row">
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-l.png">
+                        <span>安全高效</span>
+                    </li> 
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
+                        <span>省心省力</span>
+                    </li> 
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
+                        <span>贴心服务</span>
+                    </li>
+                </div> 
+                <div>
+                    <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
     <div class="content">
         <div class="q-info" @click="typeClick(SerialID)">
             <img :src="list.CoverPhoto" />
@@ -87,8 +89,6 @@ export default {
         };
     },
     methods: {
-<<<<<<< HEAD
-=======
          ...mapMutations({
             ctxfalg:'site/ctxfalg'
         }),
@@ -96,7 +96,6 @@ export default {
         this.$router.push("/site")
         this.ctxfalg()
         },
->>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
         Tclick(){
             this.flog = !this.flog
         },
@@ -116,28 +115,20 @@ export default {
             }else{
                 alert("输入正确")
             }
-<<<<<<< HEAD
-        }
-=======
         },
   
        
         
     
->>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
     },
     mounted() {
         console.log(this.$route)
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
-<<<<<<< HEAD
-            this.SerialID = res.data.data.SerialID
-=======
         }),
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
             this.list = res.data.data;
             // this.SerialID=res.data.data.SerialID
->>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
             console.log(res);
         }),
        axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
@@ -153,10 +144,6 @@ export default {
     }
 }
 </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
 <style lang="scss" scoped>
     .wrap-q {
         width: 100%;
@@ -183,6 +170,15 @@ export default {
             margin-left: 5px;
         }
     }
+    // .hehe-enter,.hehe-leave-to{
+    //         opacity: 0;
+    //     }
+    //     .hehe-enter-to,.hehe-leave{
+    //         opacity: 1;
+    //     }
+    //     .hehe-enter-active,.hehe-leave-active{
+    //         transition: all 3s;
+    //     }
     .q-tip {
         position: fixed;
         width: 100%;
@@ -191,6 +187,8 @@ export default {
         left: 0;
         background: rgba(0,0,0,.1);
         z-index: 101;
+        // transition: all 3s;
+        transition-delay: 1s;
     }
     .q-tip>div {
         position: relative;
@@ -212,8 +210,6 @@ export default {
         right: 16px;
         top: -5px;
     }
-<<<<<<< HEAD
-=======
     .q-tip>div:before {
         position: absolute;
         content: "";
@@ -226,7 +222,6 @@ export default {
         right: 16px;
         top: -5px;
     }
->>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
     .flex-row{
         display: flex;
         height: 79px;

@@ -1,5 +1,5 @@
 <template>
-
+    <transition name="move">
     <div class="car">
         <div class="content">
              <div class="img">
@@ -31,7 +31,7 @@
             </li>       
         </div>
     </div>
-
+</transition>
 </template>
 <script>
 
@@ -115,7 +115,7 @@ export default {
     width:100%;
     height:100%;
     background: #f4f4f4;
-     overflow-x: hidden;
+    overflow-x: hidden;
     overflow-y: scroll;  
 }
 .inquiry-btn{
@@ -132,13 +132,14 @@ export default {
     }
     li:nth-of-type(1){
         font-size:16px;
-          display: flex;
+        display: flex;
         justify-content: center;
         align-items: flex-end;
     }
      li:nth-of-type(2){
         font-size:10px;
-          display: flex;
+        display: flex;
+        margin-top: 10px;
         justify-content: center;
     }
 }
