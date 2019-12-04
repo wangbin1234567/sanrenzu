@@ -7,12 +7,12 @@
 
 <script>
 export default {
-props:["dataList"],
-methods:{
-    itemskip(lets){
-        document.getElementById(lets).scrollIntoView(true);
+    props:["dataList"],
+    methods:{
+        itemskip(lets){
+            document.getElementById(lets).scrollIntoView(true);
+        }
     }
-}
 }
 </script>
 
@@ -27,7 +27,7 @@ methods:{
     li{
         font-size: 12px;
         color: #999;
-        padding: 1px 4px;
+        padding: 3px 4px;
     }
 }
 </style>

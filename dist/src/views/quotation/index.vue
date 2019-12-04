@@ -4,7 +4,7 @@
         <p>可向多个商家咨询最低价，商家及时回复</p>
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
-
+    <!-- <div class="q-tip"> -->
     <div class="q-tip" v-if="flog" @click="Tclick()">
         <div>
             <div class="flex-row">
@@ -47,120 +47,101 @@
             </li>
             <li>
                 <span>城市</span>
-                <span>北京</span>
+                <span>{{name}}</span>
+                
             </li>
             </ul>
             <div class="quotation">
-            <button data-hover="hover" @click="btnList">询最低价</button>
+            <button data-hover="hover" @click="btnList()">询最低价</button>
             </div>
         </div>
         <!-- !!!!!!!! -->
         <Dealer :dealer="dealerList"/>
-
-        <!-- 验证弹窗 -->  
-        <Verify @btnLists="btnLists" :color="color" :boxh="boxh" :message="message" :ps="ps" :hello="hello" :dahezi="dahezi" :pic="pic" :xunjia="xunjia" :dierduan="dierduan" v-show="isUser" @btnList="btnList"></Verify>  
+        
     </div>
   </div>
 </template>
 
+
 <script>
+// import {mapMutations} from "vuex"
 import axios from "axios";
 import Dealer from '../../components/dealer'
-import Verify from "../../components/verify.vue"
 export default {
     components:{
         Dealer,
-        Verify
     },
+    
     data() {
         return {
             list: [],
             dealerList:[],
+            name:this.$route.query.CityName,
             flog: false,
-            phone:"",//手机号
-            username:"",//用户名
+            phone:"",
+            username:"",
             SerialID:"",
-            isUser:false,//默认弹窗隐藏
-            message:"",//弹窗中部信息
-            hello:"",//弹窗按钮,
-            pic:"",//图片
-            xunjia:"",//询价成功
-            dierduan:"",
-            dahezi:"",
-            boxh:"",
-            ps:"",
-            color:""
+            id: this.$route.params.id,
+            cityId: "",
+            timestamp: ""
         };
     },
     methods: {
-        btnLists(){
-              this.isUser=!this.isUser  
-              this.hello=""
-                this.pic=""
-                this.message=""
-                this.xunjia=""
-                this.dierduan=""
-                this.dahezi=""
-                this.boxh=""
-                this.ps=""
-                this.color=""
+        //  ...mapMutations({
+        //     ctxfalg:'site/ctxfalg'
+        // }),
+        getcity(){
+        this.$router.push("/site")
+        this.ctxfalg()
         },
         Tclick(){
             this.flog = !this.flog
         },
-        typeClick(SerialID){            
+        typeClick(SerialID){
+            console.log(SerialID);
+            
             this.$router.push({
-                name:"type",
-                params:{
+                path:"type",
+                query:{
                     SerialID:SerialID
                 }
             })
-          
         },
-        btnList(){  
-           
-            if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
-                 this.message="名字不正确"
-                 this.dahezi="104px"
-                 this.hello="好"
-                 this.isUser=!this.isUser  
-                 this.boxh="0px"
-                 this.ps="0px"
-                 this.color="green"
-                 
-            }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
-                 this.isUser=!this.isUser 
-                 this.hello="好"
-                 this.dahezi="104px"
-                 this.message="手机号错误"
-                 this.boxh="0px"
-                 this.ps="0px"
-                 this.color="green"
-            }else {
-                this.isUser=!this.isUser
-                this.hello="确定"
-                this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
-                this.message="询问成功"
-                this.xunjia="稍后有专业汽车顾问为你服务"
-                this.dierduan="请保持手机畅通"
-                this.dahezi="190px"
-                this.boxh="50px"
+        btnList(){
+            if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
+                alert("请输入正确的手机号或名字")
+            }else{
+                alert("输入正确")
             }
-        }
+        },
+  
+       
+        
+    
     },
-    created() {
+    mounted() {
+        console.log(this.$route)
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
-            this.SerialID=res.data.data.SerialID
-        });
-        axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575199616353`).then(res => {
+        }),
+        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
+            this.list = res.data.data;
+            // this.SerialID=res.data.data.SerialID
+            console.log(res);
+        }),
+       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
             this.dealerList = res.data.data.list
+            // console.log(this.dealerList);
+        }),
+        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
+            
+            this.cityId = res.data.data.CityID;
+            this.timestamp=res.data.data.timestamp
+            console.log(this.cityId,"============>");
         })
     }
-};
+}
 </script>
-
-
 <style lang="scss" scoped>
  .wrap-q {
         width: 100%;
@@ -174,7 +155,7 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: sticky;
+        position: relative;
         top: 0;
         p{
             color: #fff;
@@ -217,7 +198,19 @@ export default {
         right: 16px;
         top: -5px;
     }
-   .flex-row{
+    .q-tip>div:before {
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 2;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 5px solid #fff;
+        right: 16px;
+        top: -5px;
+    }
+    .flex-row{
         display: flex;
         height: 79px;
         padding: 15px 0;
