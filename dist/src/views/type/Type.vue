@@ -1,6 +1,6 @@
 <template>
     <div class="type">
-    <p>全部车款</p>
+    <p v-if="!this.$route.query.carId">全部车款</p>
     <div>
       <p class="c-type">
          <span v-for="(v,i) in year" :key="i" :class="{active:yearNum==i}" @click="tab(i,v)">{{v}}</span>
@@ -25,11 +25,10 @@
 </template>
 
 <script>
-import axios from "axios"
 export default {
  data(){
      return {
-       list: [],
+       list: JSON.parse(localStorage.getItem("2017.official.sortArr")) || [],
        year:"",//年份
        yearNum:0,//年份下标
      }
@@ -37,20 +36,19 @@ export default {
   methods:{
       tab(i,v){
         this.yearNum=i
-         axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{       
-          this.list=res.data.data.list.filter(item => item.market_attribute.year==v);
-      })
+           
+          this.list=this.list.filter(item => item.market_attribute.year==v);
+   
       }
   },
   mounted(){
-      axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{
-          this.list=res.data.data.list
+     
             let arr=[];//存放年份
             this.list.forEach(item => {
                  arr.push(item.market_attribute.year)               
                  this.year=Array.from(new Set(arr))
              });
-      })
+  
   }
 }
 </script>
@@ -81,7 +79,7 @@ export default {
   padding: 0 21px 0 0;
 }
 .type .c-type span.active{
-  color:#06f;
+  color:#00afff;
 }
 .tip{
    line-height: 25px;

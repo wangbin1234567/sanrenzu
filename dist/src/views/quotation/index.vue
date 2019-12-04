@@ -4,7 +4,7 @@
         <p>可向多个商家咨询最低价，商家及时回复</p>
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
-    <div class="q-tip" v-if="flog" @click="Tclick()">
+    <div class="q-tip" v-if="flog" @click="Tclick">
         <div>
             <div class="flex-row">
                 <li>
@@ -26,11 +26,11 @@
         </div>
     </div>
     <div class="content">
-        <div class="q-info" @click="typeClick(SerialID)">
+        <div class="q-info" @click="typeClick">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
-            <p>2019款 35 TFSI 进取版 国V</p>
+            <p>{{sortArr[0].market_attribute.year}}款 {{sortArr[0].car_name}}</p>
             </div>
         </div>
         <div class="self-info">
@@ -46,7 +46,7 @@
             </li>
             <li>
                 <span>城市</span>
-                <span>北京</span>
+                <span @click="handleAddress">{{this.$route.params.CityName}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -55,69 +55,89 @@
         </div>
         <!-- !!!!!!!! -->
         <Dealer :dealer="dealerList"/>
+         <!-- 验证弹窗 -->  
+        <Verify @btnLists="btnLists" 
+        :message="message" 
+        :hello="hello" 
+        v-show="isUser" 
+        @btnList="btnList"></Verify>  
     </div>
   </div>
 </template>
 
 
 <script>
-import axios from "axios";
 import Dealer from '../../components/dealer'
+import Verify from "../../components/verify.vue"
+import {mapActions,mapState} from "vuex"
 export default {
     components:{
-        Dealer
+        Dealer,
+        Verify
     },
     data() {
         return {
-            list: [],
-            dealerList:[],
+            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || [],
             flog: false,
             phone:"",
             username:"",
-            SerialID:"",
-            id: this.$route.params.id,
-            cityId: "",
-            timestamp: ""
+            carId: localStorage.getItem("2017.official.curId") || "",
+            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr")) || [],
+            isUser:false,//默认弹窗隐藏
+            message:"",//弹窗中部信息
+            hello:"",//弹窗按钮,
         };
     },
+    computed: {
+   ...mapState({
+     dealerList: state=>state.dealer.dealerList
+   })
+  },
     methods: {
+         ...mapActions({
+           getCityAddress: 'city/getCityAddress',
+           getDealer: 'dealer/getDealer'
+    }),
+        handleAddress(){
+           this.$router.push("/site")
+        },
+         btnLists(){
+              this.isUser=false 
+              this.hello=""
+              this.message=""
+        },
         Tclick(){
             this.flog = !this.flog
         },
-        // typeClick(SerialID){
-        //     console.log(SerialID);
-            
-        //     this.$router.push({
-        //         path:"type",
-        //         query:{
-        //             SerialID:SerialID
-        //         }
-        //     })
-        // },
-        btnList(){
-            if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
-                alert("请输入正确的手机号或名字")
-            }else{
-                alert("输入正确")
+        typeClick(){  
+            this.$router.push({
+                path:"/type",
+                query:{
+                    carId: this.carId
+                }
+            })
+        },
+        btnList(){  
+           
+            if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
+                 this.message="请输入真实的中文姓名"
+                 this.hello="好"
+                 this.isUser=true
+                 
+            }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
+                 this.isUser=true 
+                 this.hello="好"
+                 this.message="请输入正确的手机号"
+            }else {
+                this.isUser=true
+                this.hello="确定"
+                this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
+                this.message="询价成功"
             }
         }
     },
-    created() {
-        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
-            this.list = res.data.data;
-            // this.SerialID=res.data.data.SerialID
-            console.log(res);
-        });
-       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
-            this.dealerList = res.data.data.list
-            // console.log(this.dealerList);
-        })
-        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
-            
-            this.cityId = res.data.data.CityID;
-            this.timestamp=res.data.data.timestamp
-            console.log(this.cityId,"============>");
-        })
+    mounted() {
+        this.getDealer(this.carId)
     }
 };
 </script>
@@ -229,12 +249,12 @@ export default {
     .q-info {
         width: 100%;
         height: 100px;
-        padding: 10px;
+        padding: 16px 9px 12px;
         display: flex;
         position: relative;
         img {
-            width: 127px;
-            height: 77px;
+            width: 115px;
+            height: 70px;
             border: 1px solid #eee;
             box-sizing: border-box;
             border-radius: 5px;
@@ -244,12 +264,13 @@ export default {
         }
         .flex-column p:first-child {
             font-size: 18px;
-            line-height: 2;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;
-            line-height: 2.2;
             color: #333;
+            margin: 13px 0 0;
+            line-height: 20px;
+            width: 215px;
         }
     }
     .q-info:before {
@@ -278,8 +299,8 @@ export default {
         }
         ul li {
             font-size: 18px;
-            height: 48px;
-            line-height: 48px;
+            height: 44px;
+            line-height: 44px;
             border-bottom: 1px solid #eee;
             box-sizing: border-box;
             color: #000;

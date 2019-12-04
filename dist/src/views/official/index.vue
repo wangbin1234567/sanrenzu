@@ -41,7 +41,6 @@ export default {
   methods:{
     addlist(MasterID){
       this.colorlist=true,
-      console.log(MasterID)
       this.rightList(MasterID)
     },
     occludes(){
