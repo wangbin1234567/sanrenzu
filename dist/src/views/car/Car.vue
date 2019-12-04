@@ -1,5 +1,5 @@
 <template>
-
+<transition name="slide-fade"> 
     <div class="car">
         <div class="content">
              <div class="img">
@@ -31,13 +31,14 @@
             </li>       
         </div>
     </div>
-
+</transition>
 </template>
 <script>
 
 
 import axios from "axios"
 import List from "../../components/list.vue"
+import {mapActions,mapState} from "vuex"
 export default {
     props:{
 
@@ -55,13 +56,19 @@ export default {
           list:"",//数据
           year:"",//年份
           BottomEntranceSubTitle:"",
-          yearNum:"全部",//年份下标
+          yearNum:"全部",//年份,
+          SerialID:this.$route.params.id
         }
     },
     computed:{
-
+          ...mapState({
+              lists:state=>state.car.list
+          })
     },
     methods:{
+        ...mapActions({
+           getInfoAndListById:"car/getInfoAndListById"
+        }),
         chelun(){
             this.$router.push({
                 path:"/quotation",                         
@@ -80,6 +87,8 @@ export default {
         },       
     },
     created(){
+        
+        console.log(this.getInfoAndListById())
          axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364`).then(res=>{
             // window.console.log(res.data.data.list)
              this.pic_group_count=res.data.data.pic_group_count
@@ -111,9 +120,10 @@ export default {
     background: #f4f4f4;
      overflow-x: hidden;
     overflow-y: scroll;  
+    opacity: 1;
 }
 .inquiry-btn{
-    position: absolute;
+    position: fixed;  
     bottom:0;
     width:100%;
     height:55px;
@@ -202,7 +212,7 @@ export default {
 .c-type{
     width:100%;
     height:46px;
-    padding:7px 0;
+   margin-top:7px;
     background:#fff;
     display: flex;
     align-items: center;
@@ -210,12 +220,18 @@ export default {
         font-size: 16px;
         margin:0 10px;
     }
-    // span:nth-of-type(1){
-    //     color:#04f;
-    // }
     span.active{
        color:#04f;
     }
 }
-
+.slide-fade-enter-active {
+  transition: all 3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
 </style>

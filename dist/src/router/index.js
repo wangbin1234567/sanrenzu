@@ -20,6 +20,15 @@ const routes = [
   {
     path:"/quotation",
     component:()=>import("../views/quotation/index.vue")
+  },{
+    path:"/site",
+    component:()=>import("../views/site/index.vue")
+  },{
+    path:"/official",
+    component:()=>import("../views/official/index.vue")
+  },{
+    path:"/",
+    redirect:"/official"
   }
 ]
 
