@@ -4,6 +4,7 @@
         <p>可向多个商家咨询最低价，商家及时回复</p>
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
+    <!-- <div class="q-tip"> -->
     <div class="q-tip" v-if="flog" @click="Tclick()">
         <div>
             <div class="flex-row">
@@ -46,7 +47,8 @@
             </li>
             <li>
                 <span>城市</span>
-                <span>北京</span>
+                <span>{{name}}</span>
+                
             </li>
             </ul>
             <div class="quotation">
@@ -55,28 +57,46 @@
         </div>
         <!-- !!!!!!!! -->
         <Dealer :dealer="dealerList"/>
+        
     </div>
   </div>
 </template>
 
+
 <script>
+import {mapMutations} from "vuex"
 import axios from "axios";
 import Dealer from '../../components/dealer'
 export default {
     components:{
         Dealer
     },
+    
     data() {
         return {
             list: [],
             dealerList:[],
+            name:this.$route.query.CityName,
             flog: false,
             phone:"",
             username:"",
-            SerialID:""
+            SerialID:"",
+            id: this.$route.params.id,
+            cityId: "",
+            timestamp: ""
         };
     },
     methods: {
+<<<<<<< HEAD
+=======
+         ...mapMutations({
+            ctxfalg:'site/ctxfalg'
+        }),
+        getcity(){
+        this.$router.push("/site")
+        this.ctxfalg()
+        },
+>>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
         Tclick(){
             this.flog = !this.flog
         },
@@ -96,22 +116,47 @@ export default {
             }else{
                 alert("输入正确")
             }
+<<<<<<< HEAD
         }
+=======
+        },
+  
+       
+        
+    
+>>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
     },
-    created() {
+    mounted() {
+        console.log(this.$route)
         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
             this.list = res.data.data;
+<<<<<<< HEAD
             this.SerialID = res.data.data.SerialID
+=======
+        }),
+        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
+            this.list = res.data.data;
+            // this.SerialID=res.data.data.SerialID
+>>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
             console.log(res);
-        });
-        axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575199616353`).then(res => {
+        }),
+       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
             this.dealerList = res.data.data.list
             // console.log(this.dealerList);
+        }),
+        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
+            
+            this.cityId = res.data.data.CityID;
+            this.timestamp=res.data.data.timestamp
+            console.log(this.cityId,"============>");
         })
     }
-};
+}
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
 <style lang="scss" scoped>
     .wrap-q {
         width: 100%;
@@ -167,6 +212,21 @@ export default {
         right: 16px;
         top: -5px;
     }
+<<<<<<< HEAD
+=======
+    .q-tip>div:before {
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 2;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 5px solid #fff;
+        right: 16px;
+        top: -5px;
+    }
+>>>>>>> f617eac9fc791aae9848208bdaa892e3a2452e78
     .flex-row{
         display: flex;
         height: 79px;

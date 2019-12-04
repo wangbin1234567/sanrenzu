@@ -56,7 +56,7 @@ export default {
           year:"",//年份
           BottomEntranceSubTitle:"",
           yearNum:"全部",//年份下标,
-        SerialID:this.$route.params.id
+          SerialID:this.$route.query.id
         }
     },
     computed:{
@@ -65,15 +65,18 @@ export default {
     methods:{
         chelun(){
             this.$router.push({
-                path:"/quotation",                         
+                name:"quotation",    
+                params: {
+                    id: this.SerialID
+                }                     
             })           
         },
         tab(item){
              this.yearNum=item
-             axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{       
+             axios.get(`http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{       
              this.list=res.data.data.list.filter(i => i.market_attribute.year==item);
             if(this.yearNum=="全部"){
-                    axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364`).then(res=>{
+                    axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
                         this.list=res.data.data.list
                     })
                 }
@@ -81,8 +84,10 @@ export default {
         },       
     },
     created(){
-         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364`).then(res=>{
-            // window.console.log(res.data.data.list)
+         axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
+        
+            window.console.log(res.data.data.list)
+            // this.SerialID=res.data.data.
              this.pic_group_count=res.data.data.pic_group_count
              this.CoverPhoto=res.data.data.CoverPhoto
              this.dealer_price=res.data.data.market_attribute.dealer_price
