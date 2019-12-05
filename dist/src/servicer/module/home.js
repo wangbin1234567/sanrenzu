@@ -17,3 +17,6 @@ export let getMasterSeries=(SerialID)=>{
 export let getMasterDataList=(SerialID,ImageID,Page,PageSize)=>{
     return request(`/v2-car-getCategoryImageList.html?SerialID=${SerialID}&ImageID=${ImageID}&Page=${Page}&PageSize=${PageSize}`)
 }
+export let getMasterDataListAdd=(SerialID,ImageID,Page,PageSize)=>{
+    return request(`/v2-car-getCategoryImageList.html?SerialID=${SerialID}&ImageID=${ImageID}&Page=${Page}&PageSize=${PageSize}`)
+}
