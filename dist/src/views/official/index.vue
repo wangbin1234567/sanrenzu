@@ -54,14 +54,6 @@ export default {
       }
     }
   },
-  // data(){
-  //   return {
-  //     pageXleft:'',
-  //     pageXtop:'',
-  //     clientYleft:'',
-  //     clientYTop:''
-  //   }
-  // },
   mounted(){
     this.getMasterBrandList()
   }

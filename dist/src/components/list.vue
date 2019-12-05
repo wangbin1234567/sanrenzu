@@ -49,7 +49,7 @@ export default {
     }
     .item-text {
       width: 100%;
-      height: 138px;
+      height: 118px;
       background: #fff;
       padding:0 10px;
       margin-bottom:8px;
@@ -87,7 +87,7 @@ export default {
     .item-btn {
       width: 100%;
       height: 40.93px;
-      border-top: 1px solid #c5c5c5;
+      border-top: 0.2px solid #c5c5c5;
       button {
         width: 100%;
         height: 100%;
