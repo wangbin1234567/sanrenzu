@@ -15,10 +15,31 @@
     import OfficialFixe from "@/components/officialfixe.vue"
     import OfficialRight from "@/components/officialright.vue"
 export default {
-    components: {
-        OfficialLeft,
-        OfficialFixe,
-        OfficialRight
+  name: 'home',
+  components: {
+    OfficialLeft,
+    OfficialFixe,
+    OfficialRight
+  },
+   data(){
+    return {
+      colorlist:false,
+      pageXleft:'',
+      pageXtop:'',
+      clientYleft:'',
+      clientYTop:''
+    }
+  },
+  computed:{
+   ...mapState({
+     list: state=>state.home.list,
+     listMasterID: state=>state.rightnavigation.listMasterID
+   })
+  },
+  methods:{
+    addlist(MasterID){
+      this.colorlist=true,
+      this.rightList(MasterID)
     },
     data(){
         return {

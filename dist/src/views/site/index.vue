@@ -33,9 +33,23 @@ export default {
     },
     
     methods:{
-        ...mapActions({
-            getMasterStair:'stair/getMasterStair'
-        }),
+        revealCitys(CityID){
+            this.flag=true
+            axios.get("https://baojia.chelun.com/v1-city-alllist.html",{params:{provinceid:CityID}}).then(res=>{
+            if(res.data.code===1){
+                this.provinceidData=res.data.data
+            }
+            
+        })
+        },
+        siteitemlist(CityName){
+            this.$router.push({
+                name: "quotation",
+                params:{
+                    CityName
+                }
+            })
+        },
         removelist(){
             this.flag=false
         }

@@ -2,14 +2,7 @@
     <div class="list_right_content">
         <h5 @click="occlude">{{items.GroupName}}</h5>
         <ul>
-            <li v-for="(grounitem,key) in items.GroupList" 
-                :key="key" 
-                @click="particularsitem(grounitem.SerialID)"
-                ><img :src="grounitem.Picture" alt="">
-                <div><p>{{grounitem.AliasName}}</p>
-                <p class="list_ps active">{{grounitem.DealerPrice}}</p>
-                </div>
-            </li>
+            <li v-for="(grounitem,key) in items.GroupList" :key="key" @click="particularsitem(grounitem.SerialID,grounitem)"><img :src="grounitem.Picture" alt=""><div><p>{{grounitem.AliasName}}</p><p class="list_ps active">{{grounitem.DealerPrice}}</p></div></li>
         </ul>
     </div>
 </template>
@@ -25,7 +18,8 @@ export default {
         occlude(){
             this.amendstatefalse()
         },
-        particularsitem(SerialID){
+        particularsitem(SerialID,grounitem){
+            localStorage.setItem("2017.official.carInfo",JSON.stringify(grounitem))
             this.$router.push(`/car?id=${SerialID}`)
         }, 
     }
