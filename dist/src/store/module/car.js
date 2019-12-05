@@ -41,7 +41,6 @@ function formatCarList(list) {
             })
         }
     })
-    window.console.log(state.currentList)
     return newList
 }
 const mutations = {
@@ -49,6 +48,7 @@ const mutations = {
         state.carList = payload
         // 拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
+        state.year=["全部"]
         state.year = state.year.concat([...new Set(year)])
         // 拿到当前选择年份的数据
         let currentList = [];
@@ -61,7 +61,9 @@ const mutations = {
         currentList = sortCarList(currentList)
         currentList = formatCarList(currentList)
         state.currentList = currentList
-        window.console.log(state.currentList)
+    },
+    setCurrent(state,payload){
+        state.current=payload
     }
 }
 const actions = {

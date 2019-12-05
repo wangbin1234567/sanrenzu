@@ -38,7 +38,7 @@ export default {
 <style scoped lang="scss">
 .list-box {
   width: 100%;
-  height: 100%;
+  flex: 1;
   background: #f4f4f4;
 }
 .list-box .list-item {
@@ -54,40 +54,40 @@ export default {
       display: flex;
       align-items: center;
     }
-  }
-  .item-text {
-    width: 100%;
-    height: 138px;
-    background: #fff;
-    padding: 14px;
-    li {
+    .item-text {
       width: 100%;
-      display: flex;
-      align-items: center;
-    }
-    li:nth-of-type(1) {
-      font-size: 17px;
-      height: 36.45px;
-      color: #3d3d3d;
-    }
-    li:nth-of-type(2) {
-      font-size: 13px;
-      height: 17.4px;
-      color: #c4c4c4;
-    }
-    li:nth-of-type(3) {
-      height: 24.5px;
-      display: flex;
-      justify-content: flex-end;
-
-      span:nth-of-type(1) {
-        color: #c4c4c4;
-        font-size: 16px;
+      height: 138px;
+      background: #fff;
+      padding: 14px;
+      li {
+        width: 100%;
+        display: flex;
+        align-items: center;
       }
-      span:nth-of-type(2) {
-        font-size: 19.5px;
-        color: red;
-        margin: 0 0 0 4.9px;
+      li:nth-of-type(1) {
+        font-size: 17px;
+        height: 36.45px;
+        color: #3d3d3d;
+      }
+      li:nth-of-type(2) {
+        font-size: 13px;
+        height: 17.4px;
+        color: #c4c4c4;
+      }
+      li:nth-of-type(3) {
+        height: 24.5px;
+        display: flex;
+        justify-content: flex-end;
+
+        span:nth-of-type(1) {
+          color: #c4c4c4;
+          font-size: 16px;
+        }
+        span:nth-of-type(2) {
+          font-size: 19.5px;
+          color: red;
+          margin: 0 0 0 4.9px;
+        }
       }
     }
     .item-btn {

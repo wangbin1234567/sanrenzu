@@ -34,7 +34,7 @@
 </template>
 <script>
 import List from "../../components/list.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: {},
   components: {
@@ -49,12 +49,15 @@ export default {
     ...mapState({
       carList: store => store.car.carList,
       year: store => store.car.year,
-      current: store => store.car.current
+      current:store=>store.car.current
     })
   },
   methods: {
     ...mapActions({
       getInfoAndListById: "car/getInfoAndListById"
+    }),
+    ...mapMutations({
+      setCurrent: "car/setCurrent"
     }),
     chelun() {
       this.$router.push({
@@ -65,8 +68,8 @@ export default {
       });
     },
     tab(item) {
-      this.current = item;
-      window.console.log(this.current);
+      this.setCurrent(item);
+      this.getInfoAndListById(this.SerialID);
     }
   },
   mounted() {
@@ -79,6 +82,30 @@ export default {
   width: 100%;
   height: 100%;
   background: #f4f4f4;
+  position: relative;
+}
+.inquiry-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: 55px;
+  background: #09f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  li:nth-of-type(1) {
+    width: 63.94px;
+    height: 21.01px;
+    color: #fff;
+    font-size: 15px;
+    margin: 6.03px 0 0;
+  }
+  li:nth-of-type(2) {
+    width: 109.2px;
+    height: 15.92px;
+    color: #fff;
+    font-size: 11.98px;
+  }
 }
 .content {
   width: 100%;
@@ -93,14 +120,15 @@ export default {
     img {
       width: 100%;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-52%);
       position: absolute;
     }
     span {
-      background: rgba(0, 0, 0, 0.5);
+      height: 17.75px;
+      background: rgba(0, 0, 0, 0.6);
       color: #fff;
       font-size: 12px;
-      padding: 0 5px;
+      padding: 0.9051px 5px;
       border-radius: 8px;
       position: absolute;
       right: 17px;
@@ -144,29 +172,6 @@ export default {
     }
   }
 }
-.inquiry-btn {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 55px;
-  background: #09f;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  li:nth-of-type(1) {
-    width: 63.94px;
-    height: 21.01px;
-    color: #fff;
-    font-size: 15px;
-    margin: 6.03px 0 0;
-  }
-  li:nth-of-type(2) {
-    width: 109.2px;
-    height: 15.92px;
-    color: #fff;
-    font-size: 11.98px;
-  }
-}
 .c-type {
   width: 100%;
   height: 45.95px;
@@ -187,10 +192,10 @@ export default {
   }
 }
 .slide-fade-enter-active {
-  transition: all 1s ease;
+  transition: all 0.2s ease;
 }
 .slide-fade-leave-active {
-  transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter,
 .slide-fade-leave-to {
