@@ -2,13 +2,18 @@
   <div id="app">
     <transition :name="transitionName">
       <keep-alive>
-        <router-view class="transitionBody"/>
+        <router-view class="transitionBody" :key="key"/>
       </keep-alive>
     </transition>
   </div>
 </template>
 <script>
 export default {
+  computed: {
+    key(){
+      return this.$route.name?this.$route.name+ +new Date():this.$route+ +new Date()
+    }
+  },
    data() {
      return {
        transitionName: "transitionLeft"

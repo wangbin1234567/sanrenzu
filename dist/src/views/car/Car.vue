@@ -1,5 +1,4 @@
 <template>
-  <transition name="slide-fade">
     <div class="car" v-if="Object.keys(carList).length">
       <div class="content">
         <div class="img">
@@ -7,10 +6,8 @@
           <span>{{carList.pic_group_count}}张图片</span>
         </div>
         <div class="info">
-          <div class="text">
-            <p>{{carList.market_attribute.dealer_price}}</p>
-            <p>指导价{{carList.market_attribute.official_refer_price}}</p>
-          </div>
+            <p>{{carList.market_attribute.dealer_price}}</p> 
+            <p>指导价 {{carList.market_attribute.official_refer_price}}</p> 
           <div class="action">
             <button @click="chelun">{{carList.BottomEntranceTitle}}</button>
           </div>
@@ -26,15 +23,14 @@
       </div>
       <List></List>
       <div class="inquiry-btn" @click="chelun">
-        <li>{{carList.BottomEntranceTitle}}</li>
-        <li>本地销售商为你报价</li>
+        <p>{{carList.BottomEntranceTitle}}</p>
+        <p>本地销售商为你报价</p>
       </div>
     </div>
-  </transition>
 </template>
 <script>
 import List from "../../components/list.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: {},
   components: {
@@ -56,6 +52,9 @@ export default {
     ...mapActions({
       getInfoAndListById: "car/getInfoAndListById"
     }),
+     ...mapMutations({
+      setCurrent: "car/setCurrent"
+    }),
     chelun() {
       this.$router.push({
         name: "quotation",
@@ -63,15 +62,16 @@ export default {
           id: this.SerialID
         }
       });
+      localStorage.setItem("2017.official.curId",131315)
     },
     tab(item) {
-      this.current = item;
-      window.console.log(this.current);
+      this.setCurrent(item)
+      this.getInfoAndListById(this.SerialID);
     }
   },
-  mounted() {
-    this.getInfoAndListById(this.SerialID);
-  }
+mounted() {
+this.getInfoAndListById(this.SerialID)
+}
 };
 </script>
 <style scoped lang="scss">
@@ -79,9 +79,32 @@ export default {
   width: 100%;
   height: 100%;
   background: #f4f4f4;
-
+  overflow-x: hidden;
+  position: relative;
 }
-
+.inquiry-btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: #3aacff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p:nth-of-type(1){
+     width:64px;
+     height:20px;
+     color:#fff;
+     font-size:16px;
+     margin:6px 0 0;
+  } 
+  p:nth-of-type(2){
+      width:108px;
+      height:16px;
+      color:#fff;
+      font-size:12px;
+  }
+}
 .content {
   width: 100%;
   height: 260px;
@@ -99,87 +122,59 @@ export default {
       position: absolute;
     }
     span {
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       color: #fff;
       font-size: 12px;
-      padding: 0 5px;
+      padding: 1px 5px;
       border-radius: 8px;
       position: absolute;
       right: 17px;
       bottom: 16px;
+      line-height: 18px;
     }
   }
   .info {
     width: 100%;
     position: relative;
-    .text {
-      margin-top: 18px;
-      padding-left: 14px;
-      p:nth-of-type(1) {
-        font-size: 18px;
-        height: 23.8px;
-        color: red;
-      }
-      p:nth-of-type(2) {
-        font-size: 14px;
-        height: 17.37px;
-        color: #c5c5c5;
-      }
+    padding: 18px 10px 15px;
+    height: 73px;
+    p:nth-of-type(1){
+      color: #ff0000;
+      font-size: 18px;
+      line-height: 24px;
     }
-    .action {
-      width: 187.5px;
-      height: 35px;
-      margin-right: 5px;
-      position: absolute;
-      right: 0;
-      bottom: 3px;
-      button {
+     p:nth-of-type(2){
+      color: #c0c0c0;
+      font-size: 13px;
+    }
+    .action{
+    padding: 10px 0 0;
+    justify-content: space-between;
+    width: 50%;
+    position: absolute;
+    right: .1rem;
+    top: .22rem;
+     button {
         width: 100%;
-        height: 100%;
+        height: 35px;
         outline: none;
         border: none;
         font-size: 16px;
-        border-radius: 7px;
+        border-radius: 5px;
         background: #00afff;
         color: #fff;
       }
     }
-  }
+    }
 }
-.inquiry-btn {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 55px;
-  background: #09f;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  li:nth-of-type(1){
-     width:63.94px;
-     height:21.01px;
-     color:#fff;
-     font-size:15px;
-     margin:6.03px 0 0;
-  } 
-  li:nth-of-type(2){
-      width:109.2px;
-      height:15.92px;
-      color:#fff;
-      font-size:11.98px;
-  }
-}
+
 .c-type {
   width: 100%;
-  height: 45.95px;
+  line-height: 46px;
   padding: 0 15px;
   background: #fff;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+  border-top: .15rem solid #f4f4f4;
   span {
-      width:57px;
-      height:21px;
     font-size: 16px;
     padding: 0 23px 0 0;
     color:#000;
@@ -187,16 +182,5 @@ export default {
   span.active {
     color: #3AACFF;
   }
-}
-.slide-fade-enter-active {
-  transition: all 1s ease;
-}
-.slide-fade-leave-active {
-  transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
 }
 </style>

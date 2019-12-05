@@ -30,7 +30,7 @@
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
-            <p>{{sortArr[0].market_attribute.year}}款 {{sortArr[0].car_name}}</p>
+            <!-- <p>{{sortArr[0].market_attribute.year}}款 {{sortArr[0].car_name}}</p> -->
             </div>
         </div>
         <div class="self-info">

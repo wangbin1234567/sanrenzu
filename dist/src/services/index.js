@@ -1,5 +1,4 @@
 export * from "./modules/home"
-export * from "./modules/rightnavigation"
 // export * from "./modules/city"
 export * from "./modules/dealer"
 export * from "./modules/carColor"
