@@ -2,7 +2,7 @@
   <transition name="slide-fade">
     <div class="car" v-if="Object.keys(carList).length">
       <div class="content">
-        <div class="img">
+        <div class="img" @click="goImg">
           <img :src="carList.CoverPhoto" alt />
           <span>{{carList.pic_group_count}}张图片</span>
         </div>
@@ -70,6 +70,9 @@ export default {
     tab(item) {
       this.setCurrent(item);
       this.getInfoAndListById(this.SerialID);
+    },
+    goImg(){
+      this.$router.push('/img?serialId=' + this.SerialID);
     }
   },
   mounted() {

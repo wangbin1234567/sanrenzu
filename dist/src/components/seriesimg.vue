@@ -5,7 +5,7 @@
             <p>{{item.Count}}张</p>
         </div>
         <li v-for="(itemimg,key) in item.List" :key="key">
-            <img src='' :style="{backgroundImage:'url('+itemimg.Url+')'}" @click="magnifyImg">
+            <span src='' :style="{backgroundImage:'url('+itemimg.Url+')'}" @click="magnifyImg"/>
         </li>
     </div>
 </template>
@@ -35,10 +35,12 @@ export default {
         width: 33.3%;
         height: 123px;
         padding: 2px 2px;
-        img{
+        span{
+            display: inline-block;
             width: 100%;
             height: 100%;
-            background-size: cover  
+            background-size: cover;
+            background-position: center;
         }
     }
 }

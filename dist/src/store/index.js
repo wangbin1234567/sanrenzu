@@ -8,7 +8,7 @@ import home from "./module/home.js"
 import list from "./module/list"
 import stair from "./module/stair"
 import site from './module/site'
-import series from "./module/series"
+import img from "./module/img"
 import car from "./module/car"
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -18,7 +18,7 @@ export default new Vuex.Store({
     list,
     stair,
     site,
-    series
+    img
   },
   plugins:[createLogger()]
 })

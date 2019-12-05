@@ -21,18 +21,11 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   computed: {
     ...mapState({
       currentList: store => store.car.currentList
     })
-  },
-  methods: {},
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -58,14 +51,15 @@ export default {
       width: 100%;
       height: 138px;
       background: #fff;
-      padding: 14px;
+      padding:0 10px;
+      margin-bottom:8px;
       li {
         width: 100%;
         display: flex;
         align-items: center;
       }
       li:nth-of-type(1) {
-        font-size: 17px;
+        font-size: 15px;
         height: 36.45px;
         color: #3d3d3d;
       }
@@ -81,10 +75,10 @@ export default {
 
         span:nth-of-type(1) {
           color: #c4c4c4;
-          font-size: 16px;
+          font-size: 11.98px;
         }
         span:nth-of-type(2) {
-          font-size: 19.5px;
+          font-size: 15px;
           color: red;
           margin: 0 0 0 4.9px;
         }
@@ -104,6 +98,9 @@ export default {
         font-size: 16px;
       }
     }
+  }
+  .item-text:last-child{
+    margin-bottom:0;
   }
 }
 </style>
