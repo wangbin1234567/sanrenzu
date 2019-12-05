@@ -9,6 +9,7 @@ import list from "./module/list"
 import stair from "./module/stair"
 import site from './module/site'
 import series from "./module/series"
+import carlist from "./module/carlist"
 Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     list,
     stair,
     site,
-    series
+    series,
+    carlist
   },
   plugins:[createLogger()]
 })

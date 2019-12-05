@@ -1,15 +1,21 @@
 
 
 //清除游览器的默认样式
-import "./reset/reset.css"
+import "./reset.css"
+// import "./animate.css"
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import VueLazyload from "vue-lazyload"
 import "lib-flexible/flexible.js"
+import Vant from "vant"
+import 'vant/lib/index.css';
+// 引入vant ui 插件
+
 Vue.config.productionTip = false
-// Vue.use(VueLazyload)
+// 
+Vue.use(Vant);
 
 //配置图片懒加载
 Vue.use(VueLazyload, {

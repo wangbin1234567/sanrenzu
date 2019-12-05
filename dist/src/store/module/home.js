@@ -13,7 +13,6 @@ import {getMasterBrandList} from "@/servicer/index"
         if (state.dataList.findIndex(item => item.lets == lets) == -1) {
           state.dataList.push({ lets, children: newArr });
         }
-     
     })
    },
    amendstate(state){

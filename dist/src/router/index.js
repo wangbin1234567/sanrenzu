@@ -9,7 +9,8 @@ const routes = [
     path: '/car',
     component: () => import('../views/car/Car.vue')
   },{
-    path: '/img',
+    path: '/img/:id?',
+    name:"img",
     component: () => import('../views/img/index.vue')
   },
 {
@@ -24,9 +25,6 @@ const routes = [
     path:"/quotation",
     name: "quotation",
     component:()=>import("../views/quotation/index.vue")
-  },{
-    path:"/site",
-    component:()=>import("../views/site/index.vue")
   },{
     path:"/official",
     component:()=>import("../views/official/index.vue")

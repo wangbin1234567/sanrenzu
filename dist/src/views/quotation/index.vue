@@ -47,7 +47,8 @@
             </li>
             <li @click="getcity">
                 <span>城市</span>
-                <span>{{name}}</span>
+              
+                <span>{{getCityData}}</span>
                 
             </li>
             </ul>
@@ -59,24 +60,29 @@
         <Dealer :dealer="dealerList"/>
         
     </div>
+     <transition name="cityjudge">
+         
+        <CityListLeft v-if="flag"/>
+    </transition>
   </div>
 </template>
 
 
 <script>
-import {mapMutations} from "vuex"
+import {mapMutations, mapActions,mapState} from "vuex"
 import axios from "axios";
 import Dealer from '../../components/dealer'
+import CityListLeft from "@/components/city_list_left/index"
 export default {
     components:{
-        Dealer
+        Dealer,
+        CityListLeft
     },
     
     data() {
         return {
             list: [],
             dealerList:[],
-            name:this.$route.query.CityName,
             flog: false,
             phone:"",
             username:"",
@@ -86,13 +92,23 @@ export default {
             timestamp: ""
         };
     },
+    computed:{
+        ...mapState({
+             flag:state=>state.site.flag,
+             getCityData:state=>state.site.getCityData,
+             cityJudgeFals:state=>state.site.cityJudgeFals
+        })
+    },
     methods: {
          ...mapMutations({
             ctxfalg:'site/ctxfalg'
         }),
+        ...mapActions({
+            getMasterStair:'stair/getMasterStair'
+        }),
         getcity(){
-        this.$router.push("/site")
-        this.ctxfalg()
+            this.getMasterStair()
+            this.ctxfalg()
         },
         Tclick(){
             this.flog = !this.flog
@@ -114,10 +130,6 @@ export default {
                 alert("输入正确")
             }
         },
-  
-       
-        
-    
     },
     mounted() {
         console.log(this.$route)
@@ -143,6 +155,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.cityjudge-enter-active {
+  transition: all .3s ease;
+}
+.cityjudge-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.cityjudge-enter, .cityjudge-leave-active {
+transform: translateY(100%)
+}
     .wrap-q {
         width: 100%;
         height: 100%;

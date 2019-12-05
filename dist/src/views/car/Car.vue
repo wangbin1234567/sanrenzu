@@ -2,7 +2,7 @@
 
     <div class="car">
         <div class="content">
-             <div class="img">
+             <div class="img" @click="carimage(SerialID)">
              <img :src="CoverPhoto" alt="">
              <span>{{pic_group_count}}张图片</span>
          </div>
@@ -59,9 +59,7 @@ export default {
           SerialID:this.$route.query.id
         }
     },
-    computed:{
-
-    },
+    
     methods:{
         chelun(){
             this.$router.push({
@@ -69,8 +67,14 @@ export default {
                 params: {
                     id: this.SerialID
                 }                     
-            })           
+            })
+                     
         },
+         carimage(SerialID){
+             this.$router.push({path:"/img",query:{SerialID}})
+            //  this.$router.push({name:"img",params:{SerialID}})
+                console.log(SerialID)
+            }, 
         tab(item){
              this.yearNum=item
              axios.get(`http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{       
@@ -85,7 +89,7 @@ export default {
     },
     created(){
          axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.SerialID}`).then(res=>{
-        
+        console.log(res)
             window.console.log(res.data.data.list)
             // this.SerialID=res.data.data.
              this.pic_group_count=res.data.data.pic_group_count
