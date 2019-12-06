@@ -10,22 +10,21 @@
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
         </div>
        <EnlargementImg v-if="EnlargementImgfalg"/>
-            
-        
+       <carAllImg v-if="carAllImg"/>
     </div>
-    
 </template>
 
 <script>
-// http://baojia.chelun.com/v2-car-getCategoryImageList.html?SerialID=2593&ImageID=6&Page=1&PageSize=30&_1575373568483
+
 import {mapActions,mapState} from "vuex"
 import SeriesImg from "@/components/series_img/index.vue"
 import EnlargementImg from "@/components/enlargement_img/index.vue"
-// screenimg
+import carAllImg from "@/components/car_all_img/index.vue"
 export default {
     components:{
         SeriesImg,
-        EnlargementImg
+        EnlargementImg,
+        carAllImg
     },
     
     methods:{
@@ -43,7 +42,8 @@ export default {
     computed:{
         ...mapState({
             seriesDate:state=>state.series.seriesDate,
-            EnlargementImgfalg:state=>state.series.EnlargementImgfalg
+            EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
+            carAllImg:state=>state.series.carAllImg
         })
     },
     

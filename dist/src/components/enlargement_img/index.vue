@@ -1,16 +1,16 @@
 <template>
     <div class="magnify_img">
-        <van-swipe @change="onChange" :duration="9000" :initial-swipe="seriesIndex-1">
+        <van-swipe @change="onChange" :duration="9000" :initial-swipe="seriesIndex-1" :loop='false'>
             <van-swipe-item v-for="(item,index) in curData.List" :key="index">
                 <li>
-                    <img v-lazy="item.Url" alt="" class="swiper_img">
+                    <img v-lazy="curData.List[index].Url" alt="" class="swiper_img">
                 </li>
             </van-swipe-item>
             <div class="custom-indicator" slot="indicator">
                 {{ seriesIndex}}/{{curData.Count}}
             </div>
             <div class="magnify_img_footer" slot="indicator">
-                <button>
+                <button @click="clkButton">
                     询最低价
                 </button>
             </div>
@@ -20,23 +20,18 @@
 <script>
 import { Swipe, SwipeItem } from 'vant';
 import {mapState, mapMutations, mapActions} from "vuex"
-
-// Vue.use(Swipe).use(SwipeItem);
 export default {
     components: {
     [Swipe.name]: Swipe,
     [SwipeItem.name]:SwipeItem
-   
     },
     watch:{
         seriesIndex(){
-            // console.log(this.curData.ID)
-            if(this.seriesIndex==25){
+            if(this.seriesIndex%25===0){
                 let SerialID=this.$route.query.SerialID
                 let Id=this.curData.ID
-                
-                this.getMasterDataListAdd({SerialID,Id,Page:1,PageSize:30})
-                console.log("冀志民")
+                let Page=Math.floor(this.seriesIndex/25)+1
+                this.getMasterDataListAdd({SerialID,Id,Page,PageSize:30})
             }
         }
     },
@@ -51,7 +46,9 @@ export default {
             index+=1
             this.setSeries(index)
         },
-     
+        clkButton(){
+            this.$router.history.push("/quotation")
+        }
    },
     computed:{
         ...mapState({
@@ -68,6 +65,7 @@ export default {
     height: 100%;
     position: absolute;
     top: 0;
+    z-index: 100;
     left: 0;
     background: #000;
 }

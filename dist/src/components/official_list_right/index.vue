@@ -73,6 +73,7 @@ export default {
     position: fixed;
     right: 0;
     top:0;
+    overflow-y:scroll; 
     z-index: 200;
     background: #ffffff;
 }

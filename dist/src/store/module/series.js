@@ -4,7 +4,8 @@ import {getMasterSeries} from "@/servicer/index"
 const state={
     seriesDate:[],
     EnlargementImgfalg:false,
-    seriesIndex:null
+    seriesIndex:null,
+    carAllImg:false
     }
    const mutations={
      getSeries(state,payload){
@@ -22,14 +23,14 @@ const state={
      },
      
      setSeries(state,payload){
-         
           state.seriesIndex=payload
-
+     },
+     setCarAllImg(state){
+        state.carAllImg=true
      }
     }
    const actions= {
    async getMasterSeries({commit},payload){
-       
        let res=await getMasterSeries(payload)
        console.log('jzm----------------------',res)
        commit('getSeries',res)

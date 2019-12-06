@@ -1,6 +1,6 @@
 <template>
     <div class="image_item_list">
-        <div class="image_ps" @click="addList(item.Id)">
+        <div class="image_ps" @click.stop="addList(item.Id)">
             <p class="image_ps_wan">{{item.Name}}</p>
             <p>{{item.Count}}张</p>
         </div>
@@ -12,8 +12,6 @@
 
 <script>
 import {mapMutations,mapActions} from "vuex"
-// import axios from 'axios';
-
 export default {
     props:{
         item:{
@@ -29,38 +27,33 @@ export default {
     },
     methods:{
         ...mapMutations({
-            imgFalg:"series/imgFalg"
+            imgFalg:"series/imgFalg",
+            setCarAllImg:'series/setCarAllImg'
             
         }),
         ...mapActions({
             getMasterDataList:'carlist/getMasterDataList'
         }),
-        // magnifyImg(){
-           
-        // },
         addList(Id){
             let SerialID=this.$route.query.SerialID
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
-            // axios.get("http://baojia.chelun.com/v2-car-getCategoryImageList.html?SerialID=2593&ImageID=6&Page=1&PageSize=30").then(res=>{
-            //     console.log('res---------------------',res)
-            // })
+            this.setCarAllImg()
         },
         blowImage(Id,key){
-            console.log("Id-------------------------",Id)
             this.imgFalg(key)
             let SerialID=this.$route.query.SerialID
-            console.log('this.$route.query.SerialID-----------',this.$route.query.SerialID)
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
+        },
+        bbb(){
+            
         }
     }
-    
 }
 </script>
-
 <style lang="scss" scoped>
 .image_item_list{
     width: 100%;

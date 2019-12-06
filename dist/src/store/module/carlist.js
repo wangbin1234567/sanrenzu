@@ -18,19 +18,21 @@ const state={
         state.curData.List.push(item)
       })
       //  state.curData=state.curData.List.concat(payload.List)
-       console.log('payload-------------------------',state.curData)
+      //  console.log('payload-------------------------',state.curData)
      }
     }
    const actions= {
         async getMasterDataList({commit},payload){
+          console.log(payload)
             let {SerialID,Id,Page,PageSize}=payload
             let res=await getMasterDataList(SerialID,Id,Page,PageSize)
+            console.log('res---------------------------',res)
              commit("getCurlit",res)
             
         },
         async getMasterDataListAdd({commit},payload){
           let {SerialID,Id,Page,PageSize}=payload
-          console.log(payload)
+          // console.log(payload)
           // console.log(`/v2-car-getCategoryImageList.html?${payload}`)
           let res=await getMasterDataListAdd(SerialID,Id,Page,PageSize)
           commit('addGetCurlits',res)
