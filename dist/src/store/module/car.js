@@ -10,14 +10,14 @@ const state = {
 }
 //给车款排序
 function sortCarList(list) {
-    list.sort((a, b)=>{
-        if (a.exhaust_str == b.exhaust_str){
-            if (a.max_power_str == b.max_power_str){
+    list.sort((a, b) => {
+        if (a.exhaust_str == b.exhaust_str) {
+            if (a.max_power_str == b.max_power_str) {
                 return b.inhale_type > a.inhale_type;
-            }else{
+            } else {
                 return a.max_power - b.max_power;
             }
-        }else{
+        } else {
             return a.exhaust - b.exhaust;
         }
     })
@@ -48,7 +48,7 @@ const mutations = {
         state.carList = payload
         // 拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
-        state.year=["全部"]
+        state.year = ["全部"]
         state.year = state.year.concat([...new Set(year)])
         // 拿到当前选择年份的数据
         let currentList = [];
@@ -62,8 +62,8 @@ const mutations = {
         currentList = formatCarList(currentList)
         state.currentList = currentList
     },
-    setCurrent(state,payload){
-        state.current=payload
+    setCurrent(state, payload) {
+        state.current = payload
     }
 }
 const actions = {
