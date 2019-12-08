@@ -10,7 +10,9 @@ const mutations = {
 
 const actions = {
     async getDealer({commit},payload){
+        console.log(payload)
         let res = await getDealer(payload);
+        console.log(res)
         commit('updateDealerList', res.data.list);
     }
 }

@@ -46,7 +46,7 @@
             </li>
             <li>
                 <span>城市</span>
-                <span @click="handleAddress">{{this.$route.params.CityName}}</span>
+                <span @click="handleAddress">{{cityName}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -63,10 +63,10 @@
         @btnList="btnList"></Verify>  
     </div>
     <transition name="scroll-top">
-         <div class="wrap" v-show="showAddress">
-                <Address />
-         </div>
+         <CityListLeft v-if="flag"/>
+         
     </transition>
+  
   </div>
 </template>
 
@@ -74,13 +74,14 @@
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
-import Address from "../site/index"
+import CityListLeft from "@/components/city_list_left/index"
 import {mapActions,mapState} from "vuex"
+import axios from 'axios';
 export default {
     components:{
         Dealer,
         Verify,
-        Address
+        CityListLeft
     },
     data() {
         return {
@@ -93,7 +94,9 @@ export default {
             isUser:false,//默认弹窗隐藏
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
-            showAddress: false
+            showAddress: false,
+            cityName:'',
+            cityID:null
         };
     },
     computed: {
@@ -146,7 +149,17 @@ export default {
         }
     },
     mounted() {
-        this.getDealer(this.carId)
+      
+        axios.get("https://baojia.chelun.com/location-client.html").then(res=>{
+            console.log('res---------------------------',res)
+            this.cityName=res.data.data.CityName
+            this.cityID=res.data.data.CityID
+            console.log(this.cityName)
+             this.getDealer({carId:this.carId,cityId:this.cityID})
+        });
+            
+        console.log(this.carId)
+        
     }
 };
 </script>

@@ -35,9 +35,7 @@ const state={
     }
    const actions= {
    async getMasterSeries({commit},payload){
-     console.log(payload)
        let res=await getMasterSeries(payload)
-       console.log('jzm----------------------',res)
        commit('getSeries',res.data)
    }
     }

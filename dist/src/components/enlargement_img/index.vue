@@ -36,10 +36,6 @@ export default {
         }
     },
     methods: {
-        //  ...mapMutations({
-           
-        //      // this.seriesfalg()
-        // }),
         ...mapMutations({
             setSeries:'series/setSeries',
              seriesfalg:'series/seriesfalg'
