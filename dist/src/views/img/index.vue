@@ -2,6 +2,7 @@
 <template>
   
     <div class="series_wrap">
+
         <header class="series_wrap_header">
             <p @click="seriescolor">颜色<span></span></p>
             <p @click="seriestype">车款</p>
@@ -10,22 +11,31 @@
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
         </div>
        <EnlargementImg v-if="EnlargementImgfalg"/>
+<<<<<<< HEAD
             
         
+=======
+       <carAllImg v-if="carAllImg"/>
+>>>>>>> 1092eb8a5613ffcd7c666b7acfc365384bbe68b3
     </div>
     
 </template>
 
 <script>
-// http://baojia.chelun.com/v2-car-getCategoryImageList.html?SerialID=2593&ImageID=6&Page=1&PageSize=30&_1575373568483
+
 import {mapActions,mapState} from "vuex"
 import SeriesImg from "@/components/series_img/index.vue"
 import EnlargementImg from "@/components/enlargement_img/index.vue"
+<<<<<<< HEAD
 // screenimg
+=======
+import carAllImg from "@/components/car_all_img/index.vue"
+>>>>>>> 1092eb8a5613ffcd7c666b7acfc365384bbe68b3
 export default {
     components:{
         SeriesImg,
-        EnlargementImg
+        EnlargementImg,
+        carAllImg
     },
     
     methods:{
@@ -43,7 +53,8 @@ export default {
     computed:{
         ...mapState({
             seriesDate:state=>state.series.seriesDate,
-            EnlargementImgfalg:state=>state.series.EnlargementImgfalg
+            EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
+            carAllImg:state=>state.series.carAllImg
         })
     },
     

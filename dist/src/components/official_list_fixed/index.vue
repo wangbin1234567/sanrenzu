@@ -75,8 +75,13 @@ export default {
     transform: translateY(-50%);
     li{
         font-size: 12px;
+<<<<<<< HEAD
         color: #999;
         padding: 3px 4px;
+=======
+        color: #666;
+        padding: 1px 5px;
+>>>>>>> 1092eb8a5613ffcd7c666b7acfc365384bbe68b3
     }
 }
 </style>

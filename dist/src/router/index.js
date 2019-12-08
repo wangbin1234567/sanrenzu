@@ -8,10 +8,13 @@ const routes = [
   {
     path: '/car',
     component: () => import('../views/car/Car.vue')
+<<<<<<< HEAD
   },{
     path: '/img/:id?',
     name:"img",
     component: () => import('../views/img/index.vue')
+=======
+>>>>>>> 1092eb8a5613ffcd7c666b7acfc365384bbe68b3
   },
 {
     path: '/color',
@@ -29,6 +32,10 @@ const routes = [
     path:"/official",
     component:()=>import("../views/official/index.vue")
   },{
+    path:"/img",
+    component:()=>import("../views/img/index.vue")
+  }
+  ,{
     path:"/",
     redirect:"/official"
   }
