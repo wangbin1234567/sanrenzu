@@ -44,24 +44,31 @@ function formatCarList(list) {
     window.console.log(state.currentList)
     return newList
 }
-const mutations = {
+const mutations = {  
     updateInfoAndListById(state, payload) {
-        state.carList = payload
+        state.carList = payload.data
+        localStorage.setItem("2017.official.carInfo",JSON.stringify(state.carList))
         // 拿到年份
-        let year = payload.list.map(item => item.market_attribute.year);
-        state.year = state.year.concat([...new Set(year)])
+        let year = payload.data.list.map(item => item.market_attribute.year);
+        state.year=["全部"]
+        state.year = [...new Set(state.year.concat([...new Set(year)]))]
+        localStorage.setItem("2017.official.yearArr",JSON.stringify(state.year))
         // 拿到当前选择年份的数据
         let currentList = [];
         if (state.current == "全部") {
-            currentList = payload.list
+            currentList = payload.data.list
         } else {
-            currentList = payload.list.filter(item => item.market_attribute.year == state.current)
+            currentList = payload.data.list.filter(item => item.market_attribute.year == state.current)
         }
         // 给当前年份数据排序
         currentList = sortCarList(currentList)
         currentList = formatCarList(currentList)
         state.currentList = currentList
+        localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
         window.console.log(state.currentList)
+    },
+    setCurrent(state,payload){
+        state.current=payload
     }
 }
 const actions = {

@@ -1,37 +1,42 @@
 <template>
-    <div class="wrap_quotation">
-        <div class="main">
-            <p class="ps_city">省市</p>
-        <div class="wrap_quotation_left">
-            <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item"/>
-        </div>
-        <div class="wrap_quotation_right" v-if="flag" @click="removelist">
-            <div class="left">
+    <div class="select-city">
+        <div class="province">
+            <div class="location">
+              <p class="ps_auto">自动定位</p>
+              <p class="address">北京</p>
             </div>
-            <div class="right">
-                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item"/>
+            <div class="list">
+             <p class="ps_city">省市</p>
+             <ul>
+             <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item" @revealCitys="revealCitys"/>
+             </ul>
             </div>
-        </div>
-        </div>
+         </div>
+            <div class="city" :class="{active: flag}" @click="removelist">
+                <ul id="cityList">
+                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
+                </ul>
+            </div>  
     </div>
 </template>
+
 <script>
-import {mapActions,mapState} from "vuex"
 import CityListLeft from "@/components/citylistleft.vue"
 import CityListRight from "@/components/citylistright.vue"
+import axios from "axios"
 export default {
     components:{
-        CityListLeft,
-        CityListRight,
+         CityListLeft,
+         CityListRight,
+        
     },
-    computed:{
-        ...mapState({
-            cityData:state=>state.stair.cityData,
-            provinceidData:state=>state.site.provinceidData,
-            flag:state=>state.site.flag
-        })
+    data(){
+        return {
+            cityData:[],
+            provinceidData:[],
+             flag:false
+        }
     },
-    
     methods:{
         revealCitys(CityID){
             this.flag=true
@@ -51,59 +56,70 @@ export default {
             })
         },
         removelist(){
-            this.flag=false
+            this.flag=!this.flag
         }
     },
     mounted(){
-        this.getMasterStair()
+        axios.get("https://baojia.chelun.com/v1-city-alllist.html").then(res=>{
+            if(res.data.code===1){
+                this.cityData=res.data.data
+            }
+        })
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.wrap_quotation{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    overflow: auto;
-    flex-direction: column;
+.select-city.active{
+  transform: translateZ(0)
 }
-.main{
-    flex: 1;
-    overflow: auto;
-}
-.ps_city{
-    width: 100%;
-    height: 20px;
-    background: #eee;
-}
-.wrap_quotation_left{
-    width: 100%;
-    overflow: auto;
-    height: 100%;
-    position: relative;
+.select-city{
+    position: fixed;
     top: 0;
-}
-.wrap_quotation_right{
-    position: absolute;
     width: 100%;
-   height: 100%;
-    top: 0;
-    right: 0;
-    display: flex;
-    // height: 100%;
-
-}
-.left{
-    width: 25%;
-    overflow: auto;
-     background: rgba(0, 0, 0, .6);
-     height: 100%;
-}
-.right{
-    width: 75%;
-    overflow: auto;
-    background: #ffffff;
     height: 100%;
+    z-index: 99;
+    background: #fff;
+    // transition: transform .2s ease;
+    // transform: translate3d(0,100%,0);
+}
+.province{
+    height: 100%;
+    overflow-y: scroll;
+}
+.location p:first-child ,.ps_city{
+    line-height: 20px;
+    font-size: 12px;
+    padding-left: 10px;
+    background: #f4f4f4;
+}
+.location p:nth-child(2) {
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 40px;
+    background: #fff;
+}
+.select-city .city ul {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    transform: translate3d(100%,0,0);
+    transition: transform .2s ease;
+}
+.select-city .city {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    background: rgba(0,0,0,.6);
+    visibility: hidden;
+}
+.select-city .city.active {
+    visibility: visible;
+}
+.select-city .city.active ul {
+    transform: translate3d(30%,0,0);
 }
 </style>

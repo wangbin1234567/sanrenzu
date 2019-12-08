@@ -1,6 +1,7 @@
 
 <template>
     <div class="series_wrap">
+
         <header class="series_wrap_header">
             <p @click="seriescolor">颜色<span></span></p>
             <p @click="seriestype">车款</p>
@@ -8,23 +9,24 @@
         <div class="main_series">
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
         </div>
-        <div class="magnify_img" v-if="EnlargementImgfalg">
-            <EnlargementImg/>
-        </div>
+       <EnlargementImg v-if="EnlargementImgfalg"/>
+       <carAllImg v-if="carAllImg"/>
     </div>
 </template>
 
 <script>
-// http://baojia.chelun.com/v2-car-getCategoryImageList.html?SerialID=2593&ImageID=6&Page=1&PageSize=30&_1575373568483
+
 import {mapActions,mapState} from "vuex"
-import SeriesImg from "@/components/seriesimg.vue"
-import EnlargementImg from "@/components/enlargementimg.vue"
-// screenimg
+import SeriesImg from "@/components/series_img/index.vue"
+import EnlargementImg from "@/components/enlargement_img/index.vue"
+import carAllImg from "@/components/car_all_img/index.vue"
 export default {
     components:{
         SeriesImg,
-        EnlargementImg
+        EnlargementImg,
+        carAllImg
     },
+    
     methods:{
         ...mapActions({
             getMasterSeries:'series/getMasterSeries'
@@ -36,21 +38,25 @@ export default {
             this.$router.push("/type")
         }
     },
+    
     computed:{
         ...mapState({
             seriesDate:state=>state.series.seriesDate,
-            EnlargementImgfalg:state=>state.series.EnlargementImgfalg
+            EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
+            carAllImg:state=>state.series.carAllImg
         })
     },
+    
     mounted(){
-        let SerialID=2593
-        console.log(SerialID)
+        let SerialID=this.$route.query.SerialID
         this.getMasterSeries(SerialID)
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
+
 .series_wrap{
     width: 100%;
     height: 100%;
@@ -74,12 +80,12 @@ export default {
     flex: 1;
     overflow: auto;
 }
-.magnify_img{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    top: 0;
-    left: 0;
-    background: red;
-}
+// .magnify_img{
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     background: red;
+// }
 </style>

@@ -12,7 +12,7 @@
             <span>{{listItem.market_attribute.dealer_price_min}}起</span>
           </li>
           <div class="item-btn">
-            <button>询问底价</button>
+            <button @click="handleChelun(listItem.car_id)">询问底价</button>
           </div>
         </div>
       </div>
@@ -32,16 +32,19 @@ export default {
       currentList: store => store.car.currentList
     })
   },
-  methods: {},
-  created() {},
-  mounted() {}
+  methods: {
+    handleChelun(car_id){
+       localStorage.setItem("2017.official.curId",car_id)
+        this.$router.push("/quotation")
+    }
+  }
 };
 </script>
 <style scoped lang="scss">
 .list-box{
     width:100%;
-    height:100%;
     background:#f4f4f4;
+    padding-bottom: 50px;
 }
 .list-box .list-item {
   width: 100%;
@@ -49,55 +52,55 @@ export default {
     width: 100%;
     p {
       width: 100%;
-      height: 25px;
+      line-height: 25px;
       color: #999;
-      font-size: 12px;
-      padding-left: 10px;
-      display: flex;
-      align-items: center;
+      font-size: 13px;
+      padding: 0 10px;
+      background: #f4f4f4;
     }
   }
   .item-text {
     width: 100%;
-    height: 138px;
+    height: 127px;
     background: #fff;
-    padding: 14px;
-    li {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      
-    }
+    padding: 0 10px;
+    border-bottom: .18rem solid #f4f4f4;
     li:nth-of-type(1) {
-      font-size: 17px;
-      height: 36.45px;
+      font-size: 15px;
+      height: 36px;
+
       color: #3d3d3d;
+      padding: 13px 0 9px;
     }
     li:nth-of-type(2) {
       font-size: 13px;
-      height: 17.4px;
-      color: #c4c4c4;
+      height: 16px;
+      color: #bdbdbd;
     }
     li:nth-of-type(3) {
-      height: 24.5px;
+      height: 25px;
       display: flex;
       justify-content: flex-end;
-      
+      padding: 0 0 5px;
       span:nth-of-type(1) {
-        color: #c4c4c4;
-        font-size: 16px;
-
+        color: #818181;
+        font-size: 12px;
+        line-height: 16px;
+        margin-top: 3px;
       }
       span:nth-of-type(2) {
-        font-size: 19.5px;
-        color: red;
-        margin:0 0 0 4.9px;
+        font-size: 15px;
+        color: #ff2336;
+        margin:0 0 0 5px;
+        line-height: 20px;
       }
     }
     .item-btn {
-      width: 100%;
-      height: 40.93px;
-      border-top: 1px solid #c5c5c5;
+      width: 110%;
+      height:43px;
+      border-top: 1px solid #eee;
+      margin: 0 0 0 -15px;
+      padding: 1px 6px;
       button {
         width: 100%;
         height: 100%;
@@ -108,6 +111,10 @@ export default {
         font-size: 16px;
       }
     }
+  }
+  .item-text:last-child{
+     border-bottom: 0;
+     height: 118px;
   }
 }
 </style>

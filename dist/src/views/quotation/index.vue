@@ -21,32 +21,16 @@
                 </li>
             </div> 
             <div>
-                <div class="flex-row">
-                    <li>
-                        <img src="http://h5.chelun.com/2017/official/img/q-l.png">
-                        <span>安全高效</span>
-                    </li> 
-                    <li>
-                        <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
-                        <span>省心省力</span>
-                    </li> 
-                    <li>
-                        <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
-                        <span>贴心服务</span>
-                    </li>
-                </div> 
-                <div>
-                    <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
-                </div>
+                <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
             </div>
         </div>
-    </transition>
+    </div>
     <div class="content">
         <div class="q-info" @click="typeClick">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
-            <p>{{sortArr[0].market_attribute.year}}款 {{sortArr[0].car_name}}</p>
+            <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
             </div>
         </div>
         <div class="self-info">
@@ -78,6 +62,11 @@
         v-show="isUser" 
         @btnList="btnList"></Verify>  
     </div>
+    <transition name="scroll-top">
+        <div class="wrap" v-show="showAddress">
+            <Address />
+        </div>
+    </transition>
   </div>
 </template>
 
@@ -85,24 +74,26 @@
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
+import Address from "../site/index"
 import {mapActions,mapState} from "vuex"
 export default {
     components:{
         Dealer,
-        Verify
+        Verify,
+        Address
     },
-    
     data() {
         return {
-            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || [],
+            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || {},
             flog: false,
             phone:"",
             username:"",
             carId: localStorage.getItem("2017.official.curId") || "",
-            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr")) || [],
+            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr"))[0].list[0] || [],
             isUser:false,//默认弹窗隐藏
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
+            showAddress: false
         };
     },
     computed: {
@@ -114,9 +105,9 @@ export default {
          ...mapActions({
            getCityAddress: 'city/getCityAddress',
            getDealer: 'dealer/getDealer'
-    }),
+          }),
         handleAddress(){
-           this.$router.push("/site")
+           this.showAddress = true
         },
          btnLists(){
               this.isUser=false 
@@ -137,30 +128,25 @@ export default {
         btnList(){  
            
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
-                 this.message="请输入真实的中文姓名"
-                 this.hello="好"
-                 this.isUser=true
-                 
+                this.message="请输入真实的中文姓名"
+                this.hello="好"
+                this.isUser=true
             }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
-                 this.isUser=true 
-                 this.hello="好"
-                 this.message="请输入正确的手机号"
+                this.isUser=true 
+                this.hello="好"
+                this.message="请输入正确的手机号"
             }else {
                 this.isUser=true
                 this.hello="确定"
                 this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
                 this.message="询价成功"
             }
-        },
-  
-       
-        
-    
+        }
     },
     mounted() {
         this.getDealer(this.carId)
     }
-}
+};
 </script>
 <style lang="scss" scoped>
     .wrap-q {
@@ -174,7 +160,7 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: sticky;
+        position: relative;
         top: 0;
         p{
             color: #fff;
@@ -188,15 +174,6 @@ export default {
             margin-left: 5px;
         }
     }
-    // .hehe-enter,.hehe-leave-to{
-    //         opacity: 0;
-    //     }
-    //     .hehe-enter-to,.hehe-leave{
-    //         opacity: 1;
-    //     }
-    //     .hehe-enter-active,.hehe-leave-active{
-    //         transition: all 3s;
-    //     }
     .q-tip {
         position: fixed;
         width: 100%;
@@ -205,8 +182,6 @@ export default {
         left: 0;
         background: rgba(0,0,0,.1);
         z-index: 101;
-        // transition: all 3s;
-        transition-delay: 1s;
     }
     .q-tip>div {
         position: relative;
@@ -276,7 +251,7 @@ export default {
     .content {
         width: 100%;
         height: 100%;
-        overflow-y: scroll;
+        overflow: auto;
     }
     .q-info {
         width: 100%;
@@ -293,16 +268,16 @@ export default {
         }
         .flex-column {
             margin-left: 10px;
+            width: 215px;
         }
         .flex-column p:first-child {
             font-size: 18px;
+            margin-top: 7px;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;
             color: #333;
             margin: 13px 0 0;
-            line-height: 20px;
-            width: 215px;
         }
     }
     .q-info:before {
@@ -312,7 +287,6 @@ export default {
         padding-right: 8px;
         border-top: 2px solid #ccc;
         border-right: 2px solid #ccc;
-        -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
         right: 13px;
@@ -320,32 +294,30 @@ export default {
     }
     .self-info {
         width: 100%;
-        height: 243px;
         .tip{
-            height: 28px;
-            line-height: 28px;
-            padding: 0 5px;
+            line-height: 25px;
+            padding: 0 10px;
             font-size: 12px;
             color: #666;
             background: #eee;
         }
+        ul{
+          height: 132px;
+          background: #fff;
+          padding: 0 10px;  
+        }
         ul li {
-            font-size: 18px;
+            font-size: 16px;
             height: 44px;
             line-height: 44px;
             border-bottom: 1px solid #eee;
-            box-sizing: border-box;
-            color: #000;
-            padding: 2px 10px;
             input {
-                font-size: 18px;
+                font-size: 16px;
                 padding-right: 10px;
                 width: 88%;
                 text-align: right;
-                box-sizing: border-box;
                 color: #555;
                 outline: none;
-                -webkit-appearance: none;
                 border: none;
             }
             span:nth-child(2) {
@@ -376,13 +348,31 @@ export default {
             button {
                 font-size: 16px;
                 color: #fff;
-                width: 80%;
+                width: 300px;
                 outline: none;
                 background: #3aacff;
-                height: 39px;
-                border-radius: 10px;
+                height: 35px;
+                border-radius: 5px;
                 border: 0;
+                padding: 1px 6px;
             }
         }
     }
+    .scroll-top-enter,.scroll-top-leave-to{
+    transform: translate3d(0, 100%, 0)
+}
+.scroll-top-enter-active, .scroll-top-leave-active{
+    transition: transform .3s linear;
+}
+
+.wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    overflow: auto;
+}
 </style>

@@ -36,9 +36,8 @@
     .dealer-info{
         width: 100%;
         .tip {
-            height: 28px;
-            line-height: 28px;
-            padding: 0 5px;
+            line-height: 25px;
+            padding: 0 10px;
             font-size: 12px;
             color: #666;
             background: #eee;
