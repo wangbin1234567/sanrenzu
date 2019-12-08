@@ -11,13 +11,12 @@
                     <p class="list_ps active">{{grounitem.DealerPrice}}</p>
                     </div>
                 </li>
-            
         </div> 
     </div>
 </template>
 
 <script>
-import { mapMutations, mapState} from "vuex"
+import { mapMutations, mapState } from "vuex"
 export default {
     computed:{
         ...mapState({
@@ -33,25 +32,27 @@ export default {
         },
         particularsitem(SerialID){
             this.$router.push(`/car?id=${SerialID}`)
+            localStorage.setItem("id",SerialID)
         },
         touchstart(e){
+            //获取手指按下的X与Y轴的坐标
             this.startPageX=e.touches[0].pageX
             this.startPageY=e.touches[0].pageY
-            // console.log(e.touches[0].pageX)
-            // console.log(e.touches[0].pageY)
+          
         },
         touchmove(){
             // console.log(22)
         },
         touchend(e){
+            //获取手指抬起的X与Y轴的坐标
             let endPageX = e.changedTouches[0].clientX
             let endPageY = e.changedTouches[0].clientY
             console.log(this.startPageY-endPageY*1)
+            //判断抬起的坐标减去按下的坐标大于80并且Y轴的按下坐标减去抬起的坐标。取绝对值变成正数。大于50，
             if(endPageX-this.startPageX > 80 && Math.abs(this.startPageY-endPageY) < 50){
                  this.amendstatefalse()
             }
-            // console.log(e.changedTouches[0].clientX)
-            // console.log(e.changedTouches[0].clientY)
+         
         },
         officialVanish(){
             this.amendstatefalse()
@@ -73,36 +74,44 @@ export default {
     position: fixed;
     right: 0;
     top:0;
-    overflow-y:scroll; 
     z-index: 200;
     background: #ffffff;
+    overflow-y: auto;
 }
 .official_header_item{
     h5{
         height: 24px;
         line-height: 24px;
-        background: #eee;
+        background: #f2f2f2;
         padding-left: 15px;
+        color: #717171;
+        font-size: 14px;
+        margin: 0 0 0 1px;
+        padding: 0 0 0 15px;
+        font-weight: 500;
     }
     li{
-        width: 100%;
         height: 70px;
         display: flex;
-        margin-left: 10px;
-        border-bottom: 1px solid #999;
+        margin-left: 5px;
+        border-bottom: 1px solid #ddd;
+           align-items: center;
+    display: flex;
         div{
-            padding-left: 6px;
             p{
-                margin: 14px 0;
+                font-size: 17px;
+                color: #5f687a;
             }
             .list_ps{
-                color: red;
+                color: #ff0000;
+                font-size: 14px;
+                margin: 5px 0 0;
             }
         }
         img{
             height: 60px;
             width: 90px;
-            margin: auto 0;
+            margin: 0 5px 0 10px;
         }
     }
 }

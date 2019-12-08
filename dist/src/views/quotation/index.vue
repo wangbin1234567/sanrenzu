@@ -4,8 +4,7 @@
         <p>可向多个商家咨询最低价，商家及时回复</p>
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
-    <!-- <div class="q-tip"> -->
-    <div class="q-tip" v-if="flog" @click="Tclick()">
+    <div class="q-tip" v-if="flog" @click="Tclick">
         <div>
             <div class="flex-row">
                 <li>
@@ -27,11 +26,11 @@
         </div>
     </div>
     <div class="content">
-        <div class="q-info" @click="typeClick(SerialID)">
+        <div class="q-info" @click="typeClick">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
-            <p>2019款 35 TFSI 进取版 国V</p>
+            <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
             </div>
         </div>
         <div class="self-info">
@@ -45,11 +44,9 @@
                 <span>手机</span>
                 <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
             </li>
-            <li @click="getcity">
+            <li>
                 <span>城市</span>
-              
-                <span>{{getCityData}}</span>
-                
+                <span @click="handleAddress">{{this.$route.params.CityName}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -58,112 +55,102 @@
         </div>
         <!-- !!!!!!!! -->
         <Dealer :dealer="dealerList"/>
-        
+         <!-- 验证弹窗 -->  
+        <Verify @btnLists="btnLists" 
+        :message="message" 
+        :hello="hello" 
+        v-show="isUser" 
+        @btnList="btnList"></Verify>  
     </div>
-     <transition name="cityjudge">
-         
-        <CityListLeft v-if="flag"/>
+    <transition name="scroll-top">
+         <div class="wrap" v-show="showAddress">
+                <Address />
+         </div>
     </transition>
   </div>
 </template>
 
 
 <script>
-import {mapMutations, mapActions,mapState} from "vuex"
-import axios from "axios";
 import Dealer from '../../components/dealer'
-import CityListLeft from "@/components/city_list_left/index"
+import Verify from "../../components/verify.vue"
+import Address from "../site/index"
+import {mapActions,mapState} from "vuex"
 export default {
     components:{
         Dealer,
-        CityListLeft
+        Verify,
+        Address
     },
-    
     data() {
         return {
-            list: [],
-            dealerList:[],
+            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || {},
             flog: false,
             phone:"",
             username:"",
-            SerialID:"",
-            id: this.$route.params.id,
-            cityId: "",
-            timestamp: ""
+            carId: localStorage.getItem("2017.official.curId") || "",
+            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr"))[0].list[0] || [],
+            isUser:false,//默认弹窗隐藏
+            message:"",//弹窗中部信息
+            hello:"",//弹窗按钮,
+            showAddress: false
         };
     },
-    computed:{
-        ...mapState({
-             flag:state=>state.site.flag,
-             getCityData:state=>state.site.getCityData,
-             cityJudgeFals:state=>state.site.cityJudgeFals
-        })
-    },
+    computed: {
+   ...mapState({
+     dealerList: state=>state.dealer.dealerList
+   })
+  },
     methods: {
-         ...mapMutations({
-            ctxfalg:'site/ctxfalg'
-        }),
-        ...mapActions({
-            getMasterStair:'stair/getMasterStair'
-        }),
-        getcity(){
-            this.getMasterStair()
-            this.ctxfalg()
+         ...mapActions({
+           getCityAddress: 'city/getCityAddress',
+           getDealer: 'dealer/getDealer'
+          }),
+        handleAddress(aa){
+            console.log('aa--------------------',aa)
+           this.showAddress = true
+        },
+         btnLists(){
+              this.isUser=false 
+              this.hello=""
+              this.message=""
         },
         Tclick(){
             this.flog = !this.flog
         },
-        typeClick(SerialID){
-            console.log(SerialID);
-            
+        typeClick(){  
             this.$router.push({
-                path:"type",
+                path:"/type",
                 query:{
-                    SerialID:SerialID
+                    carId: this.carId
                 }
             })
         },
-        btnList(){
-            if (!(/^1[34578]\d{9}$/.test(this.phone)) || !(/^[\u4e00-\u9fa5]{1,}$/.test(this.username))) {
-                alert("请输入正确的手机号或名字")
-            }else{
-                alert("输入正确")
+        btnList(){  
+           
+            if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
+                 this.message="请输入真实的中文姓名"
+                 this.hello="好"
+                 this.isUser=true
+                 
+            }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
+                 this.isUser=true 
+                 this.hello="好"
+                 this.message="请输入正确的手机号"
+            }else {
+                this.isUser=true
+                this.hello="确定"
+                this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
+                this.message="询价成功"
             }
-        },
+        }
     },
     mounted() {
-        console.log(this.$route)
-        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2593`).then(res => {
-            this.list = res.data.data;
-        }),
-        axios.get(`https://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=${this.id}`).then(res => {
-            this.list = res.data.data;
-            // this.SerialID=res.data.data.SerialID
-            console.log(res);
-        }),
-       axios.get(`http://baojia.chelun.com/v2-dealer-alllist.html?carId=131315&cityId=201&_1575354331`).then(res => {
-            this.dealerList = res.data.data.list
-            // console.log(this.dealerList);
-        }),
-        axios.get('https://baojia.chelun.com/location-client.html').then(res => {
-            
-            this.cityId = res.data.data.CityID;
-            this.timestamp=res.data.data.timestamp
-            console.log(this.cityId,"============>");
-        })
+        this.getDealer(this.carId)
     }
-}
+};
 </script>
 <style lang="scss" scoped>
-.cityjudge-enter-active {
-  transition: all .3s ease;
-}
-.cityjudge-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.cityjudge-enter, .cityjudge-leave-active {
-transform: translateY(100%)
-}
     .wrap-q {
         width: 100%;
         height: 100%;
@@ -271,27 +258,28 @@ transform: translateY(100%)
     .q-info {
         width: 100%;
         height: 100px;
-        padding: 10px;
+        padding: 16px 9px 12px;
         display: flex;
         position: relative;
         img {
-            width: 127px;
-            height: 77px;
+            width: 115px;
+            height: 70px;
             border: 1px solid #eee;
             box-sizing: border-box;
             border-radius: 5px;
         }
         .flex-column {
             margin-left: 10px;
+            width: 215px;
         }
         .flex-column p:first-child {
             font-size: 18px;
-            line-height: 2;
+            margin-top: 7px;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;
-            line-height: 2.2;
             color: #333;
+            margin: 13px 0 0;
         }
     }
     .q-info:before {
@@ -301,7 +289,6 @@ transform: translateY(100%)
         padding-right: 8px;
         border-top: 2px solid #ccc;
         border-right: 2px solid #ccc;
-        -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
         right: 13px;
@@ -309,32 +296,30 @@ transform: translateY(100%)
     }
     .self-info {
         width: 100%;
-        height: 243px;
         .tip{
-            height: 28px;
-            line-height: 28px;
-            padding: 0 5px;
+            line-height: 25px;
+            padding: 0 10px;
             font-size: 12px;
             color: #666;
             background: #eee;
         }
+        ul{
+          height: 132px;
+          background: #fff;
+          padding: 0 10px;  
+        }
         ul li {
-            font-size: 18px;
-            height: 48px;
-            line-height: 48px;
+            font-size: 16px;
+            height: 44px;
+            line-height: 44px;
             border-bottom: 1px solid #eee;
-            box-sizing: border-box;
-            color: #000;
-            padding: 2px 10px;
             input {
-                font-size: 18px;
+                font-size: 16px;
                 padding-right: 10px;
                 width: 88%;
                 text-align: right;
-                box-sizing: border-box;
                 color: #555;
                 outline: none;
-                -webkit-appearance: none;
                 border: none;
             }
             span:nth-child(2) {
@@ -365,13 +350,31 @@ transform: translateY(100%)
             button {
                 font-size: 16px;
                 color: #fff;
-                width: 80%;
+                width: 300px;
                 outline: none;
                 background: #3aacff;
-                height: 39px;
-                border-radius: 10px;
+                height: 35px;
+                border-radius: 5px;
                 border: 0;
+                padding: 1px 6px;
             }
         }
     }
+    .scroll-top-enter,.scroll-top-leave-to{
+    transform: translate3d(0, 100%, 0)
+}
+.scroll-top-enter-active, .scroll-top-leave-active{
+    transition: transform .3s linear;
+}
+
+.wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    overflow: auto;
+}
 </style>

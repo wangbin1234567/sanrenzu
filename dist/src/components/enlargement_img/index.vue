@@ -1,8 +1,8 @@
 <template>
     <div class="magnify_img">
-        <van-swipe @change="onChange" :duration="9000" :initial-swipe="seriesIndex-1" :loop='false'>
+        <van-swipe @change="onChange" :duration="3000" :initial-swipe="seriesIndex-1" :loop='false'>
             <van-swipe-item v-for="(item,index) in curData.List" :key="index">
-                <li>
+                <li @click="removeFalg">
                     <img v-lazy="curData.List[index].Url" alt="" class="swiper_img">
                 </li>
             </van-swipe-item>
@@ -36,8 +36,13 @@ export default {
         }
     },
     methods: {
+        //  ...mapMutations({
+           
+        //      // this.seriesfalg()
+        // }),
         ...mapMutations({
-            setSeries:'series/setSeries'
+            setSeries:'series/setSeries',
+             seriesfalg:'series/seriesfalg'
         }),
         ...mapActions({
             getMasterDataListAdd:'carlist/getMasterDataListAdd'
@@ -48,6 +53,9 @@ export default {
         },
         clkButton(){
             this.$router.history.push("/quotation")
+        },
+        removeFalg(){
+             this.seriesfalg()
         }
    },
     computed:{

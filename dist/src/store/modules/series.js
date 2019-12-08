@@ -1,4 +1,4 @@
-import {getMasterSeries} from "@/servicer/index"
+import {getMasterSeries} from "@/services/index"
 
 
 const state={
@@ -17,6 +17,10 @@ const state={
           return item
       })
      },
+     seriesfalg(state){
+      state.EnlargementImgfalg=false
+      state.carAllImg=false
+   },
      imgFalg(state,payload){
        state.seriesIndex=payload+1
       state.EnlargementImgfalg=true
@@ -31,9 +35,10 @@ const state={
     }
    const actions= {
    async getMasterSeries({commit},payload){
+     console.log(payload)
        let res=await getMasterSeries(payload)
        console.log('jzm----------------------',res)
-       commit('getSeries',res)
+       commit('getSeries',res.data)
    }
     }
 export default {

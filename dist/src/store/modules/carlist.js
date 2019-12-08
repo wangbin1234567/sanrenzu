@@ -1,4 +1,4 @@
-import {getMasterDataList,getMasterDataListAdd} from "@/servicer/index"
+import {getMasterDataList,getMasterDataListAdd} from "@/services/index"
 const state={
     curData:[]
     }
@@ -27,7 +27,7 @@ const state={
             let {SerialID,Id,Page,PageSize}=payload
             let res=await getMasterDataList(SerialID,Id,Page,PageSize)
             console.log('res---------------------------',res)
-             commit("getCurlit",res)
+             commit("getCurlit",res.data)
             
         },
         async getMasterDataListAdd({commit},payload){
@@ -35,7 +35,7 @@ const state={
           // console.log(payload)
           // console.log(`/v2-car-getCategoryImageList.html?${payload}`)
           let res=await getMasterDataListAdd(SerialID,Id,Page,PageSize)
-          commit('addGetCurlits',res)
+          commit('addGetCurlits',res.data)
         }
     }
 export default {

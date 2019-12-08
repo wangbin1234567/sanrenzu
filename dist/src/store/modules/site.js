@@ -1,4 +1,4 @@
- import {getMasterStairSite} from "@/servicer/index.js"
+ import {getMasterStairSite} from "@/services/index.js"
  
  const state={
     provinceidData:[],
@@ -6,6 +6,7 @@
     cityJudgeFals:false,
     getCityData:''
     }
+  
    const mutations={
     provinceid(state,payload){
         state.provinceidData=payload
@@ -30,7 +31,7 @@
    const actions= {
    async getMasterStairSite({commit},payload){
     let res=await getMasterStairSite(payload)
-    commit('provinceid',res)
+    commit('provinceid',res.data)
    }
     }
 export default {

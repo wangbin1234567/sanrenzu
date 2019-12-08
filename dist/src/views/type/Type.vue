@@ -1,21 +1,21 @@
 <template>
     <div class="type">
-    <p>全部车款</p>
+    <p v-if="!this.$route.query.carId">全部车款</p>
     <div>
       <p class="c-type">
-         <span v-for="(v,i) in year" :key="i" :class="{active:yearNum==i}" @click="tab(i,v)">{{v}}</span>
+         <span v-for="(v,i) in year" :key="i" :class="{active:curIndex==i}" @click="tab(v,i)">{{v}}</span>
       </p>
-      <div v-for="(item,index) in list" :key="index">
-          <p class="tip">{{item.exhaust_str}}/{{item.max_power_str}} {{item.inhale_type}}</p>
-          <ul class="uls">
+      <div v-for="(item,index) in currentList" :key="index">
+          <p class="tip">{{item.key}}</p>
+          <ul class="uls" v-for="(listItem,listIndex) in item.list" :key="listIndex">
               <li>
                   <p>
-                    <span class="spnO">{{item.market_attribute.year}}款 {{item.car_name}}</span>  
-                    <span class="spnT">{{item.market_attribute.dealer_price_min}}起</span>
+                    <span class="spnO">{{listItem.market_attribute.year}}款 {{listItem.car_name}}</span>  
+                    <span class="spnT">{{listItem.market_attribute.dealer_price_min}}起</span>
                   </p>
                     <p>
-                    <span class="spnS">{{item.horse_power}}马力{{item.gear_num}}档{{item.trans_type}}</span>  
-                    <span class="spnF">指导价 {{item.market_attribute.dealer_price_max}}</span>
+                    <span class="spnS">{{listItem.horse_power}}马力{{listItem.gear_num}}档{{item.trans_type}}</span>  
+                    <span class="spnF">指导价 {{listItem.market_attribute.dealer_price_max}}</span>
                   </p>
               </li>
           </ul>
@@ -25,32 +25,35 @@
 </template>
 
 <script>
-import axios from "axios"
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
  data(){
      return {
-       list: [],
-       year:"",//年份
-       yearNum:0,//年份下标
+       year: JSON.parse(localStorage.getItem("2017.official.yearArr")).slice(1),
+       curIndex: 0
      }
   },
+    computed: {
+    ...mapState({
+     currentList: store => store.car.currentList
+    })
+  },
   methods:{
-      tab(i,v){
-        this.yearNum=i
-         axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{       
-          this.list=res.data.data.list.filter(item => item.market_attribute.year==v);
-      })
+     ...mapActions({
+      getInfoAndListById: "car/getInfoAndListById"
+    }),
+     ...mapMutations({
+      setCurrent: "car/setCurrent"
+    }),
+      tab(item,i){
+        this.curIndex=i
+          this.setCurrent(item)
+          this.getInfoAndListById(localStorage.getItem("id"))
       }
   },
   mounted(){
-      axios.get('http://baojia.chelun.com/v2-car-getInfoAndListById.html?SerialID=2364').then(res=>{
-          this.list=res.data.data.list
-            let arr=[];//存放年份
-            this.list.forEach(item => {
-                 arr.push(item.market_attribute.year)               
-                 this.year=Array.from(new Set(arr))
-             });
-      })
+       this.setCurrent(JSON.parse(localStorage.getItem("2017.official.yearArr"))[1])
+     this.getInfoAndListById(localStorage.getItem("id"))
   }
 }
 </script>
@@ -81,7 +84,7 @@ export default {
   padding: 0 21px 0 0;
 }
 .type .c-type span.active{
-  color:#06f;
+  color:#00afff;
 }
 .tip{
    line-height: 25px;
@@ -96,6 +99,7 @@ export default {
 .uls li{
    margin: 0 10px;
    padding: 14px 3px;
+   height: 62px;
 }
 .spnO{
     font-size: 15px;

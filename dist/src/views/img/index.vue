@@ -1,7 +1,7 @@
 
 <template>
-  
     <div class="series_wrap">
+
         <header class="series_wrap_header">
             <p @click="seriescolor">颜色<span></span></p>
             <p @click="seriestype">车款</p>
@@ -26,7 +26,7 @@ export default {
         EnlargementImg,
         carAllImg
     },
-    
+     
     methods:{
         ...mapActions({
             getMasterSeries:'series/getMasterSeries'
@@ -48,8 +48,10 @@ export default {
     },
     
     mounted(){
+        
         let SerialID=this.$route.query.SerialID
         this.getMasterSeries(SerialID)
+       
     }
 }
 </script>

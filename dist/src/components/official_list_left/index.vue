@@ -1,9 +1,11 @@
 <template>
     <div class="wrap">
         <div class="wrap_comtext">           
-            <h2 :id="item.lets">{{item.lets}}</h2>
+            <p :id="item.lets">{{item.lets}}</p>
             <!-- 点击listitem显示链表 -->
+            <div class="itemList">
             <div v-for="(listitem,index) in item.children" :key="index" class="item_list" @click="listitemclick(listitem.MasterID)"><img v-lazy="listitem.CoverPhoto" alt=""><span>{{listitem.Name}}</span></div>
+            </div>
         </div>
     </div>
 </template>
@@ -35,27 +37,30 @@ export default {
    flex: 1;
 }
 .wrap_comtext{ 
-    h2{
+    p{
         width: 100%;
-        height:22px;
-        line-height: 22px;
-        padding-left: 3%;
-        background: #eee;
+        line-height: 20px;
+        padding: 0 0 0 15px;
+        background: #f4f4f4;
+        color: #aaaaaa;
+        font-size: 14px;
     }
 }
 .item_list{
-    height: 50px;
-    width: 92%;
-    margin: 0 auto;
+    height: 50px; 
+    border-bottom: 1px solid #ddd;
+    align-items: center;
     display: flex;
-    line-height: 50px;
-    border-bottom: 1px solid #ccc;
     img{
         height: 40px;
-        margin-top: 5px;
+        width: 40px;
     }
     span{
-        margin-left: 8px;
+        margin-left: 20px;
+        font-size: 16px;
     }
+}
+.itemList{
+    margin: 0 12px;
 }
 </style>

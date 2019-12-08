@@ -1,4 +1,4 @@
-import {getMasterBrandList} from "@/servicer/index"
+import {getMasterBrandList} from '@/services/index'
  const state={
   dataList:[],
   colorlist:false
@@ -25,7 +25,7 @@ import {getMasterBrandList} from "@/servicer/index"
  const actions= {
   async getMasterBrandList({commit}){
    let res=await getMasterBrandList()
-        commit("setData",res)  
+        commit("setData",res.data)  
    }
   }
   export default {
