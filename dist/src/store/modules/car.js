@@ -1,6 +1,6 @@
 import {
     getInfoAndListById
-} from "@/servicer/index.js"
+} from "@/services/index.js"
 
 const state = {
     carList: {},

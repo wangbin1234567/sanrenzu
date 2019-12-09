@@ -1,6 +1,7 @@
 
 <template>
     <div class="series_wrap">
+
         <header class="series_wrap_header">
             <p @click="setColor">颜色<span></span></p>
             <p @click="setType">车款</p>
@@ -8,31 +9,17 @@
         <div class="main_series">
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
         </div>
-        <div class="magnify_img" v-if="EnlargementImgfalg">
-            <EnlargementImg/>
-        </div>
-
-         <transition name="scroll-top">
-            <!-- 选择车系颜色 -->
-            <div class="wrap" v-show="showColor">
-                <Color :showColor.sync="showColor"/>
-            </div>
-
-            <!-- 选择具体车款 -->
-
-        </transition>
+       <EnlargementImg v-if="EnlargementImgfalg"/>
+       <carAllImg v-if="carAllImg"/>
     </div>
 </template>
 
 <script>
-// http://baojia.chelun.com/v2-car-getCategoryImageList.html?SerialID=2593&ImageID=6&Page=1&PageSize=30&_1575373568483
-import {mapActions,mapState} from "vuex"
-import SeriesImg from "@/components/seriesimg.vue"
-import EnlargementImg from "@/components/enlargementimg.vue"
-// 引入颜色选择组件
-import Color from '@/views/color/Color.vue'
 
-// screenimg
+import {mapActions,mapState} from "vuex"
+import SeriesImg from "@/components/series_img/index.vue"
+import EnlargementImg from "@/components/enlargement_img/index.vue"
+import carAllImg from "@/components/car_all_img/index.vue"
 export default {
     data(){
         return {
@@ -42,8 +29,9 @@ export default {
     components:{
         SeriesImg,
         EnlargementImg,
-        Color
+        carAllImg
     },
+    
     methods:{
         ...mapActions({
             getMasterSeries:'img/getMasterSeries'
@@ -56,45 +44,25 @@ export default {
             this.$router.push("/type?serialId="+this.serialId);
         }
     },
+    
     computed:{
         ...mapState({
-            seriesDate: state=>state.img.seriesDate,
-            EnlargementImgfalg: state=>state.img.EnlargementImgfalg,
-            colorId: state=>state.img.colorId,
-            carId: state=>state.img.carId
+            seriesDate:state=>state.series.seriesDate,
+            EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
+            carAllImg:state=>state.series.carAllImg
         })
     },
-    watch: {
-        colorId(){
-            this.getMasterSeries(this.serialId);
-        },
-        carId(){
-            this.getMasterSeries(this.serialId);
-        }
-    },
+    
     mounted(){
-        this.serialId = this.$route.query.serialId
-        this.getMasterSeries(this.serialId);
+        let SerialID=this.$route.query.SerialID
+        this.getMasterSeries(SerialID)
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.scroll-top-enter,.scroll-top-leave-to{
-    transform: translate3d(0, 100%, 0)
-}
-.scroll-top-enter-active, .scroll-top-leave-active{
-    transition: transform .3s linear;
-}
 
-.wrap{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #fff;
-}
+
 .series_wrap{
     width: 100%;
     height: 100%;
@@ -118,12 +86,12 @@ export default {
     flex: 1;
     overflow: auto;
 }
-.magnify_img{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    top: 0;
-    left: 0;
-    background: red;
-}
+// .magnify_img{
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     background: red;
+// }
 </style>

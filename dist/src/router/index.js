@@ -8,9 +8,6 @@ const routes = [
   {
     path: '/car',
     component: () => import('../views/car/Car.vue')
-  },{
-    path: '/img',
-    component: () => import('../views/img/index.vue')
   },
 {
     path: '/color',
@@ -31,6 +28,10 @@ const routes = [
     path:"/official",
     component:()=>import("../views/official/index.vue")
   },{
+    path:"/img",
+    component:()=>import("../views/img/index.vue")
+  }
+  ,{
     path:"/",
     redirect:"/official"
   }

@@ -1,4 +1,4 @@
-import {getMasterList} from "@/servicer/index.js"
+import {getMasterList} from "@/services/index"
 const state={
     listMasterID:[]
 }
@@ -11,13 +11,13 @@ const actions= {
     async getMasterList({commit},payload){
         let res=await getMasterList(payload)
         console.log(res)
-        commit('getDatalist',res)
+        commit('getDatalist',res.data)
     }
 }
 
-    export default {
-      namespaced:true,
-      state,
-      mutations,
-      actions
-    }
+export default {
+  namespaced:true,
+  state,
+  mutations,
+  actions
+}
