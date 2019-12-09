@@ -60,6 +60,12 @@ export default {
         }
     },
     mounted(){
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
         axios.get("https://baojia.chelun.com/v1-city-alllist.html").then(res=>{
             if(res.data.code===1){
                 this.cityData=res.data.data

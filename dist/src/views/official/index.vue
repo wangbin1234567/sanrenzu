@@ -37,9 +37,16 @@ export default {
         ...mapMutations({
             amendstatefalse: 'home/amendstatefalse'
         }),
+      
     },
     mounted(){
         this.getMasterBrandList()
+         this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
     }
 }
 </script>

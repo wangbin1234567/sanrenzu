@@ -56,6 +56,12 @@ export default {
     mounted(){
         let SerialID=this.$route.query.SerialID
         this.getMasterSeries(SerialID)
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
     }
 }
 </script>

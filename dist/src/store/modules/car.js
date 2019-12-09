@@ -50,6 +50,10 @@ const mutations = {
         let year = payload.list.map(item => item.market_attribute.year);
         state.year = ["全部"]
         state.year = state.year.concat([...new Set(year)])
+        //判断拿不到年份的情况下
+        if(year==""){
+            state.year=""
+        }
         // 拿到当前选择年份的数据
         let currentList = [];
         if (state.current == "全部") {
@@ -71,7 +75,7 @@ const actions = {
         commit
     }, payload) {
         let res = await getInfoAndListById(payload)
-        commit("updateInfoAndListById", res)
+        commit("updateInfoAndListById", res.data)
     }
 }
 export default {

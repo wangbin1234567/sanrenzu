@@ -5,10 +5,12 @@ import store from './store/index'
 import VueLazyload from "vue-lazyload"
 import "lib-flexible/flexible.js"
 Vue.config.productionTip = false
+// Vue.prototype.bus=new Vue
 // Vue.use(VueLazyload)
+import loading from "./utils/loading.js"
 import Vant from "vant"
 import 'vant/lib/index.css';
-
+Vue.use(loading)
 Vue.use(Vant);
 
 //配置图片懒加载

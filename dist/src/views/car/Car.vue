@@ -1,5 +1,5 @@
 <template>
-    <div class="car" v-if="Object.keys(carList).length">
+    <div class="car" v-if="Object.keys(carList).length>0">
         <div class="content">
             <div class="img" @click="handleImg">
                 <img :src="carList.CoverPhoto" alt />
@@ -13,13 +13,16 @@
             </div>
             </div>
         </div>
-        <div class="c-type">
+        <div class="c-type" v-if="year.length">
             <span
             v-for="(item,index) in year"
             :key="index"
             @click="tab(item,index)"
             :class="{active:curIndex==index}"
             >{{item}}</span>
+        </div>
+        <div class="c-type" v-else>
+            <span></span>
         </div>
         <List></List>
         <div class="inquiry-btn" @click="chelun">
@@ -39,7 +42,11 @@ export default {
     data() {
         return {
             SerialID: this.$route.query.id,
-            curIndex: 0
+            curIndex: 0,
+            Aist:[
+                {id:1,name:""},
+                {id:2,name:""}
+            ]
         };
     },
     computed: {
@@ -74,7 +81,7 @@ export default {
         handleImg(){
             let SerialID=this.SerialID
             this.$router.push({path:"/img",query:{SerialID}})
-        }
+        },
     },
     mounted() {
         this.getInfoAndListById(this.SerialID)
@@ -191,4 +198,5 @@ export default {
         color: #3AACFF;
     }
 }
+
 </style>

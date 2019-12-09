@@ -1,6 +1,4 @@
-import { getMasterSeries } from "@/servicer/index"
-
-
+import { getMasterSeries } from "@/services/index"
 const state = {
   seriesDate: [],
   EnlargementImgfalg: false,
@@ -11,9 +9,9 @@ const mutations = {
   getSeries(state, payload) {
     state.seriesDate = payload.map(item => {
       item.List = item.List.map(ite => {
-        ite.Url = ite.Url.replace('{0}', 3)
-        return ite
-      })
+            ite.Url = ite.Url.replace('{0}', 3)
+            return ite
+        })
       return item
     })
   },

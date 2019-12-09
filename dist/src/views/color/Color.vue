@@ -35,6 +35,12 @@ export default {
         let obj=JSON.parse(JSON.stringify(this.colorList))
         this.arr=Object.values(obj)  
         this.handleC(this.arr[0],0)  
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
     },
     methods: {
         ...mapActions({

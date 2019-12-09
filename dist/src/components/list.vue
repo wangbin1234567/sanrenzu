@@ -1,22 +1,24 @@
 <template>
   <div class="list-box">
     <!-- {{currentList}} -->
-    <div class="list-item" v-for="(item,index) of currentList" :key="index">
-      <div class="item-content">
-        <p>{{item.key}}</p>
-        <div class="item-text" v-for="(listItem,listIndex) in item.list" :key="listIndex">
-          <li>{{listItem.market_attribute.year}}款{{listItem.car_name}}</li>
-          <li>{{listItem.horse_power}}马力{{listItem.gear_num}}档{{item.trans_type}}</li>
-          <li>
-            <span>指导价{{listItem.market_attribute.dealer_price_max}}</span>
-            <span>{{listItem.market_attribute.dealer_price_min}}起</span>
-          </li>
-          <div class="item-btn">
-            <button @click="handleChelun(listItem.car_id)">询问底价</button>
-          </div>
-        </div>
+      <div v-if="currentList.length>0">
+            <div class="list-item" v-for="(item,index) of currentList" :key="index">
+                <div class="item-content">
+                    <p>{{item.key}}</p>
+                    <div class="item-text" v-for="(listItem,listIndex) in item.list" :key="listIndex">
+                    <li>{{listItem.market_attribute.year}}款{{listItem.car_name}}</li>
+                    <li>{{listItem.horse_power}}马力{{listItem.gear_num}}档{{item.trans_type}}</li>
+                    <li>
+                        <span>指导价{{listItem.market_attribute.dealer_price_max}}</span>
+                        <span>{{listItem.market_attribute.dealer_price_min}}起</span>
+                    </li>
+                    <div class="item-btn">
+                        <button @click="handleChelun(listItem.car_id)">询问底价</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
       </div>
-    </div>
   </div>
 </template>
 <script>

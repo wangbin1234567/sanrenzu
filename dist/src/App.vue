@@ -7,7 +7,7 @@
     </transition>
   </div>
 </template>
-<script>
+ <script>
 export default {
     computed: {
         key(){

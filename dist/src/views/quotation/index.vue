@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-q">
-    <header @click="Tclick()">
+    <header @click="Tclick">
         <p>可向多个商家咨询最低价，商家及时回复</p>
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
     </header>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="content">
-        <div class="q-info" @click="typeClick">
+        <div class="q-info" @click="typeClick" v-if="list">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
@@ -145,6 +145,12 @@ export default {
     },
     mounted() {
         this.getDealer(this.carId)
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
     }
 };
 </script>

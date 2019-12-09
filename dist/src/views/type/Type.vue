@@ -54,6 +54,12 @@ export default {
     mounted(){
         this.setCurrent(JSON.parse(localStorage.getItem("2017.official.yearArr"))[1])
         this.getInfoAndListById(localStorage.getItem("id"))
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },150)
     }
 }
 </script>

@@ -11,9 +11,9 @@ const state={
     getSeries(state,payload){
         state.seriesDate=payload.map(item=>{
             item.List=item.List.map(ite=>{
-            ite.Url= ite.Url.replace('{0}',3) 
-            return ite
-            })
+                ite.Url= ite.Url.replace('{0}',3) 
+                return ite
+                })
             return item
         })
     },
