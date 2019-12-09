@@ -46,7 +46,7 @@
             </li>
             <li>
                 <span>城市</span>
-                <span @click="handleAddress">{{cityName}}</span>
+                <span @click="getcity">{{getCityData||quoutDataCty.CityName}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -72,11 +72,10 @@
 
 
 <script>
-import Dealer from '../../components/dealer'
-import Verify from "../../components/verify.vue"
+import Dealer from '@/components/dealer'
+import Verify from "@/components/verify.vue"
 import CityListLeft from "@/components/city_list_left/index"
-import {mapActions,mapState} from "vuex"
-import axios from 'axios';
+import {mapActions,mapState, mapMutations} from "vuex"
 export default {
     components:{
         Dealer,
@@ -101,13 +100,27 @@ export default {
     },
     computed: {
    ...mapState({
-     dealerList: state=>state.dealer.dealerList
+     dealerList: state=>state.dealer.dealerList,
+      flag:state=>state.site.flag,
+      quoutDataCty:state=>state.quotation.quoutDataCty,
+      getCityData:state=>state.site.getCityData
    })
   },
+  watch:{
+      quoutDataCty(){
+          console.log(this.carId,this.quoutDataCty.CityID)
+           this.getDealer({carId:this.carId,cityId:this.quoutDataCty.CityID})
+      }
+  },
     methods: {
+         ...mapMutations({
+            ctxfalg:'site/ctxfalg'
+        }),
          ...mapActions({
            getCityAddress: 'city/getCityAddress',
-           getDealer: 'dealer/getDealer'
+           getDealer: 'dealer/getDealer',
+            getMasterStair:'stair/getMasterStair',
+            getMasterListQuout:'quotation/getMasterListQuout'
           }),
         handleAddress(aa){
             console.log('aa--------------------',aa)
@@ -146,19 +159,16 @@ export default {
                 this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
                 this.message="询价成功"
             }
-        }
+        },
+        getcity(){
+            this.flog=false
+            this.getMasterStair()
+            this.ctxfalg()
+        },
     },
     mounted() {
-      
-        axios.get("https://baojia.chelun.com/location-client.html").then(res=>{
-            console.log('res---------------------------',res)
-            this.cityName=res.data.data.CityName
-            this.cityID=res.data.data.CityID
-            console.log(this.cityName)
-             this.getDealer({carId:this.carId,cityId:this.cityID})
-        });
-            
-        console.log(this.carId)
+        this.getMasterListQuout()
+       
         
     }
 };
@@ -174,7 +184,6 @@ export default {
         width: 100%;
         background: #79cd92;
         text-align: center;
-        z-index: 99;
         position: relative;
         top: 0;
         p{

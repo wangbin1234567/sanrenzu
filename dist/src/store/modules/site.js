@@ -17,6 +17,7 @@
       state.flag=false
     },
     //点击显示地址
+  
     ctxfalg(state){
       state.flag=true
     },
@@ -31,6 +32,7 @@
    const actions= {
    async getMasterStairSite({commit},payload){
     let res=await getMasterStairSite(payload)
+    console.log(res.data)
     commit('provinceid',res.data)
    }
     }

@@ -8,12 +8,15 @@
             </li>
         </div>
         <div class="Citylist_right" v-if="cityJudgeFals">
- 
-            <transition name="City-cartoonPeer">
-                <div class="Citylist_right-cont" v-if="cityJudgeFals">
-                    <li v-for="(cityitem,index) in provinceidData" :key="index" @click="siteitem(cityitem.CityName)">{{cityitem.CityName}}</li>
-                </div>
-            </transition>
+        
+            <div class="Citylist_right-cont" v-if="cityJudgeFals">
+            <ul>
+                <li v-for="(cityitem,index) in provinceidData" :key="index" @click="siteitem(cityitem.CityName,cityitem.CityID)">{{cityitem.CityName}}</li>
+            </ul>
+            
+        </div>
+      
+        
         </div>
     </div>
 </template>
@@ -23,6 +26,7 @@ import { mapState, mapMutations, mapActions} from "vuex"
 export default {
     components:{
     },
+    // cityData
     methods:{
         ...mapMutations({
             falg:'site/falg',
@@ -30,14 +34,17 @@ export default {
             getCityName:'site/getCityName'
         }),
         ...mapActions({
-            getMasterStairSite:'site/getMasterStairSite'
+            getMasterStairSite:'site/getMasterStairSite',
+            getDealer:'dealer/getDealer'
         }),
         revealCity(CityID){
             this.cityJudge()
             this.getMasterStairSite(CityID)  
         },
-        siteitem(CityName){
-            console.log(CityName)
+        siteitem(CityName,cityId){
+            let carId=localStorage.getItem("2017.official.curId")
+            console.log(carId)
+            this.getDealer({carId,cityId})
             this.getCityName(CityName)
             this.falg()
         }
@@ -46,7 +53,8 @@ export default {
         ...mapState({
             cityData:state=>state.stair.cityData,
             provinceidData:state=>state.site.provinceidData,
-            cityJudgeFals:state=>state.site.cityJudgeFals
+            cityJudgeFals:state=>state.site.cityJudgeFals,
+            quoutDataCty:state=>state.quotation.quoutDataCty
         })
     },
 }
@@ -62,6 +70,7 @@ export default {
     font-size: 16px;
     background: #ffffff;
     overflow-y: scroll;
+    z-index: 20;
     li{
         height: 40px;
         margin-left: 5px;
@@ -93,14 +102,6 @@ export default {
     position: absolute;
     background:#ffffff;
 }
-.City-cartoonPeer-enter-active {
-  transition: all .3s ease;
-}
-.City-cartoonPeer-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.City-cartoonPeer-enter, .City-cartoonPeer-leave-active {
-transform: translateX(65%)
-}
+
 
 </style>

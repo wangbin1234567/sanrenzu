@@ -2,29 +2,32 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import createLogger from "vuex/dist/logger"
-
-//引入子模块
 import home from "./modules/home"
-// import city from "./modules/city"
-import dealer from "./modules/dealer"
-import carColor from "./modules/carColor"
-import car from "./modules/car"
 import list from "./modules/list"
-import carlist from "./modules/carlist"
-import site from './modules/site'
+import car from "./modules/car"
 import series from "./modules/series"
+import carlist from "./modules/carlist"
+import carColor from "./modules/carColor"
+import quotation from "./modules/quotation"
+import dealer from "./modules/dealer"
+import site from "./modules/site"
+import stair from "./modules/stair"
+//引入子模块
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     home,
-    dealer,
-    carColor,
-    car,
     list,
-    site,
+    car,
     series,
-    carlist
+    carlist,
+    carColor,
+    quotation,
+    dealer,
+    site,
+    stair
   },
   plugins:[createLogger()]
 })

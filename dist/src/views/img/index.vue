@@ -9,6 +9,7 @@
         <div class="main_series">
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
         </div>
+        {{EnlargementImgfalg}}
        <EnlargementImg v-if="EnlargementImgfalg"/>
        <carAllImg v-if="carAllImg"/>
     </div>
@@ -26,39 +27,44 @@ export default {
         EnlargementImg,
         carAllImg
     },
-     
+     data(){
+         return {
+             SerialID:this.$route.query.SerialID||localStorage.getItem("id")
+         }
+     },
     methods:{
         ...mapActions({
             getMasterSeries:'series/getMasterSeries'
         }),
         seriescolor(){
-            this.$router.push("/color")
+            this.$router.push({path:"/color",query:{SerialID:this.$route.query.SerialID}})
         },
         seriestype(){
             this.$router.push("/type")
+            
         }
     },
-    
+    // watch:{
+    //     numberColorId(){
+    //         this.getMasterSeries(this.SerialID)
+    //     },
+    //     numberCarid(){
+    //         this.getMasterSeries(this.SerialID)
+    //     }
+    // },
     computed:{
         ...mapState({
             seriesDate:state=>state.series.seriesDate,
             EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
-            carAllImg:state=>state.series.carAllImg
+            carAllImg:state=>state.series.carAllImg,
         })
     },
-    
     mounted(){
-        
-        let SerialID=this.$route.query.SerialID
-        this.getMasterSeries(SerialID)
-       
+        this.getMasterSeries(this.SerialID)
     }
 }
 </script>
-
 <style lang="scss" scoped>
-
-
 .series_wrap{
     width: 100%;
     height: 100%;
@@ -82,5 +88,4 @@ export default {
     flex: 1;
     overflow: auto;
 }
-
 </style>

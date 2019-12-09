@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {mapMutations,mapActions} from "vuex"
+import {mapMutations,mapActions, mapState} from "vuex"
 export default {
     props:{
         item:{
@@ -25,6 +25,13 @@ export default {
             PageSize:30
         }
     },
+    computed:{
+        ...mapState({
+            numberColorId:state=>state.series.numberColorId,
+            numberCarid:state=>state.series.numberCarid
+
+        })
+    },
     methods:{
         ...mapMutations({
             imgFalg:"series/imgFalg",
@@ -34,23 +41,32 @@ export default {
         ...mapActions({
             getMasterDataList:'carlist/getMasterDataList'
         }),
-        addList(Id){
-            let SerialID=this.$route.query.SerialID
+        addList(ImageID){
+            let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
-            this.getMasterDataList({SerialID,Id,Page,PageSize})
+            let ColorID=this.numberColorId
+          
+            if(ColorID){
+                this.getMasterDataList({SerialID,ImageID,Page,PageSize,ColorID})
+            }else{
+                 this.getMasterDataList({SerialID,ImageID,Page,PageSize})
+            }
             this.setCarAllImg()
         },
-        blowImage(Id,key){
+        blowImage(ImageID,key){
             this.imgFalg(key)
-            let SerialID=this.$route.query.SerialID
+            let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
-            this.getMasterDataList({SerialID,Id,Page,PageSize})
-        },
-        bbb(){
+            let ColorID=this.numberColorId
+            if(ColorID){
+                this.getMasterDataList({SerialID,ImageID,Page,PageSize,ColorID})
+            }else{
+                 this.getMasterDataList({SerialID,ImageID,Page,PageSize})
+            }
             
-        }
+        },
     }
 }
 </script>

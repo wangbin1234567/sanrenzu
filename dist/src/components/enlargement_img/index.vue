@@ -28,10 +28,15 @@ export default {
     watch:{
         seriesIndex(){
             if(this.seriesIndex%25===0){
-                let SerialID=this.$route.query.SerialID
-                let Id=this.curData.ID
+                let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
+                let ImageID=this.curData.ID
                 let Page=Math.floor(this.seriesIndex/25)+1
-                this.getMasterDataListAdd({SerialID,Id,Page,PageSize:30})
+                if(this.numberColorId){
+                    this.getMasterDataListAdd({SerialID,ImageID,Page,PageSize:30,ColorID:this.numberColorId})
+                }else{
+                     this.getMasterDataListAdd({SerialID,ImageID,Page,PageSize:30})
+                }
+                
             }
         }
     },
@@ -57,7 +62,8 @@ export default {
     computed:{
         ...mapState({
             curData:state=>state.carlist.curData,
-            seriesIndex:state=>state.series.seriesIndex
+            seriesIndex:state=>state.series.seriesIndex,
+            numberColorId:state=>state.series.numberColorId,
         })
     }
 }

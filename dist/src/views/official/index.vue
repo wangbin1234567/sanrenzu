@@ -15,13 +15,13 @@
 <script>
   import {mapActions, mapState, mapMutations} from "vuex"
   import OfficialListLeft from "@/components/official_list_left/index.vue"
-  import officialListFixed from "@/components/official_list_fixed/index.vue"
-  import officialListRight from "@/components/official_list_right/index.vue"
+  import OfficialListFixed from "@/components/official_list_fixed/index.vue"
+  import OfficialListRight from "@/components/official_list_right/index.vue"
 export default {
   components: {
     OfficialListLeft,
-    officialListFixed,
-    officialListRight
+    OfficialListFixed,
+    OfficialListRight
   },
   
   computed:{

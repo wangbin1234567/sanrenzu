@@ -22,7 +22,7 @@ export default {
         }),
         adds(Id,key){
             this.imgFalg(key)
-            let SerialID=this.$route.query.SerialID
+            let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
             let Page=1
             let PageSize=30
             this.getMasterDataList({SerialID,Id,Page,PageSize})

@@ -5,7 +5,10 @@ const state={
     seriesDate:[],
     EnlargementImgfalg:false,
     seriesIndex:null,
-    carAllImg:false
+    carAllImg:false,
+    SerialID:null,
+    numberColorId:null,
+    numberCarid:null
     }
    const mutations={
      getSeries(state,payload){
@@ -31,12 +34,29 @@ const state={
      },
      setCarAllImg(state){
         state.carAllImg=true
+     },
+     setColorId(state,payload){
+        state.numberColorId=payload
+     },
+     setCarid(state,payload){
+        state.numberCarid=payload
      }
     }
+    // getMasterSeries
    const actions= {
-   async getMasterSeries({commit},payload){
-       let res=await getMasterSeries(payload)
-       commit('getSeries',res.data)
+   async getMasterSeries({commit,state},payload){
+     let params={SerialID:payload}
+        if(state.numberColorId){
+          params.ColorID=state.numberColorId
+        }
+        if(state.numberCarid){
+          params.CarId=state.numberCarid
+        }
+        console.log(params)
+       let res=await getMasterSeries(params)
+       console.log(res)
+       await commit('getSeries',res.data)
+     
    }
     }
 export default {

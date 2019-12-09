@@ -3,12 +3,12 @@
     <p>全部颜色</p>
     <div>
       <p class="c-type">
-        <span v-for="(item, index, key) of colorList" :key="index" @click="handleC(item,key)" :class="{active: curIndex==key}">{{index}}</span>
+        <span v-for="(item, index) in colorList" :key="index" @click="handleC(index)" :class="{active:index==curIndex}">{{Object.keys(item).join(' ')}}</span>
       </p>
       <ul>
-        <li v-for="(v,i) in colorData" :key="i">
+        <li v-for="(v,i) in colorItem" :key="i" @click="setcolor(v.ColorId)">
           <span :style="{background: v.Value}"></span>
-          {{v.Name}}
+            {{v.Name}}
         </li>
       </ul>
     </div>
@@ -16,34 +16,39 @@
 </template>
 
 <script>
-import {mapActions,mapState} from "vuex"
+import {mapActions, mapState, mapMutations} from "vuex"
+// import axios from 'axios';
 export default {
-  data(){
-     return {
-       colorData: [],
-       curIndex: 0,//年份下标
-       arr: []
-     }
-  },
+
    computed: {
    ...mapState({
-     colorList: state=>state.carColor.colorList
+     colorList: state=>state.carColor.colorList,
+     colorItem:state=>state.carColor.colorItem,
+     curIndex:state=>state.carColor.curIndex
    })
    },
-   mounted(){  
-        this.getCarColor(2593) 
-        let obj=JSON.parse(JSON.stringify(this.colorList))
-        this.arr=Object.values(obj)  
-        this.handleC(this.arr[0],0)  
+   mounted(){
+     
+        this.getCarColor(this.$route.query.SerialID||localStorage.getItem("id")) 
    },
   methods: {
-         ...mapActions({
-           getCarColor: 'carColor/getCarColor'
-         }),
-    //点击年份切换高亮并切换数据
-    handleC(item,key){
-      this.colorData=item
-      this.curIndex=key
+    //点击获取vuex的方法
+    ...mapMutations({
+      colorIndex:'carColor/colorIndex',
+      setColorId:'series/setColorId'
+    }),
+    //获取进来时候获取的数据
+    ...mapActions({
+      getCarColor: 'carColor/getCarColor'
+    }),
+    //切换数据
+    handleC(key){
+      this.colorIndex(key)
+    },
+    setcolor(ColorId){
+      this.setColorId(ColorId)
+      
+        this.$router.push("/img")
     }
   }
 };

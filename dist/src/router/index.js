@@ -7,23 +7,20 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/car',
-    component: () => import('../views/car/Car.vue')
+    component: () => import('../views/car/index.vue')
   },
 {
     path: '/color',
-    component: () => import('../views/color/Color.vue')
+    component: () => import('../views/color/index.vue')
   },
    {
     path: '/type',
-    component: () => import('../views/type/Type.vue')
+    component: () => import('../views/type/index.vue')
   },
   {
     path:"/quotation",
     name: "quotation",
     component:()=>import("../views/quotation/index.vue")
-  },{
-    path:"/site",
-    component:()=>import("../views/site/index.vue")
   },{
     path:"/official",
     component:()=>import("../views/official/index.vue")
