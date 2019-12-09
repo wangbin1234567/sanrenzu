@@ -30,7 +30,7 @@
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
-            <!-- <p>{{sortArr[0].market_attribute.year}}款 {{sortArr[0].car_name}}</p> -->
+            <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
             </div>
         </div>
         <div class="self-info">
@@ -46,7 +46,7 @@
             </li>
             <li>
                 <span>城市</span>
-                <span @click="handleAddress">{{this.$route.params.CityName}}</span>
+                <span @click="handleAddress">{{address}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -62,6 +62,11 @@
         v-show="isUser" 
         @btnList="btnList"></Verify>  
     </div>
+    <transition name="scroll-top">
+         <div class="wrap" v-show="showAddress">
+                <Address :showAddress.sync="showAddress" />
+         </div>
+    </transition>
   </div>
 </template>
 
@@ -69,37 +74,43 @@
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
+import Address from "../../components/Address"
 import {mapActions,mapState} from "vuex"
 export default {
     components:{
         Dealer,
-        Verify
+        Verify,
+        Address
     },
     data() {
         return {
-            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || [],
+            list: JSON.parse(localStorage.getItem("2017.official.carInfo")) || {},
             flog: false,
             phone:"",
             username:"",
             carId: localStorage.getItem("2017.official.curId") || "",
-            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr")) || [],
+            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr"))[0].list[0] || [],
             isUser:false,//默认弹窗隐藏
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
+            showAddress: false,
+            cityId: localStorage.getItem("cityId") || ""
         };
     },
     computed: {
    ...mapState({
-     dealerList: state=>state.dealer.dealerList
+     dealerList: state=>state.dealer.dealerList,
+     address: state=>state.city.address,
+    //  cityId: state=>state.city.cityId
    })
   },
     methods: {
          ...mapActions({
            getCityAddress: 'city/getCityAddress',
            getDealer: 'dealer/getDealer'
-    }),
+          }),
         handleAddress(){
-           this.$router.push("/site")
+           this.showAddress = true
         },
          btnLists(){
               this.isUser=false 
@@ -122,8 +133,7 @@ export default {
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
                  this.message="请输入真实的中文姓名"
                  this.hello="好"
-                 this.isUser=true
-                 
+                 this.isUser=true   
             }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
                  this.isUser=true 
                  this.hello="好"
@@ -137,7 +147,11 @@ export default {
         }
     },
     mounted() {
-        this.getDealer(this.carId)
+        this.getCityAddress()
+        let carId=this.carId
+        let cityId=this.cityId
+        console.log(carId,cityId)
+        this.getDealer({carId,cityId})
     }
 };
 </script>
@@ -261,16 +275,16 @@ export default {
         }
         .flex-column {
             margin-left: 10px;
+            width: 215px;
         }
         .flex-column p:first-child {
             font-size: 18px;
+            margin-top: 7px;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;
             color: #333;
             margin: 13px 0 0;
-            line-height: 20px;
-            width: 215px;
         }
     }
     .q-info:before {
@@ -280,7 +294,6 @@ export default {
         padding-right: 8px;
         border-top: 2px solid #ccc;
         border-right: 2px solid #ccc;
-        -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
         right: 13px;
@@ -288,32 +301,30 @@ export default {
     }
     .self-info {
         width: 100%;
-        height: 243px;
         .tip{
-            height: 28px;
-            line-height: 28px;
-            padding: 0 5px;
+            line-height: 25px;
+            padding: 0 10px;
             font-size: 12px;
             color: #666;
             background: #eee;
         }
+        ul{
+          height: 132px;
+          background: #fff;
+          padding: 0 10px;  
+        }
         ul li {
-            font-size: 18px;
+            font-size: 16px;
             height: 44px;
             line-height: 44px;
             border-bottom: 1px solid #eee;
-            box-sizing: border-box;
-            color: #000;
-            padding: 2px 10px;
             input {
-                font-size: 18px;
+                font-size: 16px;
                 padding-right: 10px;
                 width: 88%;
                 text-align: right;
-                box-sizing: border-box;
                 color: #555;
                 outline: none;
-                -webkit-appearance: none;
                 border: none;
             }
             span:nth-child(2) {
@@ -344,13 +355,31 @@ export default {
             button {
                 font-size: 16px;
                 color: #fff;
-                width: 80%;
+                width: 300px;
                 outline: none;
                 background: #3aacff;
-                height: 39px;
-                border-radius: 10px;
+                height: 35px;
+                border-radius: 5px;
                 border: 0;
+                padding: 1px 6px;
             }
         }
     }
+    .scroll-top-enter,.scroll-top-leave-to{
+    transform: translate3d(0, 100%, 0)
+}
+.scroll-top-enter-active, .scroll-top-leave-active{
+    transition: transform .3s linear;
+}
+
+.wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    overflow: auto;
+}
 </style>

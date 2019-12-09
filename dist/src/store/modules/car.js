@@ -6,7 +6,8 @@ const state = {
     carList: {},
     current: "全部",
     year: ["全部"],
-    currentList: []
+    currentList: [],
+    carId: ""
 }
 //给车款排序
 function sortCarList(list) {
@@ -47,10 +48,12 @@ function formatCarList(list) {
 const mutations = {  
     updateInfoAndListById(state, payload) {
         state.carList = payload.data
+        localStorage.setItem("2017.official.carInfo",JSON.stringify(state.carList))
         // 拿到年份
         let year = payload.data.list.map(item => item.market_attribute.year);
         state.year=["全部"]
         state.year = [...new Set(state.year.concat([...new Set(year)]))]
+        localStorage.setItem("2017.official.yearArr",JSON.stringify(state.year))
         // 拿到当前选择年份的数据
         let currentList = [];
         if (state.current == "全部") {
@@ -62,10 +65,15 @@ const mutations = {
         currentList = sortCarList(currentList)
         currentList = formatCarList(currentList)
         state.currentList = currentList
+        localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
         window.console.log(state.currentList)
     },
     setCurrent(state,payload){
         state.current=payload
+    },
+    setCarId(state,payload){
+      state.carId=payload
+      localStorage.setItem("2017.official.curId",state.carId) 
     }
 }
 const actions = {

@@ -61,7 +61,7 @@ export default {
   transition: all 1s ease;
 }
 .drawer-leave-active {
-  transition: all 0.8s ease;
+  transition: all 0.2s ease;
 }
 .home_content{
   flex: 1;

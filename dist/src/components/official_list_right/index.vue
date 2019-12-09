@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState} from "vuex"
+import { mapMutations, mapState } from "vuex"
 export default {
     computed:{
         ...mapState({
@@ -33,6 +33,7 @@ export default {
         },
         particularsitem(SerialID){
             this.$router.push(`/car?id=${SerialID}`)
+            localStorage.setItem("id",SerialID)
         },
         touchstart(e){
             this.startPageX=e.touches[0].pageX

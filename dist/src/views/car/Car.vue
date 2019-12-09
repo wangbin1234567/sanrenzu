@@ -1,7 +1,7 @@
 <template>
     <div class="car" v-if="Object.keys(carList).length">
       <div class="content">
-        <div class="img">
+        <div class="img" @click="handleImg">
           <img :src="carList.CoverPhoto" alt />
           <span>{{carList.pic_group_count}}张图片</span>
         </div>
@@ -17,8 +17,8 @@
         <span
           v-for="(item,index) in year"
           :key="index"
-          @click="tab(item)"
-          :class="{active:current==item}"
+          @click="tab(item,index)"
+          :class="{active:curIndex==index}"
         >{{item}}</span>
       </div>
       <List></List>
@@ -38,23 +38,27 @@ export default {
   },
   data() {
     return {
-      SerialID: this.$route.query.id
+      SerialID: this.$route.query.id,
+      curIndex: 0
     };
   },
   computed: {
     ...mapState({
       carList: store => store.car.carList,
       year: store => store.car.year,
-      current: store => store.car.current,
-      currentList: store => store.car.currentList
+       currentList: store => store.car.currentList
     })
   },
-  methods: {
+  methods: 
+  {
     ...mapActions({
-      getInfoAndListById: "car/getInfoAndListById"
+      getInfoAndListById: "car/getInfoAndListById",
+         getCityAddress: 'city/getCityAddress'
     }),
      ...mapMutations({
-      setCurrent: "car/setCurrent"
+      setCurrent: "car/setCurrent",
+      seriesfalg:'series/seriesfalg',
+      setCarId: "car/setCarId"
     }),
     chelun() {
       this.$router.push({
@@ -63,17 +67,21 @@ export default {
           id: this.SerialID
         }
       });
-      localStorage.setItem("2017.official.curId",131315)
+      this.setCarId(this.currentList[0].list[0].car_id)
     },
-    tab(item) {
+    tab(item,index) {
+      this.curIndex=index
       this.setCurrent(item)
       this.getInfoAndListById(this.SerialID);
+    },
+    handleImg(){
+      this.$router.push("/img")
     }
   },
 mounted() {
-this.getInfoAndListById(this.SerialID)
-  localStorage.setItem("2017.official.yearArr",JSON.stringify(this.year))
-  localStorage.setItem("2017.official.sortArr",JSON.stringify(this.currentList))
+  this.getInfoAndListById(this.SerialID)
+   this.seriesfalg()
+    this.getCityAddress()
 }
 };
 </script>

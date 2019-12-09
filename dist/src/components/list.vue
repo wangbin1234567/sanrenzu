@@ -12,7 +12,7 @@
             <span>{{listItem.market_attribute.dealer_price_min}}起</span>
           </li>
           <div class="item-btn">
-            <button>询问底价</button>
+            <button @click="handleChelun(listItem.car_id)">询问底价</button>
           </div>
         </div>
       </div>
@@ -31,6 +31,12 @@ export default {
     ...mapState({
       currentList: store => store.car.currentList
     })
+  },
+  methods: {
+    handleChelun(car_id){
+       localStorage.setItem("2017.official.curId",car_id)
+        this.$router.push("/quotation")
+    }
   }
 };
 </script>

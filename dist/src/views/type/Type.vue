@@ -3,7 +3,7 @@
     <p v-if="!this.$route.query.carId">全部车款</p>
     <div>
       <p class="c-type">
-         <span v-for="(v,i) in year" :key="i" :class="{active:current==v}" @click="tab(v)">{{v}}</span>
+         <span v-for="(v,i) in year" :key="i" :class="{active:curIndex==i}" @click="tab(v,i)">{{v}}</span>
       </p>
       <div v-for="(item,index) in currentList" :key="index">
           <p class="tip">{{item.key}}</p>
@@ -29,14 +29,13 @@ import { mapState, mapActions, mapMutations } from "vuex";
 export default {
  data(){
      return {
-       currentList: JSON.parse(localStorage.getItem("2017.official.sortArr")),
-       year: JSON.parse(localStorage.getItem("2017.official.yearArr")).slice(1)
+       year: JSON.parse(localStorage.getItem("2017.official.yearArr")).slice(1),
+       curIndex: 0
      }
   },
     computed: {
     ...mapState({
-      year: store => store.car.year,
-      current: store => store.car.current
+     currentList: store => store.car.currentList
     })
   },
   methods:{
@@ -46,13 +45,15 @@ export default {
      ...mapMutations({
       setCurrent: "car/setCurrent"
     }),
-      tab(item){
+      tab(item,i){
+        this.curIndex=i
           this.setCurrent(item)
-          this.getInfoAndListById(2593)
+          this.getInfoAndListById(localStorage.getItem("id"))
       }
   },
   mounted(){
-    
+       this.setCurrent(JSON.parse(localStorage.getItem("2017.official.yearArr"))[1])
+     this.getInfoAndListById(localStorage.getItem("id"))
   }
 }
 </script>
@@ -99,6 +100,7 @@ export default {
    margin: 0 10px;
    padding: 14px 3px;
    height: 62px;
+   border-bottom: 1px solid #eee;
 }
 .spnO{
     font-size: 15px;

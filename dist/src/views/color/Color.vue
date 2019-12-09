@@ -6,7 +6,7 @@
         <span v-for="(item, index, key) of colorList" :key="index" @click="handleC(item,key)" :class="{active: curIndex==key}">{{index}}</span>
       </p>
       <ul>
-        <li v-for="(v,i) in colorData" :key="i">
+        <li v-for="(v,i) in arr" :key="i" @click="clickColor(v.ColorId)">
           <span :style="{background: v.Value}"></span>
           {{v.Name}}
         </li>
@@ -16,36 +16,43 @@
 </template>
 
 <script>
-import {mapActions,mapState} from "vuex"
+import { mapActions, mapState, mapMutations } from "vuex"
 export default {
   data(){
      return {
-       colorData: [],
        curIndex: 0,//年份下标
-       arr: []
      }
   },
    computed: {
    ...mapState({
-     colorList: state=>state.carColor.colorList
+     colorList: state=>state.carColor.colorList,
+     arr: state=>state.carColor.arr
    })
    },
-   mounted(){  
-        this.getCarColor(2593) 
-        let obj=JSON.parse(JSON.stringify(this.colorList))
-        this.arr=Object.values(obj)  
-        this.handleC(this.arr[0],0)  
-   },
+  
   methods: {
          ...mapActions({
            getCarColor: 'carColor/getCarColor'
          }),
+         ...mapMutations({
+      setArr: "carColor/setArr",
+      setColorId: "series/setColorId"
+         }),
     //点击年份切换高亮并切换数据
     handleC(item,key){
-      this.colorData=item
+      this.setArr(item)
       this.curIndex=key
-    }
-  }
+    },
+    clickColor(colorId){
+      this.setColorId(colorId)
+      this.$router.push("/img")
+      // window.history.back();
+    },
+  },
+  mounted(){  
+        let SerialID = localStorage.getItem("id")
+        this.getCarColor(SerialID) 
+   }
 };
 </script>
 

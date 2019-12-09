@@ -6,13 +6,16 @@ import VueLazyload from "vue-lazyload"
 import "lib-flexible/flexible.js"
 Vue.config.productionTip = false
 // Vue.use(VueLazyload)
+import Vant from "vant"
+import 'vant/lib/index.css';
 
+Vue.use(Vant);
 
 //配置图片懒加载
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: './imgs/timg.jpg',
-  loading: './imgs/timg.jpg',
+  error: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=984435346,506206561&fm=15&gp=0.jpg',
+  loading: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=984435346,506206561&fm=15&gp=0.jpg',
   attempt: 1
 })
 
