@@ -42,13 +42,13 @@ export default {
           color:#fff;
           .loading-animate{
                  display: inline-block;
-                 width:35px;
-                 height:35px;
+              
                  margin:25px 0 10px;
                  vertical-align: middle;
                  animation: cricleLoading 1s steps(12,end) infinite;
-                 background:transparent url("http://file.digitaling.com/eImg/uimages/20151019/1445249706879614.gif");
+                 background:transparent url("http://img.php.cn/upload/article/000/001/506/6a5fcd24f7c2870edec2a172ddef0ce0-2.gif");
                  background-size: 100%;
+                 background-color:#fff;
           }
           .loading-text{
               font-size:14px;

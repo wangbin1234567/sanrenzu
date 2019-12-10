@@ -3,8 +3,8 @@
     <div class="series_wrap">
 
         <header class="series_wrap_header">
-            <p @click="setColor">颜色<span></span></p>
-            <p @click="setType">车款</p>
+            <p @click="seriescolor">颜色<span></span></p>
+            <p @click="seriestype">车款</p>
         </header>
         <div class="main_series">
             <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
@@ -21,11 +21,6 @@ import SeriesImg from "@/components/series_img/index.vue"
 import EnlargementImg from "@/components/enlargement_img/index.vue"
 import carAllImg from "@/components/car_all_img/index.vue"
 export default {
-    data(){
-        return {
-            showColor: false
-        }
-    },
     components:{
         SeriesImg,
         EnlargementImg,
@@ -34,14 +29,13 @@ export default {
     
     methods:{
         ...mapActions({
-            getMasterSeries:'img/getMasterSeries'
+            getMasterSeries:'series/getMasterSeries'
         }),
-        setColor(){
-            // this.$router.push("/color?serialId="+this.serialId);
-            this.showColor = true;
+        seriescolor(){
+            this.$router.push("/color")
         },
-        setType(){
-            this.$router.push("/type?serialId="+this.serialId);
+        seriestype(){
+            this.$router.push("/type")
         }
     },
     
@@ -56,12 +50,6 @@ export default {
     mounted(){
         let SerialID=this.$route.query.SerialID
         this.getMasterSeries(SerialID)
-        this.$loading.show()
-        setTimeout(()=>{
-            this.$nextTick(()=>{
-                this.$loading.hide()
-            })
-        },150)
     }
 }
 </script>
