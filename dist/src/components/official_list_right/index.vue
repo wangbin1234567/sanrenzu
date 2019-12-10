@@ -1,5 +1,6 @@
 <template>
-    <div class="official_all_right" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" @click="officialVanish">
+    <div class="official_all_right" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" @click="officialVanish"
+    >
          <div v-for="(items,index) in listMasterID" :key="index" class="official_header_item">
            <h5 @click="occlude">{{items.GroupName}}</h5>
                 <!-- 渲染右面链表图片 -->
@@ -62,7 +63,6 @@ export default {
         return {
             startPageX:'',
             startPageY:''
-            
         }
     }
 }
@@ -73,7 +73,7 @@ export default {
     height: 100%;
     position: fixed;
     right: 0;
-    top:0;
+    top: 0;
     z-index: 200;
     background: #ffffff;
     overflow-y: auto;

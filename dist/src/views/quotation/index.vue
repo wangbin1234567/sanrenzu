@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="content">
-        <div class="q-info" @click="typeClick">
+        <div class="q-info" @click="typeClick" v-if="list">
             <img :src="list.CoverPhoto" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
@@ -152,6 +152,12 @@ export default {
         let cityId=this.cityId
         console.log(carId,cityId)
         this.getDealer({carId,cityId})
+        this.$loading.show()
+        setTimeout(()=>{
+            this.$nextTick(()=>{
+                this.$loading.hide()
+            })
+        },1000)
     }
 };
 </script>

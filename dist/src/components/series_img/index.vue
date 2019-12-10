@@ -35,7 +35,7 @@ export default {
             getMasterDataList:'carlist/getMasterDataList'
         }),
         addList(Id){
-            let SerialID=this.$route.query.SerialID
+            let SerialID=localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
@@ -43,7 +43,7 @@ export default {
         },
         blowImage(Id,key){
             this.imgFalg(key)
-            let SerialID=this.$route.query.SerialID
+            let SerialID=localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
@@ -60,7 +60,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    background: #fff;  
+    background: #fff;
     li{
         width: 123px;
         height: 123px;

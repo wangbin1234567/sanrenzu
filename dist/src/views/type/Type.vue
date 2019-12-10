@@ -7,7 +7,7 @@
       </p>
       <div v-for="(item,index) in currentList" :key="index">
           <p class="tip">{{item.key}}</p>
-          <ul class="uls" v-for="(listItem,listIndex) in item.list" :key="listIndex">
+          <ul class="uls" v-for="(listItem,listIndex) in item.list" :key="listIndex" @click="clickType(listItem.car_id)">
               <li>
                   <p>
                     <span class="spnO">{{listItem.market_attribute.year}}款 {{listItem.car_name}}</span>  
@@ -43,12 +43,21 @@ export default {
       getInfoAndListById: "car/getInfoAndListById"
     }),
      ...mapMutations({
-      setCurrent: "car/setCurrent"
+      setCurrent: "car/setCurrent",
+      setCarId: "series/setCarId"
     }),
       tab(item,i){
         this.curIndex=i
           this.setCurrent(item)
           this.getInfoAndListById(localStorage.getItem("id"))
+      },
+      clickType(carId){
+        this.setCarId(carId)
+        if(this.$route.query.carId){
+          this.$router.push("/quotation")
+        }else{
+         this.$router.push("/img") 
+        }  
       }
   },
   mounted(){

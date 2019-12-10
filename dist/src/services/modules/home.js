@@ -11,6 +11,7 @@ export let getMasterStairSite=(CityID)=>{
     return request("/v1-city-alllist.html",{params:{provinceid:CityID}})
 }
 export let getMasterSeries=(params)=>{
+    console.log("/v2-car-getImageList.html",{params})
     return request("/v2-car-getImageList.html",{params})
 }
 export let getMasterDataList=(SerialID,ImageID,Page,PageSize)=>{

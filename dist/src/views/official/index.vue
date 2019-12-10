@@ -36,7 +36,7 @@ export default {
     }),
     ...mapMutations({
        amendstatefalse: 'home/amendstatefalse'
-    }),
+    })
   },
   mounted(){
     this.getMasterBrandList()

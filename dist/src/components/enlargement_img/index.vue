@@ -28,7 +28,7 @@ export default {
     watch:{
         seriesIndex(){
             if(this.seriesIndex%25===0){
-                let SerialID=this.$route.query.SerialID
+                let SerialID=localStorage.getItem("id")
                 let Id=this.curData.ID
                 let Page=Math.floor(this.seriesIndex/25)+1
                 this.getMasterDataListAdd({SerialID,Id,Page,PageSize:30})
@@ -97,18 +97,17 @@ export default {
     margin-left: -2%;
 }
 .magnify_img_footer{
-    color: #ffffff;
     position: absolute;
-    bottom: 10px;
-    right:5%;
+    bottom: 4px;
+    right: 4px;
     z-index: 99;
-    margin-left: -2%;
     button{
         border: none;
         width: 63px;
         height: 24px;
         background: #3aacff;
         color: #ffffff;
+        font-size: 12px;
     }
 }
 </style>

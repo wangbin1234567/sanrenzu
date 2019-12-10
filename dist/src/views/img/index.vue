@@ -80,17 +80,21 @@ export default {
     p:nth-child(2){
        border-left: 1px solid #ececec;
     }
+    p:after {
+    content: "";
+    display: inline-block;
+    border-top: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    margin-left: 10px;
+    vertical-align: 5%;
+    padding: 8px 8px 0 0;
+}
 }
 .main_series{
     flex: 1;
     overflow: auto;
+    background: #fff;
 }
-// .magnify_img{
-//     width: 100%;
-//     height: 100%;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     background: red;
-// }
 </style>
