@@ -21,12 +21,21 @@ export default {
     watch:{
         //watch监听dataList数据的改变，获取到他减去该元素的高度，然后给需要滚动的元素原型上面添加offsetTop
         dataList:function(){
+<<<<<<< HEAD
             // console.log(window)
             // console.log(this.$refs.offcialref.offsetHeight)
             this.$nextTick(()=>{
                 this.offsetTop=(window.innerHeight - this.$refs.offcialref.offsetHeight)/2
                 // console.log(window.innerHeight - this.$refs.offcialref.offsetHeight)
                 // console.log('this.offsetTop---------------',this.offsetTop)
+=======
+            console.log(window)
+            console.log(this.$refs.offcialref.offsetHeight)
+            this.$nextTick(()=>{
+                this.offsetTop=(window.innerHeight - this.$refs.offcialref.offsetHeight)/2
+                console.log(window.innerHeight - this.$refs.offcialref.offsetHeight)
+                console.log('this.offsetTop---------------',this.offsetTop)
+>>>>>>> jyh
             })
         }
     },
@@ -35,7 +44,11 @@ export default {
             document.getElementById(lets).scrollIntoView(true);
         },
         touchstart(e){
+<<<<<<< HEAD
             console.log(this,"============?????????????")
+=======
+            // console.log(this,"============?????????????")
+>>>>>>> jyh
             let y = e.changedTouches[0].pageY-this.offsetTop
             let index = Math.floor(y/18)
             console.log('index-------------',index)
@@ -44,19 +57,33 @@ export default {
         touchmove(e){
              let y = e.changedTouches[0].pageY-this.offsetTop
             let index = Math.floor(y/18)-1
+<<<<<<< HEAD
             console.log('index------------------',index)
             index < 1 ? index = 0 : 
             console.log(this.dataList.length-1)
+=======
+            // console.log('index------------------',index)
+            // index < 1 ? index = 0 : 
+            // console.log(this.dataList.length-1)
+>>>>>>> jyh
             if(index > this.dataList.length-1){
                 index=this.dataList.length-1
             }else if(index<1){
                 index=0
             }
+<<<<<<< HEAD
             index > this.dataList.length-1 ? 20 : null
             console.log(index)
             console.log(document.getElementById(this.dataList[index].lets),index)
             document.getElementById(this.dataList[index].lets).scrollIntoView(true);
             console.log('index------------------',index)
+=======
+            // index > this.dataList.length-1 ? 20 : null
+            // console.log(index)
+            // console.log(document.getElementById(this.dataList[index].lets),index)
+            document.getElementById(this.dataList[index].lets).scrollIntoView(true);
+            // console.log('index------------------',index)
+>>>>>>> jyh
         },
         touchend(e){
             console.log('e----------------',e)

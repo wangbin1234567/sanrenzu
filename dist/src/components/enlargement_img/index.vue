@@ -28,7 +28,11 @@ export default {
     watch:{
         seriesIndex(){
             if(this.seriesIndex%25===0){
+<<<<<<< HEAD
                 let SerialID=this.$route.query.SerialID
+=======
+                let SerialID=localStorage.getItem("id")
+>>>>>>> jyh
                 let Id=this.curData.ID
                 let Page=Math.floor(this.seriesIndex/25)+1
                 this.getMasterDataListAdd({SerialID,Id,Page,PageSize:30})
@@ -97,18 +101,29 @@ export default {
     margin-left: -2%;
 }
 .magnify_img_footer{
+<<<<<<< HEAD
     color: #ffffff;
     position: absolute;
     bottom: 10px;
     right:5%;
     z-index: 99;
     margin-left: -2%;
+=======
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    z-index: 99;
+>>>>>>> jyh
     button{
         border: none;
         width: 63px;
         height: 24px;
         background: #3aacff;
         color: #ffffff;
+<<<<<<< HEAD
+=======
+        font-size: 12px;
+>>>>>>> jyh
     }
 }
 </style>

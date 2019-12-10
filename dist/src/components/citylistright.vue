@@ -5,6 +5,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import { mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -25,6 +26,20 @@ export default {
             this.getDealer({cityId,carId})
             console.log(item,"11111111111111111");
             
+=======
+import { mapMutations } from "vuex"
+export default {
+    props:["item"],
+    methods:{
+          ...mapMutations({
+           setAddress: 'city/setAddress',
+           setCityId: 'city/setCityId'
+          }),
+        siteitem(item){
+           this.setAddress(item.CityName)
+           this.setCityId(item.CityID)
+           this.$emit("siteitemlist")
+>>>>>>> jyh
         }
     }
 }   

@@ -1,24 +1,43 @@
+<<<<<<< HEAD
 <template>
     <li @click="revealCity(item.CityID)">
         {{item.CityName}}
     </li>
+=======
+
+<template>
+
+        
+        <li @click="revealCity(item.CityID)">
+            {{item.CityName}}
+        </li>
+>>>>>>> jyh
 </template>
 
 <script>
 
 export default {
+<<<<<<< HEAD
     
+=======
+>>>>>>> jyh
 props:["item"],
 data(){
     return {
       
     }
 },
+<<<<<<< HEAD
 
 methods:{
     
     revealCity(CityID){
         this.$emit("revealCitys",CityID)  
+=======
+methods:{
+    revealCity(CityID){
+        this.$emit("revealCitys",CityID)   
+>>>>>>> jyh
     }
 }
 }

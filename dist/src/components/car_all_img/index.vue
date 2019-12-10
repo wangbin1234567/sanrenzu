@@ -27,6 +27,7 @@ export default {
             let PageSize=30
             this.getMasterDataList({SerialID,Id,Page,PageSize})
         },
+<<<<<<< HEAD
         // touchstart(e){
         //     console.log('this-------------------',this)
         //     console.log("touchstart------------",e)
@@ -37,6 +38,18 @@ export default {
         // touchend(e){
         //      console.log("touchend------------",e)
         // }
+=======
+        touchstart(e){
+            console.log('this-------------------',this)
+            console.log("touchstart------------",e)
+        },
+        touchmove(e){
+             console.log("touchmove------------",e)
+        },
+        touchend(e){
+             console.log("touchend------------",e)
+        }
+>>>>>>> jyh
     }
 }
 </script>
@@ -47,15 +60,32 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
+<<<<<<< HEAD
     li{
         width: 33.3%;
         height: 123px;
         padding: 2px 2px;
+=======
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f4f4f4;
+    li{
+        width: 123px;
+        height: 123px;
+         margin: 0 2.3px 2.3px 0;
+>>>>>>> jyh
         img{
             width: 100%;
             height: 100%;
             background-size: cover  
         }
     }
+<<<<<<< HEAD
+=======
+     li:nth-child(3n+3) {
+    margin-right: 0;
+}
+>>>>>>> jyh
 }
 </style>
