@@ -41,12 +41,12 @@ export default {
     },
     mounted(){
         this.getMasterBrandList()
-         this.$loading.show()
+        this.$loading.show()
         setTimeout(()=>{
             this.$nextTick(()=>{
                 this.$loading.hide()
             })
-        },150)
+        },5000)
     }
 }
 </script>
