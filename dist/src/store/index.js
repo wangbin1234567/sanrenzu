@@ -13,6 +13,7 @@ import list from "./modules/list"
 import carlist from "./modules/carlist"
 import site from './modules/site'
 import series from "./modules/series"
+import city from "./modules/city"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     list,
     site,
     series,
-    carlist
+    carlist,
+    city
   },
   plugins:[createLogger()]
 })

@@ -1,15 +1,30 @@
 <template>
-    <li @click="siteitem(item.CityName)">
+    <li @click="siteitem(item)">
         {{item.CityName}}
     </li>
 </template>
 
 <script>
+import { mapMutations, mapActions } from 'vuex'
+
 export default {
     props:["item"],
     methods:{
-        siteitem(CityName){
-            this.$emit("siteitemlist",CityName)
+        ...mapActions({
+            getDealer: 'dealer/getDealer',
+        }),
+        ...mapMutations({
+            getListAddress: 'city/getListAddress'
+        }),
+        siteitem(item){
+            let carId = localStorage.getItem('2017.official.curId')
+            let cityId = item.CityID;
+            // let cityName = item.CityName;
+            this.$emit("siteitemlist",item.CityName),
+            this.getListAddress(item)
+            this.getDealer({cityId,carId})
+            console.log(item,"11111111111111111");
+            
         }
     }
 }   

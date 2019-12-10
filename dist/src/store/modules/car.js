@@ -41,7 +41,7 @@ function formatCarList(list) {
             })
         }
     })
-    window.console.log(state.currentList)
+    // window.console.log(state.currentList)
     return newList
 }
 const mutations = {  
@@ -65,7 +65,7 @@ const mutations = {
         currentList = formatCarList(currentList)
         state.currentList = currentList
         localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
-        window.console.log(state.currentList)
+        // window.console.log(state.currentList)
     },
     setCurrent(state,payload){
         state.current=payload

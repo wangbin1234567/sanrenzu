@@ -33,9 +33,9 @@ export default {
         curIndex: 0
         }
     },
-        computed: {
+    computed: {
         ...mapState({
-        currentList: store => store.car.currentList
+            currentList: store => store.car.currentList
         })
     },
     methods:{
