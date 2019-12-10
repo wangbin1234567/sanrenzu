@@ -2,21 +2,21 @@
   <div class="wrap-q">
     <header @click="Tclick()">
         <p>可向多个商家咨询最低价，商家及时回复</p>
-        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
+        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="" />
     </header>
     <div class="q-tip" v-if="flog" @click="Tclick">
         <div>
             <div class="flex-row">
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png">
+                    <img src="http://h5.chelun.com/2017/official/img/q-l.png" />
                     <span>安全高效</span>
                 </li> 
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
+                    <img src="http://h5.chelun.com/2017/official/img/q-m.png" /> 
                     <span>省心省力</span>
                 </li> 
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
+                    <img src="http://h5.chelun.com/2017/official/img/q-r.png" /> 
                     <span>贴心服务</span>
                 </li>
             </div> 
@@ -27,7 +27,7 @@
     </div>
     <div class="content">
         <div class="q-info" @click="typeClick" v-if="list">
-            <img :src="list.CoverPhoto" />
+            <img :src="list.CoverPhoto.replace('{0}',3)" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
             <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
@@ -146,18 +146,19 @@ export default {
             }
         }
     },
+    // created() {
+    // 	this.$loading.show() // 显示loading
+    // },
     mounted() {
         this.getCityAddress()
         let carId=this.carId
         let cityId=this.cityId
         console.log(carId,cityId)
         this.getDealer({carId,cityId})
-        this.$loading.show()
-        setTimeout(()=>{
-            this.$nextTick(()=>{
-                this.$loading.hide()
-            })
-        },1000)
+        // .then(res => {
+	    //       this.$loading.hide() // 隐藏loading
+	    //       // 其他操作
+	    //     })
     }
 };
 </script>

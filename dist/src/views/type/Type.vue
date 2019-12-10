@@ -56,7 +56,8 @@ export default {
         if(this.$route.query.carId){
           this.$router.push("/quotation")
         }else{
-         this.$router.push("/img") 
+         this.$router.back("/img") 
+        //  window.history.back()
         }  
       }
   },

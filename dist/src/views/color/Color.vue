@@ -45,7 +45,7 @@ export default {
     },
     clickColor(colorId){
       this.setColorId(colorId)
-      this.$router.push("/img")
+      this.$router.back("/img")
       // window.history.back();
     },
   },
