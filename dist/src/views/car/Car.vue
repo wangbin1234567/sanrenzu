@@ -51,7 +51,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            getInfoAndListById: "car/getInfoAndListById"
+            getInfoAndListById: "car/getInfoAndListById",
+            getCityAddress: 'city/getCityAddress',
         }),
         ...mapMutations({
             setCurrent: "car/setCurrent",
@@ -78,7 +79,8 @@ export default {
     },
     mounted() {
         this.getInfoAndListById(this.SerialID)
-        this.seriesfalg()
+        this.seriesfalg(),
+        this.getCityAddress()
     }
 };
 </script>

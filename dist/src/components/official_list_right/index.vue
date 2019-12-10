@@ -49,7 +49,7 @@ export default {
              //获取手指抬起的X与Y轴的坐标
             let endPageX = e.changedTouches[0].clientX
             let endPageY = e.changedTouches[0].clientY
-            console.log(this.startPageY-endPageY*1)
+            // console.log(this.startPageY-endPageY*1)
             //判断抬起的坐标减去按下的坐标大于80并且Y轴的按下坐标减去抬起的坐标。取绝对值变成正数。大于50，
             if(endPageX-this.startPageX > 80 && Math.abs(this.startPageY-endPageY) < 50){
                  this.amendstatefalse()

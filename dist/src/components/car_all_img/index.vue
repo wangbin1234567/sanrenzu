@@ -27,16 +27,16 @@ export default {
             let PageSize=30
             this.getMasterDataList({SerialID,Id,Page,PageSize})
         },
-        touchstart(e){
-            console.log('this-------------------',this)
-            console.log("touchstart------------",e)
-        },
-        touchmove(e){
-             console.log("touchmove------------",e)
-        },
-        touchend(e){
-             console.log("touchend------------",e)
-        }
+        // touchstart(e){
+        //     console.log('this-------------------',this)
+        //     console.log("touchstart------------",e)
+        // },
+        // touchmove(e){
+        //      console.log("touchmove------------",e)
+        // },
+        // touchend(e){
+        //      console.log("touchend------------",e)
+        // }
     }
 }
 </script>

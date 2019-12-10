@@ -11,12 +11,12 @@
              <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item" @revealCitys="revealCitys"/>
              </ul>
             </div>
-         </div>
-            <div class="city" :class="{active: flag}" @click="removelist">
-                <ul id="cityList">
-                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
-                </ul>
-            </div>  
+        </div>
+        <div class="city" :class="{active: flag}" @click="removelist">
+            <ul id="cityList">
+            <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
+            </ul>
+        </div>  
     </div>
 </template>
 
@@ -28,32 +28,28 @@ export default {
     components:{
          CityListLeft,
          CityListRight,
-        
     },
     data(){
         return {
             cityData:[],
             provinceidData:[],
-             flag:false
+            flag:false
         }
     },
     methods:{
+        
         revealCitys(CityID){
             this.flag=true
             axios.get("https://baojia.chelun.com/v1-city-alllist.html",{params:{provinceid:CityID}}).then(res=>{
-            if(res.data.code===1){
-                this.provinceidData=res.data.data
-            }
-            
-        })
-        },
-        siteitemlist(CityName){
-            this.$router.push({
-                name: "quotation",
-                params:{
-                    CityName
+                if(res.data.code===1){
+                    this.provinceidData=res.data.data
                 }
             })
+        },
+        siteitemlist(){
+            // console.log(CityName);
+            this.$emit('update:showAddress',false)
+            
         },
         removelist(){
             this.flag=!this.flag
