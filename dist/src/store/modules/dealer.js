@@ -5,6 +5,7 @@ const state = {
 const mutations = {
     updateDealerList(state, payload){
       state.dealerList=payload
+    //   window.console.log(state.dealerList)
     }
 }
 

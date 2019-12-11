@@ -10,7 +10,8 @@
                     <li>{{listItem.horse_power}}马力{{listItem.gear_num}}档{{item.trans_type}}</li>
                     <li>
                         <span>指导价{{listItem.market_attribute.dealer_price_max}}</span>
-                        <span>{{listItem.market_attribute.dealer_price_min}}起</span>
+                        <span v-if="listItem.market_attribute.dealer_price_min">{{listItem.market_attribute.dealer_price_min}}起</span>
+                        <span v-else>暂无</span>
                     </li>
                     <div class="item-btn">
                         <button @click="handleChelun(listItem.car_id)">询问底价</button>

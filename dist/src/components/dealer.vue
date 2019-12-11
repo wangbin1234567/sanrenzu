@@ -5,7 +5,8 @@
           <li data-hover="hover" data-id="8295" :class="{active: item.newsRemainingDays == 1}" @click="activeClick(item)" v-for="(item,index) in dealer" :key="index">
             <p>
               <span>{{item.dealerShortName}}</span>
-              <span>万</span>
+              <span v-if="item.promotePrice>0">{{item.promotePrice}}万</span>
+              <span v-else>万</span>
             </p>
             <p>
               <span>{{item.address}}</span>

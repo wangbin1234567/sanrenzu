@@ -26,10 +26,8 @@
         </div>
     </div>
     <div class="content">
-
-
         <div class="q-info" @click="typeClick" v-if="list">
-            <img :src="list.CoverPhoto.replace('{0}',3)" />
+            <img :src="list.Picture" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
             <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>

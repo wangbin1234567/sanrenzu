@@ -54,10 +54,15 @@ const mutations = {
         let year = payload.list.map(item => item.market_attribute.year);
         state.year = ["全部"]
         state.year = state.year.concat([...new Set(year)])
+
         //判断拿不到年份的情况下
         if(year==""){
             state.year=""
         }
+
+        // sessionStorage 的生命周期是在浏览器关闭前。在整个浏览器未关闭前，其数据一直都是存在的
+        sessionStorage.setItem("2017.official.yearArr",state.year)
+
         // 拿到当前选择年份的数据
         let currentList = [];
         if (state.current == "全部") {
@@ -65,6 +70,7 @@ const mutations = {
         } else {
             currentList = payload.list.filter(item => item.market_attribute.year == state.current)
         }
+        
         // 给当前年份数据排序
         currentList = sortCarList(currentList)
         currentList = formatCarList(currentList)
@@ -73,16 +79,11 @@ const mutations = {
     },
     setCurrent(state, payload) {
         state.current = payload
-        localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
-        window.console.log(state.currentList)
     },
-    // setCurrent(state,payload){
-    //     state.current=payload
-    // },
     setCarId(state,payload){
       state.carId=payload
+      localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
       localStorage.setItem("2017.official.curId",state.carId) 
-
     }
 }
 const actions = {

@@ -1,10 +1,10 @@
 <template>
 
-    <div class="car" v-if="Object.keys(carList).length>0">
-
+    <div class="car" v-if="Object.keys(carList).length">
+      <!-- 详情页基本数据的展示 -->
       <div class="content">
         <div class="img" @click="handleImg">
-          <img :src="carList.CoverPhoto" alt />
+          <img :src="carList.Picture" alt />
           <span>{{carList.pic_group_count}}张图片</span>
         </div>
         <div class="info">
@@ -15,7 +15,9 @@
           </div>
         </div>
       </div>
-      <div class="c-type">
+
+      <!-- 年份展示 -->
+      <div class="c-type" v-if="year">
         <span
           v-for="(item,index) in year"
           :key="index"
@@ -23,7 +25,14 @@
           :class="{active:curIndex==index}"
         >{{item}}</span>
       </div>
-      <List></List>
+      <div class="c-type" v-else>
+        <span></span>
+      </div>
+
+        <!-- 列表数据展示 -->
+      <carList></carList>
+
+      <!-- 底部按钮展示 -->
       <div class="inquiry-btn" @click="chelun">
         <p>{{carList.BottomEntranceTitle}}</p>
         <p>本地销售商为你报价</p>
@@ -31,12 +40,12 @@
     </div>
 </template>
 <script>
-import List from "../../components/list.vue";
+import carList from "../../components/list.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: {},
   components: {
-    List
+    carList
   },
   data() {
     return {
@@ -48,7 +57,7 @@ export default {
     ...mapState({
       carList: store => store.car.carList,
       year: store => store.car.year,
-       currentList: store => store.car.currentList
+      currentList: store => store.car.currentList
     })
   },
   methods: 
@@ -76,6 +85,7 @@ export default {
       this.setCurrent(item)
       this.getInfoAndListById(this.SerialID);
     },
+    //点击图片，跳转到img页面
     handleImg(){
       this.$router.push("/img")
     }
