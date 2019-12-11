@@ -2,21 +2,21 @@
   <div class="wrap-q">
     <header @click="Tclick">
         <p>可向多个商家咨询最低价，商家及时回复</p>
-        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
+        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="" />
     </header>
     <div class="q-tip" v-if="flog" @click="Tclick">
         <div>
             <div class="flex-row">
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png">
+                    <img src="http://h5.chelun.com/2017/official/img/q-l.png" />
                     <span>安全高效</span>
                 </li> 
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
+                    <img src="http://h5.chelun.com/2017/official/img/q-m.png" /> 
                     <span>省心省力</span>
                 </li> 
                 <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
+                    <img src="http://h5.chelun.com/2017/official/img/q-r.png" /> 
                     <span>贴心服务</span>
                 </li>
             </div> 
@@ -26,8 +26,10 @@
         </div>
     </div>
     <div class="content">
+
+
         <div class="q-info" @click="typeClick" v-if="list">
-            <img :src="list.CoverPhoto" />
+            <img :src="list.CoverPhoto.replace('{0}',3)" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
             <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
@@ -46,7 +48,7 @@
             </li>
             <li>
                 <span>城市</span>
-                <span @click="handleAddress">{{this.$route.params.CityName}}</span>
+                <span @click="handleAddress">{{address}}</span>
             </li>
             </ul>
             <div class="quotation">
@@ -63,9 +65,9 @@
         @btnList="btnList"></Verify>  
     </div>
     <transition name="scroll-top">
-        <div class="wrap" v-show="showAddress">
-            <Address />
-        </div>
+         <div class="wrap" v-show="showAddress">
+                <Address :showAddress.sync="showAddress" />
+         </div>
     </transition>
   </div>
 </template>
@@ -74,7 +76,7 @@
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
-import Address from "../site/index"
+import Address from "../../components/Address"
 import {mapActions,mapState} from "vuex"
 export default {
     components:{
@@ -93,12 +95,15 @@ export default {
             isUser:false,//默认弹窗隐藏
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
-            showAddress: false
+            showAddress: false,
+            cityId: localStorage.getItem("cityId") || ""
         };
     },
     computed: {
    ...mapState({
-     dealerList: state=>state.dealer.dealerList
+     dealerList: state=>state.dealer.dealerList,
+     address: state=>state.city.address,
+    //  cityId: state=>state.city.cityId
    })
   },
     methods: {
@@ -128,13 +133,13 @@ export default {
         btnList(){  
            
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
-                this.message="请输入真实的中文姓名"
-                this.hello="好"
-                this.isUser=true
+                 this.message="请输入真实的中文姓名"
+                 this.hello="好"
+                 this.isUser=true   
             }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
-                this.isUser=true 
-                this.hello="好"
-                this.message="请输入正确的手机号"
+                 this.isUser=true 
+                 this.hello="好"
+                 this.message="请输入正确的手机号"
             }else {
                 this.isUser=true
                 this.hello="确定"
@@ -144,13 +149,12 @@ export default {
         }
     },
     mounted() {
-        this.getDealer(this.carId)
-        this.$loading.show()
-        setTimeout(()=>{
-            this.$nextTick(()=>{
-                this.$loading.hide()
-            })
-        },150)
+
+        this.getCityAddress()
+        let carId=this.carId
+        let cityId=this.cityId
+        console.log(carId,cityId)
+        this.getDealer({carId,cityId})
     }
 };
 </script>

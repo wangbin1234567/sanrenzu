@@ -47,15 +47,22 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f4f4f4;
     li{
-        width: 33.3%;
+        width: 123px;
         height: 123px;
-        padding: 2px 2px;
+         margin: 0 2.3px 2.3px 0;
         img{
             width: 100%;
             height: 100%;
             background-size: cover  
         }
     }
+     li:nth-child(3n+3) {
+    margin-right: 0;
+}
 }
 </style>

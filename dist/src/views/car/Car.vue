@@ -1,92 +1,90 @@
 <template>
+
     <div class="car" v-if="Object.keys(carList).length>0">
-        <div class="content">
-            <div class="img" @click="handleImg">
-                <img :src="carList.CoverPhoto" alt />
-                <span>{{carList.pic_group_count}}张图片</span>
-            </div>
-            <div class="info">
-                <p>{{carList.market_attribute.dealer_price}}</p> 
-                <p>指导价 {{carList.market_attribute.official_refer_price}}</p> 
-            <div class="action">
-                <button @click="chelun">{{carList.BottomEntranceTitle}}</button>
-            </div>
-            </div>
+
+      <div class="content">
+        <div class="img" @click="handleImg">
+          <img :src="carList.CoverPhoto" alt />
+          <span>{{carList.pic_group_count}}张图片</span>
         </div>
-        <div class="c-type" v-if="year.length">
-            <span
-            v-for="(item,index) in year"
-            :key="index"
-            @click="tab(item,index)"
-            :class="{active:curIndex==index}"
-            >{{item}}</span>
+        <div class="info">
+            <p>{{carList.market_attribute.dealer_price}}</p> 
+            <p>指导价 {{carList.market_attribute.official_refer_price}}</p> 
+          <div class="action">
+            <button @click="chelun">{{carList.BottomEntranceTitle}}</button>
+          </div>
         </div>
-        <div class="c-type" v-else>
-            <span></span>
-        </div>
-        <List></List>
-        <div class="inquiry-btn" @click="chelun">
-            <p>{{carList.BottomEntranceTitle}}</p>
-            <p>本地销售商为你报价</p>
-        </div>
+      </div>
+      <div class="c-type">
+        <span
+          v-for="(item,index) in year"
+          :key="index"
+          @click="tab(item,index)"
+          :class="{active:curIndex==index}"
+        >{{item}}</span>
+      </div>
+      <List></List>
+      <div class="inquiry-btn" @click="chelun">
+        <p>{{carList.BottomEntranceTitle}}</p>
+        <p>本地销售商为你报价</p>
+      </div>
     </div>
 </template>
 <script>
 import List from "../../components/list.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
-    props: {},
-    components: {
-        List
+  props: {},
+  components: {
+    List
+  },
+  data() {
+    return {
+      SerialID: this.$route.query.id,
+      curIndex: 0
+    };
+  },
+  computed: {
+    ...mapState({
+      carList: store => store.car.carList,
+      year: store => store.car.year,
+       currentList: store => store.car.currentList
+    })
+  },
+  methods: 
+  {
+    ...mapActions({
+      getInfoAndListById: "car/getInfoAndListById",
+         getCityAddress: 'city/getCityAddress'
+    }),
+     ...mapMutations({
+      setCurrent: "car/setCurrent",
+      seriesfalg:'series/seriesfalg',
+      setCarId: "car/setCarId"
+    }),
+    chelun() {
+      this.$router.push({
+        name: "quotation",
+        params: {
+          id: this.SerialID
+        }
+      });
+      this.setCarId(this.currentList[0].list[0].car_id)
     },
-    data() {
-        return {
-            SerialID: this.$route.query.id,
-            curIndex: 0,
-            Aist:[
-                {id:1,name:""},
-                {id:2,name:""}
-            ]
-        };
+    tab(item,index) {
+      this.curIndex=index
+      this.setCurrent(item)
+      this.getInfoAndListById(this.SerialID);
     },
-    computed: {
-        ...mapState({
-            carList: store => store.car.carList,
-            year: store => store.car.year,
-            currentList: store => store.car.currentList
-        })
-    },
-    methods: {
-        ...mapActions({
-            getInfoAndListById: "car/getInfoAndListById"
-        }),
-        ...mapMutations({
-            setCurrent: "car/setCurrent",
-            seriesfalg:'series/seriesfalg'
-        }),
-        chelun() {
-            this.$router.push({
-                name: "quotation",
-                params: {
-                id: this.SerialID
-                }
-            });
-            localStorage.setItem("2017.official.curId",this.currentList[0].list[0].car_id) 
-        },
-        tab(item,index) {
-            this.curIndex=index
-            this.setCurrent(item)
-            this.getInfoAndListById(this.SerialID);
-        },
-        handleImg(){
-            let SerialID=this.SerialID
-            this.$router.push({path:"/img",query:{SerialID}})
-        },
-    },
-    mounted() {
-        this.getInfoAndListById(this.SerialID)
-        this.seriesfalg()
+    handleImg(){
+      this.$router.push("/img")
     }
+  },
+mounted() {
+  this.getInfoAndListById(this.SerialID)
+   this.seriesfalg()
+    this.getCityAddress()
+}
 };
 </script>
 <style scoped lang="scss">
@@ -198,5 +196,4 @@ export default {
         color: #3AACFF;
     }
 }
-
 </style>

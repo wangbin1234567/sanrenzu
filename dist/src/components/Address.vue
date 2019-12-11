@@ -3,7 +3,7 @@
         <div class="province">
             <div class="location">
               <p class="ps_auto">自动定位</p>
-              <p class="address">北京</p>
+              <p class="address" @click="siteitemlist">{{address}}</p>
             </div>
             <div class="list">
              <p class="ps_city">省市</p>
@@ -11,12 +11,12 @@
              <CityListLeft v-for="(item,index) in cityData" :key="index" :item="item" @revealCitys="revealCitys"/>
              </ul>
             </div>
-        </div>
-        <div class="city" :class="{active: flag}" @click="removelist">
-            <ul id="cityList">
-            <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
-            </ul>
-        </div>  
+         </div>
+            <div class="city" :class="{active: flag}" @click="removelist">
+                <ul id="cityList">
+                <CityListRight v-for="(item,index) in provinceidData" :key="index" :item="item" @siteitemlist="siteitemlist"/>
+                </ul>
+            </div>  
     </div>
 </template>
 
@@ -24,44 +24,49 @@
 import CityListLeft from "@/components/citylistleft.vue"
 import CityListRight from "@/components/citylistright.vue"
 import axios from "axios"
+import { mapState, mapActions } from 'vuex'
 export default {
     components:{
          CityListLeft,
          CityListRight,
+        
     },
     data(){
         return {
             cityData:[],
             provinceidData:[],
-            flag:false
+             flag:false
         }
     },
+     computed: {
+   ...mapState({
+     address: state=>state.city.address
+   })
+  },
     methods:{
-        
         revealCitys(CityID){
             this.flag=true
             axios.get("https://baojia.chelun.com/v1-city-alllist.html",{params:{provinceid:CityID}}).then(res=>{
-                if(res.data.code===1){
-                    this.provinceidData=res.data.data
-                }
-            })
-        },
-        siteitemlist(){
-            // console.log(CityName);
-            this.$emit('update:showAddress',false)
+            if(res.data.code===1){
+                this.provinceidData=res.data.data
+            }
             
+        })
+        },
+        ...mapActions({ 
+                 getDealer: 'dealer/getDealer'
+        }),
+        siteitemlist(){ 
+             let carId=localStorage.getItem("2017.official.curId") || ""
+             let cityId=localStorage.getItem("cityId") || ""
+             this.getDealer({carId,cityId})
+          this.$emit("update:showAddress", false) 
         },
         removelist(){
             this.flag=!this.flag
         }
     },
     mounted(){
-        this.$loading.show()
-        setTimeout(()=>{
-            this.$nextTick(()=>{
-                this.$loading.hide()
-            })
-        },150)
         axios.get("https://baojia.chelun.com/v1-city-alllist.html").then(res=>{
             if(res.data.code===1){
                 this.cityData=res.data.data

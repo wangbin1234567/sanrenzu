@@ -18,9 +18,7 @@ data(){
 },
 methods:{
     revealCity(CityID){
-        this.$emit("revealCitys",CityID)
-     
-        
+        this.$emit("revealCitys",CityID)   
     }
 }
 }

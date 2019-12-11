@@ -1,15 +1,22 @@
 <template>
-    <li @click="siteitem(item.CityName)">
+    <li @click="siteitem(item)">
         {{item.CityName}}
     </li>
 </template>
 
 <script>
+import { mapMutations } from "vuex"
 export default {
     props:["item"],
     methods:{
-        siteitem(CityName){
-            this.$emit("siteitemlist",CityName)
+          ...mapMutations({
+           setAddress: 'city/setAddress',
+           setCityId: 'city/setCityId'
+          }),
+        siteitem(item){
+           this.setAddress(item.CityName)
+           this.setCityId(item.CityID)
+           this.$emit("siteitemlist")
         }
     }
 }   

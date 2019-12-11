@@ -12,6 +12,7 @@
     "babel-plugin-import": "^1.13.0",
     "core-js": "^3.4.3",
     "lib-flexible": "^0.3.2",
+    "mint-ui": "^2.2.13",
     "postcss-pxtorem": "^4.0.1",
     "vant": "^2.2.16",
     "vue": "^2.6.10",

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-
+// import Mint from 'mint-ui';
+// Vue.use(Mint);
+// import 'mint-ui/lib/style.css'
 Vue.use(VueRouter)
-
+ 
 const routes = [
   {
     path: '/car',
@@ -21,10 +22,8 @@ const routes = [
     path:"/quotation",
     name: "quotation",
     component:()=>import("../views/quotation/index.vue")
-  },{
-    path:"/site",
-    component:()=>import("../views/site/index.vue")
-  },{
+  },
+  {
     path:"/official",
     component:()=>import("../views/official/index.vue")
   },{

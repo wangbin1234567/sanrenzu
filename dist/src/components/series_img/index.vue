@@ -5,7 +5,7 @@
             <p>{{item.Count}}张</p>
         </div>
         <li v-for="(itemimg,key) in item.List" :key="key" @click="blowImage(item.Id,key)">
-            <span src='' :style="{backgroundImage:'url('+itemimg.Url+')'}"></span>
+            <img src='' :style="{backgroundImage:'url('+itemimg.Url+')'}">
         </li>
     </div>
 </template>
@@ -35,7 +35,7 @@ export default {
             getMasterDataList:'carlist/getMasterDataList'
         }),
         addList(Id){
-            let SerialID=this.$route.query.SerialID
+            let SerialID=localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
@@ -43,7 +43,7 @@ export default {
         },
         blowImage(Id,key){
             this.imgFalg(key)
-            let SerialID=this.$route.query.SerialID
+            let SerialID=localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
@@ -60,16 +60,22 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    background: #fff;
     li{
-        width: 33.3%;
+        width: 123px;
         height: 123px;
-        padding: 2px 2px;
-        span{
+        margin: 0 2.3px 2.3px 0;
+        img{
             width: 100%;
             height: 100%;
-            display: inline-block;
             background-size: cover  
         }
+    }
+    li:nth-child(3n+4) {
+    margin-right: 0;
+}
+    li:nth-child(6n+6) {
+    margin-bottom: 6px;
     }
 }
 .image_ps{
@@ -78,14 +84,17 @@ export default {
     width:123px;
     top: 0;
     left: 0;
-    color: #ffffff;
     background: rgba(56,90,130,.5);
-    font-size: 13px;
-     text-align: center;
+    text-align: center; 
     .image_ps_wan{
         margin-top: 45px;
+        color: #ffffff;
         font-size: 14px;
-        margin-bottom: 3px;
+        margin: 40px 0 0;
+    }
+    p:nth-child(2){
+         color: #ffffff;
+        font-size: 13px;
     }
 }
 </style>
