@@ -11,7 +11,7 @@
             <p>{{carList.market_attribute.dealer_price}}</p> 
             <p>指导价 {{carList.market_attribute.official_refer_price}}</p> 
           <div class="action">
-            <button @click="chelun">{{carList.BottomEntranceTitle}}</button>
+            <button @click="clickFloor">{{carList.BottomEntranceTitle}}</button>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
         <span
           v-for="(item,index) in year"
           :key="index"
-          @click="tab(item,index)"
+          @click="tabYear(item,index)"
           :class="{active:curIndex==index}"
         >{{item}}</span>
       </div>
@@ -29,11 +29,11 @@
         <span></span>
       </div>
 
-        <!-- 列表数据展示 -->
+        <!-- 列表数据组件 -->
       <carList></carList>
 
       <!-- 底部按钮展示 -->
-      <div class="inquiry-btn" @click="chelun">
+      <div class="inquiry-btn" @click="clickFloor">
         <p>{{carList.BottomEntranceTitle}}</p>
         <p>本地销售商为你报价</p>
       </div>
@@ -60,18 +60,21 @@ export default {
       currentList: store => store.car.currentList
     })
   },
-  methods: 
-  {
+  methods: {
+
     ...mapActions({
       getInfoAndListById: "car/getInfoAndListById",
          getCityAddress: 'city/getCityAddress'
     }),
+
      ...mapMutations({
       setCurrent: "car/setCurrent",
       seriesfalg:'series/seriesfalg',
       setCarId: "car/setCarId"
     }),
-    chelun() {
+
+    //点击询问底价按钮跳转到经销商页面并传入id
+    clickFloor() {
       this.$router.push({
         name: "quotation",
         params: {
@@ -80,19 +83,22 @@ export default {
       });
       this.setCarId(this.currentList[0].list[0].car_id)
     },
-    tab(item,index) {
+
+    //点击切换年份并切换对应数据内容
+    tabYear(item,index) {
       this.curIndex=index
       this.setCurrent(item)
       this.getInfoAndListById(this.SerialID);
     },
+
     //点击图片，跳转到img页面
     handleImg(){
       this.$router.push("/img")
     }
   },
 mounted() {
-  this.getInfoAndListById(this.SerialID)
-   this.seriesfalg()
+    this.getInfoAndListById(this.SerialID)
+    this.seriesfalg()
     this.getCityAddress()
 }
 };

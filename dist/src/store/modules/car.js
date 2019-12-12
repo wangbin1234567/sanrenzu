@@ -28,6 +28,10 @@ function sortCarList(list) {
 function formatCarList(list) {
     list = list.map(item => {
         item.key = `${item.exhaust_str}/${item.max_power_str} ${item.inhale_type}`;
+         //判断燃油量 千瓦 为空的情况下
+        if(item.exhaust_str==""&&item.max_power_str==""&&item.inhale_type==""){
+            item.key=""
+        }
         return item
     })
     let newList = [];
@@ -61,7 +65,7 @@ const mutations = {
         }
 
         // sessionStorage 的生命周期是在浏览器关闭前。在整个浏览器未关闭前，其数据一直都是存在的
-        sessionStorage.setItem("2017.official.yearArr",state.year)
+        // sessionStorage.setItem("2017.official.yearArr",state.year)
 
         // 拿到当前选择年份的数据
         let currentList = [];

@@ -128,8 +128,7 @@ export default {
                 }
             })
         },
-        btnList(){  
-           
+        btnList(){             
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
                  this.message="请输入真实的中文姓名"
                  this.hello="好"
@@ -144,16 +143,14 @@ export default {
                 this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
                 this.message="询价成功"
             }
-        }
+        },
     },
     mounted() {
-
         this.getCityAddress()
         let carId=this.carId
         let cityId=this.cityId
-        console.log(carId,cityId)
-        this.getDealer({carId,cityId})
-    }
+        this.getDealer({carId,cityId})    
+    },
 };
 </script>
 <style lang="scss" scoped>

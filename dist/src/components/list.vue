@@ -1,6 +1,6 @@
 <template>
   <div class="list-box">
-    <!-- {{currentList}} -->
+        <!-- 列表数据展示 -->
       <div v-if="currentList.length>0">
             <div class="list-item" v-for="(item,index) of currentList" :key="index">
                 <div class="item-content">
@@ -14,7 +14,7 @@
                         <span v-else>暂无</span>
                     </li>
                     <div class="item-btn">
-                        <button @click="handleChelun(listItem.car_id)">询问底价</button>
+                        <button @click="clickFloor(listItem.car_id)">询问底价</button>
                     </div>
                     </div>
                 </div>
@@ -25,18 +25,15 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  // props:["list"],
-  components: {},
-  data() {
-    return {};
-  },
   computed: {
     ...mapState({
       currentList: store => store.car.currentList
     })
   },
   methods: {
-    handleChelun(car_id){
+
+    //点击询问底价按钮跳转到经销商列表页面
+    clickFloor(car_id){
        localStorage.setItem("2017.official.curId",car_id)
         this.$router.push("/quotation")
     }
@@ -58,7 +55,7 @@ export default {
       line-height: 25px;
       color: #999;
       font-size: 13px;
-      padding: 0 10px;
+      padding: 3px 10px;
       background: #f4f4f4;
     }
   }
