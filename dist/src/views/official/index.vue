@@ -45,7 +45,7 @@ export default {
             this.$nextTick(()=>{
                 this.$loading.hide()
             })
-        },5000)
+        },500)
     }
 }
 </script>

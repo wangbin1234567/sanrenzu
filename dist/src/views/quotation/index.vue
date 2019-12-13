@@ -26,8 +26,9 @@
         </div>
     </div>
     <div class="content">
+        <div class="headerlist"></div>
         <div class="q-info" @click="typeClick">
-            <img :src="list.CoverPhoto" />
+            <img :src="list.Picture" />
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
             <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
@@ -167,7 +168,7 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: relative;
+        position: fixed;
         top: 0;
         p{
             color: #fff;
@@ -180,6 +181,9 @@ export default {
             vertical-align: -9%;
             margin-left: 5px;
         }
+    }
+    .headerlist{
+        height: 32px;
     }
     .q-tip {
         position: fixed;
@@ -279,7 +283,7 @@ export default {
         }
         .flex-column p:first-child {
             font-size: 18px;
-            margin-top: 7px;
+            line-height: 1;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;

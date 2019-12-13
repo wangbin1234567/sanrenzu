@@ -2,19 +2,19 @@
     <div class="dealer-info">
         <p class="tip">选择报价经销商</p>
         <ul>
-          <li data-hover="hover" data-id="8295" 
-          :class="{active: item.newsRemainingDays == 1}" 
-          @click="activeClick(item)" 
-          v-for="(item,index) in dealer" :key="index">
-            <p>
-              <span>{{item.dealerShortName}}</span>
-              <span>万</span>
-            </p>
-            <p>
-              <span>{{item.address}}</span>
-              <span>售{{item.saleRange}}</span>
-            </p>
-          </li>
+            <li data-hover="hover" data-id="8295" 
+            :class="{active: item.newsRemainingDays == 1}" 
+            @click="activeClick(item)" 
+            v-for="(item,index) in dealer" :key="index">
+                <p>
+                    <span>{{item.dealerShortName}}</span>
+                    <span>万</span>
+                </p>
+                <p>
+                    <span>{{item.address}}</span>
+                    <span>售{{item.saleRange}}</span>
+                </p>
+            </li>
         </ul>
       </div>
 </template>
