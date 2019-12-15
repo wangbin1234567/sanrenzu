@@ -20,14 +20,12 @@ const mutations = {
 
     }
 }
-
 const actions = {
     async getCarColor({commit},payload){
         let res = await getCarColor(payload);
         commit('updateColor', res.data);
     }
 }
-
 export default {
     namespaced: true,
     state,

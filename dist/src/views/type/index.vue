@@ -55,11 +55,10 @@ export default {
       carType(carid){
         
           this.setCarid(carid)
-        this.$router.push("/img")
+        this.$router.back("/img")
       }
   },
   mounted(){
-    
        this.setCurrent(JSON.parse(localStorage.getItem("2017.official.yearArr"))[1])
        this.getInfoAndListById(localStorage.getItem("id"))
   }

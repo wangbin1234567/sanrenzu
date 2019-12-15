@@ -1,10 +1,20 @@
 <template>
   <div id="app">
+    <van-skeleton
+  title
+  :row="10"
+  :loading="loading"
+>
+<div>
     <transition :name="transitionName">
-      <keep-alive>
-        <router-view class="transitionBody" :key="key"/>
-      </keep-alive>
+        <keep-alive>
+          <router-view class="transitionBody" :key="key"/>
+        </keep-alive>
     </transition>
+</div>
+ 
+</van-skeleton>
+     
   </div>
 </template>
 <script>
@@ -16,9 +26,13 @@ export default {
   },
    data() {
      return {
-       transitionName: "transitionLeft"
+       transitionName: "transitionLeft",
+       loading: true
      }
    },
+   mounted() {
+    this.loading = false;
+  },
    watch: { 
   '$route' (to, from) { 
    const arr = ['/type','/color'];
@@ -29,6 +43,7 @@ export default {
 }
 </script>
 <style lang="scss">
+
 *{
   margin:0;
   padding:0;
@@ -37,19 +52,11 @@ export default {
   box-sizing:border-box;
 }
 html,body,#app{
-   width:100%;
-   height:100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
-}
-html,body,#app{
   width: 100%;
   height: 100%;
 }
 .transitionBody{
- transition: all .3s ease; /*定义动画的时间和过渡效果*/
+ transition: all .2s ease; /*定义动画的时间和过渡效果*/
 }
  
 .transitionRight-leave-active {
@@ -59,9 +66,6 @@ html,body,#app{
 .transitionRight-enter {
   transform: translate(100%, 0); 
 }
-
-
-
  .transitionLeft-enter {
    transform: translate(0, 100%); 
  }

@@ -1,6 +1,5 @@
 <template>
   <div class="list-box">
-    <!-- {{currentList}} -->
     <div class="list-item" v-for="(item,index) of currentList" :key="index">
       <div class="item-content">
         <p>{{item.key}}</p>
@@ -22,11 +21,6 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  // props:["list"],
-  components: {},
-  data() {
-    return {};
-  },
   computed: {
     ...mapState({
       currentList: store => store.car.currentList

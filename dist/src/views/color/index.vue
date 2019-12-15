@@ -17,7 +17,6 @@
 
 <script>
 import {mapActions, mapState, mapMutations} from "vuex"
-// import axios from 'axios';
 export default {
 
    computed: {
@@ -47,8 +46,7 @@ export default {
     },
     setcolor(ColorId){
       this.setColorId(ColorId)
-      
-        this.$router.push("/img")
+        this.$router.back("/img")
     }
   }
 };

@@ -43,7 +43,6 @@ export default {
         },
         siteitem(CityName,cityId){
             let carId=localStorage.getItem("2017.official.curId")
-            console.log(carId)
             this.getDealer({carId,cityId})
             this.getCityName(CityName)
             this.falg()

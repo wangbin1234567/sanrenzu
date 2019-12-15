@@ -2,7 +2,7 @@
     <div class="car" v-if="Object.keys(carList).length">
       <div class="content">
         <div class="img" @click="handleImg">
-          <img :src="carList.CoverPhoto" alt />
+          <img :src="carList.CoverPhoto.replace('{0}',3)" alt />
           <span>{{carList.pic_group_count}}张图片</span>
         </div>
         <div class="info">
@@ -36,6 +36,7 @@ export default {
   components: {
     List
   },
+
   data() {
     return {
       SerialID: this.$route.query.id,

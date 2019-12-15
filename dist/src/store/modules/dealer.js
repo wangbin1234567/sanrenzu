@@ -12,7 +12,7 @@ const actions = {
     async getDealer({commit},payload){
         let params=payload
         let res = await getDealer(params);
-        console.log(res)
+        console.log(res.data)
         commit('updateDealerList', res.data.list);
     }
 }

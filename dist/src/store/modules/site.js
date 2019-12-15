@@ -32,7 +32,6 @@
    const actions= {
    async getMasterStairSite({commit},payload){
     let res=await getMasterStairSite(payload)
-    console.log(res.data)
     commit('provinceid',res.data)
    }
     }

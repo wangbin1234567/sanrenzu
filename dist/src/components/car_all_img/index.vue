@@ -1,61 +1,65 @@
 <template>
-    <ul class="cur_uls" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
-        <li v-for="(item,index) in curData.List" :key="index">
-            <img v-lazy="item.Url" alt="" @click="adds(curData.ID,index)">
-        </li>
-    </ul>
+    <Myscroll :data="SerialAllData">
+        <ul class="cur_uls">
+            <li v-for="(item,index) in SerialAllData.List" :key="index" @click="addItemSwipr(index)">
+                <span v-lazy:background-image="item.Url.replace('{0}',item.LowSize)"></span>
+                
+                 <!-- src="" :style="{backgroundImage:'url('++')'}" -->
+            </li>
+        </ul>
+    </Myscroll>
 </template>
 <script>
-import {mapState, mapMutations,mapActions} from "vuex"
+
+import {mapActions, mapState, mapMutations} from "vuex"
+import Myscroll from "../Myscroll/index.vue"
 export default {
-    computed:{
-        ...mapState({
-            curData:state=>state.carlist.curData
-        })
+    components:{
+        Myscroll
     },
     methods:{
         ...mapActions({
-            getMasterDataList:'carlist/getMasterDataList'
+            getMasterDataList:'series/getMasterDataList'
         }),
         ...mapMutations({
-            imgFalg:"series/imgFalg",
+            
+            addItemSwiprShou:'series/addItemSwiprShou'
         }),
-        adds(Id,key){
-            this.imgFalg(key)
-            let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
-            let Page=1
-            let PageSize=30
-            this.getMasterDataList({SerialID,Id,Page,PageSize})
-        },
-        touchstart(e){
-            console.log('this-------------------',this)
-            console.log("touchstart------------",e)
-        },
-        touchmove(e){
-             console.log("touchmove------------",e)
-        },
-        touchend(e){
-             console.log("touchend------------",e)
+        addItemSwipr(index){
+            this.$emit("update:swiperShou",true)
+            this.addItemSwiprShou(index)
+            
         }
+    },
+    mounted(){
+        this.getMasterDataList()
+    },
+    computed:{
+        ...mapState({
+            SerialAllData:state=>state.series.SerialAllData
+        })
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .cur_uls{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
+    flex: 1;
+    overflow-y: scroll
+}
     li{
-        width: 33.3%;
-        height: 123px;
-        padding: 2px 2px;
-        img{
+        float: left;
+        margin-right: .06rem;
+        margin-bottom: .06rem;
+        width: 121px;
+        height: 121px;
+        padding: 0;
+        
+        span{
             width: 100%;
+            display: inline-block;
             height: 100%;
             background-size: cover  
         }
     }
-}
 </style>

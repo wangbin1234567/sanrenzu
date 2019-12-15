@@ -108,7 +108,6 @@ export default {
   },
   watch:{
       quoutDataCty(){
-          console.log(this.carId,this.quoutDataCty.CityID)
            this.getDealer({carId:this.carId,cityId:this.quoutDataCty.CityID})
       }
   },
@@ -122,8 +121,7 @@ export default {
             getMasterStair:'stair/getMasterStair',
             getMasterListQuout:'quotation/getMasterListQuout'
           }),
-        handleAddress(aa){
-            console.log('aa--------------------',aa)
+        handleAddress(){
            this.showAddress = true
         },
          btnLists(){

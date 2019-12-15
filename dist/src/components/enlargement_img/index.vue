@@ -1,13 +1,12 @@
 <template>
     <div class="magnify_img">
-        <van-swipe @change="onChange" :duration="3000" :initial-swipe="seriesIndex-1" :loop='false'>
-            <van-swipe-item v-for="(item,index) in curData.List" :key="index">
-                <li @click="removeFalg">
-                    <img v-lazy="curData.List[index].Url" alt="" class="swiper_img">
-                </li>
+
+        <van-swipe indicator-color="white" :loop="false" @change="onChange" :initial-swipe="swiperIndex">
+            <van-swipe-item v-for="(item,index) in SerialAllData.List" :key="index" @click="$emit('update:swiperShou',false)">
+                 <li><img v-lazy="item.Url.replace('{0}',item.LowSize)" alt="" class="swiper_img"></li>
             </van-swipe-item>
             <div class="custom-indicator" slot="indicator">
-                {{ seriesIndex}}/{{curData.Count}}
+                <span>{{ swiperIndex+1}}/{{SerialAllData.Count}}</span>
             </div>
             <div class="magnify_img_footer" slot="indicator">
                 <button @click="clkButton">
@@ -15,55 +14,35 @@
                 </button>
             </div>
         </van-swipe>
+        <!-- @click="$emit('updata:swiperShou',false) -->
     </div>
 </template>
-<script>
-import { Swipe, SwipeItem } from 'vant';
+ <script>
 import {mapState, mapMutations, mapActions} from "vuex"
 export default {
-    components: {
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]:SwipeItem
-    },
-    watch:{
-        seriesIndex(){
-            if(this.seriesIndex%25===0){
-                let SerialID=this.$route.query.SerialID||localStorage.getItem("id")
-                let ImageID=this.curData.ID
-                let Page=Math.floor(this.seriesIndex/25)+1
-                if(this.numberColorId){
-                    this.getMasterDataListAdd({SerialID,ImageID,Page,PageSize:30,ColorID:this.numberColorId})
-                }else{
-                     this.getMasterDataListAdd({SerialID,ImageID,Page,PageSize:30})
-                }
-                
-            }
-        }
-    },
+
     methods: {
         ...mapMutations({
-            setSeries:'series/setSeries',
-             seriesfalg:'series/seriesfalg'
+            setSwiperIndex:'series/setSwiperIndex',
         }),
         ...mapActions({
-            getMasterDataListAdd:'carlist/getMasterDataListAdd'
+            getMasterDataList:'series/getMasterDataList'
         }),
         onChange(index) {
-            index+=1
-            this.setSeries(index)
+            if(index%29==0){
+                this.getMasterDataList()
+            }
+            this.setSwiperIndex(index)
         },
         clkButton(){
-            this.$router.history.push("/quotation")
+            this.$router.back("/quotation")
         },
-        removeFalg(){
-             this.seriesfalg()
-        }
+
    },
     computed:{
         ...mapState({
-            curData:state=>state.carlist.curData,
-            seriesIndex:state=>state.series.seriesIndex,
-            numberColorId:state=>state.series.numberColorId,
+            SerialAllData:state=>state.series.SerialAllData,
+            swiperIndex:state=>state.series.swiperIndex
         })
     }
 }
@@ -73,9 +52,9 @@ export default {
 .magnify_img{
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
-    z-index: 100;
+    z-index: 200;
     left: 0;
     background: #000;
 }

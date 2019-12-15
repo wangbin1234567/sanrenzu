@@ -7,19 +7,24 @@
             <p @click="seriestype">车款</p>
         </header>
         <div class="main_series">
-            <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item"/>
+            <SeriesImg v-for="(item,index) in seriesDate" :key="index" :item="item" :index="index" :serialShow.sync="serialShow" :swiperShou.sync="swiperShou"/>
         </div>
-        {{EnlargementImgfalg}}
-       <EnlargementImg v-if="EnlargementImgfalg"/>
-       <carAllImg v-if="carAllImg"/>
+        <EnlargementImg v-if="swiperShou" :swiperShou.sync="swiperShou"/>
+       <div class="main_content" v-if="serialShow">
+            <carAllImg :swiperShou.sync="swiperShou"/>
+       </div>
+          
     </div>
 </template>
 
 <script>
 
-import {mapActions,mapState} from "vuex"
+import {mapActions, mapState, mapMutations} from "vuex"
+//车分类的页面
 import SeriesImg from "@/components/series_img/index.vue"
+
 import EnlargementImg from "@/components/enlargement_img/index.vue"
+//汽车图片展示的页面
 import carAllImg from "@/components/car_all_img/index.vue"
 export default {
     components:{
@@ -29,51 +34,50 @@ export default {
     },
      data(){
          return {
-             SerialID:this.$route.query.SerialID||localStorage.getItem("id")
+             SerialID:this.$route.query.SerialID||localStorage.getItem("id"),
+             swiperShou:false,
+             serialShow:false
          }
      },
     methods:{
         ...mapActions({
-            getMasterSeries:'series/getMasterSeries'
+            getMasterSeries:'series/getMasterSeries',
+            
+        }),
+        ...mapMutations({
+            setSeriesId:'series/setSeriesId'
         }),
         seriescolor(){
+            //点击跳转到颜色的页面
             this.$router.push({path:"/color",query:{SerialID:this.$route.query.SerialID}})
         },
         seriestype(){
+             //点击跳转到车款的页面
             this.$router.push("/type")
-            
         }
     },
-    // watch:{
-    //     numberColorId(){
-    //         this.getMasterSeries(this.SerialID)
-    //     },
-    //     numberCarid(){
-    //         this.getMasterSeries(this.SerialID)
-    //     }
-    // },
     computed:{
         ...mapState({
+            //汽车分类的数据
             seriesDate:state=>state.series.seriesDate,
-            EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
-            carAllImg:state=>state.series.carAllImg,
+            // 控制汽车图片展示的组件
         })
     },
     mounted(){
+        this.setSeriesId(this.SerialID)
         this.getMasterSeries(this.SerialID)
     }
 }
 </script>
 <style lang="scss" scoped>
 .series_wrap{
+    // overflow-y: auto;
+    top: 0;
+    background: red;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #eee;
 }
 .series_wrap_header{
-    width: 100%;
     height: 40px;
     display: flex;
     background: #ffffff;
@@ -87,5 +91,14 @@ export default {
 .main_series{
     flex: 1;
     overflow: auto;
+}
+.main_content{
+    height: 100%;
+    width: 100%;
+    position:fixed;
+    z-index: 2000;
+    top: 0;
+    background: #ffffff;
+    overflow: hidden;
 }
 </style>

@@ -58,10 +58,10 @@ export default {
   transform: translateX(75%);
 }
 .drawer-enter-active {
-  transition: all 1s ease;
+  transition: all 0.3s ease;
 }
 .drawer-leave-active {
-  transition: all 0.8s ease;
+  transition: all 0.3s ease;
 }
 .home_content{
   flex: 1;

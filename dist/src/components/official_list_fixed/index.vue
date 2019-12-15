@@ -3,13 +3,12 @@
         ref="offcialref"
         @touchstart="touchstart"
         @touchmove="touchmove"
-        @touchend="touchend"
+
         >
         <li>#</li>
         <li v-for="(item,index) in dataList" :key="index" @click="itemskip(item.lets)">{{item.lets}}</li>
     </div>
 </template>
-
 <script>
 export default {
     props:{
@@ -18,13 +17,9 @@ export default {
             dataList:"dataList"
         }
     },
-    watch:{
-        //watch监听dataList数据的改变，获取到他减去该元素的高度，然后给需要滚动的元素原型上面添加offsetTop
-        dataList:function(){
-            this.$nextTick(()=>{
-                this.offsetTop=(window.innerHeight - this.$refs.offcialref.offsetHeight)/2
-                // console.log(window.innerHeight - this.$refs.offcialref.offsetHeight)
-            })
+    data(){
+        return{
+            getOffheight:null
         }
     },
     methods:{
@@ -32,13 +27,13 @@ export default {
             document.getElementById(lets).scrollIntoView(true);
         },
         touchstart(e){
-            let y = e.changedTouches[0].pageY-this.offsetTop
-            let index = Math.floor(y/18)
-            console.log(index)
-            
+            this.getOffheight=(window.outerHeight - this.$refs.offcialref.offsetHeight)/2
+            let y = e.changedTouches[0].pageY-this.getOffheight
+            let index = Math.floor(y/18)-1
+            document.getElementById(this.dataList[index].lets).scrollIntoView(true);
         },
         touchmove(e){
-             let y = e.changedTouches[0].pageY-this.offsetTop
+             let y = e.changedTouches[0].pageY-this.getOffheight
             let index = Math.floor(y/18)-1
      
             if(index > this.dataList.length-1){
@@ -49,9 +44,7 @@ export default {
             
             document.getElementById(this.dataList[index].lets).scrollIntoView(true);
         },
-        touchend(e){
-            console.log('e----------------',e)
-        }
+       
     }
 }
 </script>
