@@ -1,14 +1,17 @@
 <template>
     <div class="magnify_img">
+        <!-- 轮播效果的展示 -->
         <van-swipe @change="onChange" :duration="9000" :initial-swipe="seriesIndex-1" :loop='false'>
             <van-swipe-item v-for="(item,index) in curData.List" :key="index">
                 <li @click="removeFalg">
                     <img v-lazy="curData.List[index].Url" alt="" class="swiper_img">
                 </li>
             </van-swipe-item>
+            <!-- 滑动到第几张图片的展示 -->
             <div class="custom-indicator" slot="indicator">
                 {{ seriesIndex}}/{{curData.Count}}
             </div>
+            <!-- 询最低价按钮的展示 -->
             <div class="magnify_img_footer" slot="indicator">
                 <button @click="clkButton">
                     询最低价
@@ -27,10 +30,10 @@ export default {
     },
     watch:{
         seriesIndex(){
-            if(this.seriesIndex%25===0){
+            if(this.seriesIndex%28===0){
                 let SerialID=localStorage.getItem("id")
                 let Id=this.curData.ID
-                let Page=Math.floor(this.seriesIndex/25)+1
+                let Page=Math.floor(this.seriesIndex/28)+1
                 this.getMasterDataListAdd({SerialID,Id,Page,PageSize:30})
             }
         }
@@ -42,15 +45,17 @@ export default {
         ...mapActions({
             getMasterDataListAdd:'carlist/getMasterDataListAdd'
         }),
+        // 对应图片的下标的展示
         onChange(index) {
             index+=1
             this.setSeries(index)
         },
+        //点击询最低价跳转到经销商列表页面
         clkButton(){
             this.$router.history.push("/quotation")
         },
          removeFalg(){
-             this.seriesfalg()
+            //  this.seriesfalg()
         }
    },
     computed:{

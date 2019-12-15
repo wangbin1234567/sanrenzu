@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="loading">
     <div>
-      <img src="http://h5.chelun.com/2017/official/img/loading.gif" />
+      <img src="../assets/loading.gif" />
       <p>{{ text }}</p>
     </div>
   </div>

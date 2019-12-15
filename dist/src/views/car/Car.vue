@@ -30,7 +30,7 @@
       </div>
 
         <!-- 列表数据组件 -->
-      <carList></carList>
+      <CarList></CarList>
 
       <!-- 底部按钮展示 -->
       <div class="inquiry-btn" @click="clickFloor">
@@ -40,12 +40,13 @@
     </div>
 </template>
 <script>
-import carList from "../../components/list.vue";
+//引入年份列表数据组件
+import CarList from "../../components/list.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: {},
   components: {
-    carList
+    CarList
   },
   data() {
     return {
@@ -94,7 +95,7 @@ export default {
     //点击图片，跳转到img页面
     handleImg(){
       this.$router.push("/img")
-    }
+    },
   },
 mounted() {
     this.getInfoAndListById(this.SerialID)

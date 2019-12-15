@@ -4,7 +4,7 @@
             <div ref="listWrapper">
                 <slot>
                     <ul class="list-content">
-                        <li @click="clickItem($event,item)" class="list-item" v-for="item in data">{{item}}</li>
+                        <li @click="clickItem($event,item)" class="list-item" v-for="(item,index) in data" :key="index">{{item}}</li>
                     </ul>
                 </slot>
             </div>

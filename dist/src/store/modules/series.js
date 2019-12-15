@@ -50,9 +50,7 @@ const state={
      if(state.carId){
       params.CarId=state.carId
      }
-     console.log(params)
        let res=await getMasterSeries(params)
-       console.log('jzm----------------------',res)
        commit('getSeries',res.data)
    }
     }

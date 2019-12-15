@@ -46,9 +46,6 @@ function formatCarList(list) {
             })
         }
     })
-
-    window.console.log(state.currentList)
-
     return newList
 }
 const mutations = {
@@ -56,6 +53,7 @@ const mutations = {
         state.carList = payload
         // 拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
+        //初始年份为全部
         state.year = ["全部"]
         state.year = state.year.concat([...new Set(year)])
 
@@ -63,9 +61,6 @@ const mutations = {
         if(year==""){
             state.year=""
         }
-
-        // sessionStorage 的生命周期是在浏览器关闭前。在整个浏览器未关闭前，其数据一直都是存在的
-        // sessionStorage.setItem("2017.official.yearArr",state.year)
 
         // 拿到当前选择年份的数据
         let currentList = [];

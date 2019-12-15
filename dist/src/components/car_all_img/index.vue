@@ -4,10 +4,33 @@
             <img v-lazy="item.Url" alt="" @click="adds(curData.ID,index)">
         </li>
     </ul>
+    <!-- <Scroll 
+     ref="scroll"
+      :data="value"
+      :pullDownRefresh="pullDownRefreshObj"
+      :pullUpLoad="pullUpLoadObj"
+      @pullingDown="onPullingDown"
+       @pullingUp="onPullingUp"
+    >
+       <ul>
+           <div 
+            :key="index" 
+            :data-bg="item.Url.replace('{0}',item.LowSize)"
+             @click="showSwiper(index)"
+            v-for="(item, index) in value">               
+           </div>
+       </ul>
+    </Scroll> -->
 </template>
 <script>
-import {mapState, mapMutations,mapActions} from "vuex"
+import {mapState,mapActions,mapMutations} from "vuex"
+// import Scroll from "../better-scroll/scroll.vue"
+// import CommonList from "../better-scroll/CommonList.vue"
 export default {
+    components:{
+    //   Scroll,
+    //   CommonList 
+    },
     computed:{
         ...mapState({
             curData:state=>state.carlist.curData
