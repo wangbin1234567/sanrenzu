@@ -5,29 +5,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import { mapMutations, mapActions } from 'vuex'
-
-export default {
-    props:["item"],
-    methods:{
-        ...mapActions({
-            getDealer: 'dealer/getDealer',
-        }),
-        ...mapMutations({
-            getListAddress: 'city/getListAddress'
-        }),
-        siteitem(item){
-            let carId = localStorage.getItem('2017.official.curId')
-            let cityId = item.CityID;
-            // let cityName = item.CityName;
-            this.$emit("siteitemlist",item.CityName),
-            this.getListAddress(item)
-            this.getDealer({cityId,carId})
-            console.log(item,"11111111111111111");
-            
-=======
-import { mapMutations } from "vuex"
+import { mapMutations, mapActions } from "vuex"
 export default {
     props:["item"],
     methods:{
@@ -35,11 +13,17 @@ export default {
            setAddress: 'city/setAddress',
            setCityId: 'city/setCityId'
           }),
+            ...mapActions({ 
+                 getDealer: 'dealer/getDealer'
+        }),
         siteitem(item){
            this.setAddress(item.CityName)
            this.setCityId(item.CityID)
+            let carId=localStorage.getItem("2017.official.curId") || ""
+            //  let cityId=localStorage.getItem("cityId") || ""
+            let cityId=item.CityID
+             this.getDealer({carId,cityId})
            this.$emit("siteitemlist")
->>>>>>> jyh
         }
     }
 }   

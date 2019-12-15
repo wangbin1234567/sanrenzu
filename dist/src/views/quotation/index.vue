@@ -1,121 +1,92 @@
 <template>
-  <div class="wrap-q">
-    <header @click="Tclick()">
-        <p>可向多个商家咨询最低价，商家及时回复</p>
-<<<<<<< HEAD
-        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
-=======
-        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="" />
->>>>>>> jyh
-    </header>
-    <div class="q-tip" v-if="flog" @click="Tclick">
-        <div>
-            <div class="flex-row">
-                <li>
-<<<<<<< HEAD
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png">
-                    <span>安全高效</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
-                    <span>省心省力</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
-=======
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png" />
-                    <span>安全高效</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png" /> 
-                    <span>省心省力</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png" /> 
->>>>>>> jyh
-                    <span>贴心服务</span>
-                </li>
-            </div> 
+    <div class="wrap-q">
+        <header @click="Tclick()">
+            <p>可向多个商家咨询最低价，商家及时回复</p>
+            <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
+        </header>
+        <div class="q-tip" v-if="flog" @click="Tclick">
             <div>
-                <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
+                <div class="flex-row">
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-l.png">
+                        <span>安全高效</span>
+                    </li> 
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
+                        <span>省心省力</span>
+                    </li> 
+                    <li>
+                        <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
+                        <span>贴心服务</span>
+                    </li>
+                </div> 
+                <div>
+                    <li>私人信息严格保密，最新报价立等可取</li> <li>足不出户，提交即可获得多家经销商的最低价格</li>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="content">
-<<<<<<< HEAD
-        <div class="q-info" @click="typeClick">
-            <img :src="list.CoverPhoto" />
-=======
-        <div class="q-info" @click="typeClick" v-if="list">
-            <img :src="list.CoverPhoto.replace('{0}',3)" />
->>>>>>> jyh
-            <div class="flex-column">
-            <p>{{list.AliasName}}</p>
-            <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
+        <div class="content" @scroll="onscroll($event)">
+            <!-- <div class="header"></div> -->
+            <div class="q-info" @click="typeClick" v-if="Object.keys(list).length">
+                <img :src="list.Picture" />
+                <div class="flex-column">
+                <p>{{list.AliasName}}</p>
+                <p class="two">{{ carPage.market_attribute.year}}款 {{ carPage.car_name}}</p>
+                <p class="two" v-if="!sortArr1">车款</p>
+                </div>
             </div>
-        </div>
-        <div class="self-info">
-            <p class="tip">个人信息</p>
-            <ul>
-            <li>
-                <span>姓名</span>
-                <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" v-model="username"/>
-            </li>
-            <li>
-                <span>手机</span>
-                <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
-            </li>
-            <li>
-                <span>城市</span>
-                <span @click="handleAddress">{{address}}</span>
-            </li>
-            </ul>
-            <div class="quotation">
-            <button data-hover="hover" @click="btnList()">询最低价</button>
+            <div class="self-info">
+                <p class="tip">个人信息</p>
+                <ul>
+                <li>
+                    <span>姓名</span>
+                    <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" v-model="username"/>
+                </li>
+                <li>
+                    <span>手机</span>
+                    <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="phone"/>
+                </li>
+                <li>
+                    <span>城市</span>
+                    <span @click="handleAddress">{{address}}</span>
+                </li>
+                </ul>
+                <div class="quotation">
+                <button data-hover="hover" @click="btnList()">询最低价</button>
+                </div>
             </div>
+            <!-- !!!!!!!! -->
+            <Dealer :dealer="dealerList"/>
+            <div class="supp-info"></div>
+        </div> 
+        <div class="priceBtn" v-if="priceFlag" id="priceBtn">
+           询最低价
         </div>
-        <!-- !!!!!!!! -->
-        <Dealer :dealer="dealerList"/>
          <!-- 验证弹窗 -->  
-        <Verify @btnLists="btnLists" 
-        :message="message" 
-        :hello="hello" 
-        v-show="isUser" 
-        @btnList="btnList"></Verify>  
+            <Verify @btnLists="btnLists" 
+            :message="message" 
+            :hello="hello" 
+            v-show="isUser" 
+            @btnList="btnList"></Verify>  
+        <transition name="scroll-top">
+            <div class="wrap" v-show="showAddress">
+                <Address :showAddress.sync = "showAddress"/>
+            </div>
+        </transition>
     </div>
-    <transition name="scroll-top">
-<<<<<<< HEAD
-        <div class="wrap" v-show="showAddress">
-            <Address :showAddress.sync = "showAddress"/>
-        </div>
-=======
-         <div class="wrap" v-show="showAddress">
-                <Address :showAddress.sync="showAddress" />
-         </div>
->>>>>>> jyh
-    </transition>
-  </div>
 </template>
 
 
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
-<<<<<<< HEAD
-import Address from "../site/index"
-=======
 import Address from "../../components/Address"
->>>>>>> jyh
 import {mapActions,mapState} from "vuex"
 export default {
     components:{
         Dealer,
         Verify,
-<<<<<<< HEAD
         Address,
-=======
-        Address
->>>>>>> jyh
     },
     data() {
         return {
@@ -124,20 +95,21 @@ export default {
             phone:"",
             username:"",
             carId: localStorage.getItem("2017.official.curId") || "",
-            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr"))[0].list[0] || [],
+            sortArr: JSON.parse(localStorage.getItem("2017.official.sortArr")).length ? JSON.parse(localStorage.getItem("2017.official.sortArr"))[0].list[0] : "",
             isUser:false,//默认弹窗隐藏
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
             showAddress: false,
-<<<<<<< HEAD
+            sortArr1: JSON.parse(localStorage.getItem("2017.official.sortArr")).length,
+            priceFlag: false
         };
     },
     computed: {
         ...mapState({
             dealerList: state=>state.dealer.dealerList, 
             address: state => state.city.address,
-            cityId: state => state.city.cityID,
-            
+            cityId: state => state.city.cityId,
+            carPage: state=>state.car.carPage
         })
     },
     methods: {
@@ -152,30 +124,6 @@ export default {
             this.isUser=false
             this.hello=""
             this.message=""
-=======
-            cityId: localStorage.getItem("cityId") || ""
-        };
-    },
-    computed: {
-   ...mapState({
-     dealerList: state=>state.dealer.dealerList,
-     address: state=>state.city.address,
-    //  cityId: state=>state.city.cityId
-   })
-  },
-    methods: {
-         ...mapActions({
-           getCityAddress: 'city/getCityAddress',
-           getDealer: 'dealer/getDealer'
-          }),
-        handleAddress(){
-           this.showAddress = true
-        },
-         btnLists(){
-              this.isUser=false 
-              this.hello=""
-              this.message=""
->>>>>>> jyh
         },
         Tclick(){
             this.flog = !this.flog
@@ -188,7 +136,6 @@ export default {
                 }
             })
         },
-<<<<<<< HEAD
         btnList(){
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
                 this.message="请输入真实的中文姓名"
@@ -198,67 +145,48 @@ export default {
                 this.isUser=true 
                 this.hello="好"
                 this.message="请输入正确的手机号"
-=======
-        btnList(){  
-           
-            if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
-                 this.message="请输入真实的中文姓名"
-                 this.hello="好"
-                 this.isUser=true   
-            }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
-                 this.isUser=true 
-                 this.hello="好"
-                 this.message="请输入正确的手机号"
->>>>>>> jyh
             }else {
                 this.isUser=true
                 this.hello="确定"
                 this.pic="http://h5.chelun.com/2017/official/img/q-icon.png"
                 this.message="询价成功"
             }
+        },
+        onscroll(e){
+            console.log(e.target.scrollTop)
+            console.log(document.getElementById("priceBtn"))
+            if(e.target.scrollTop>321){
+             this.priceFlag=true     
+            }else{
+                  this.priceFlag=false  
+            }
         }
     },
-<<<<<<< HEAD
     mounted() {
         this.getCityAddress()
         let carId = this.carId;
-        let cityId = this.cityId;
+        // let cityId = localStorage.getItem("cityId")
+        let cityId=this.cityId || localStorage.getItem("cityId")
         console.log(carId,cityId,"===========???????????");
         
         this.getDealer({carId,cityId})
     },
-=======
-    // created() {
-    // 	this.$loading.show() // 显示loading
-    // },
-    mounted() {
-        this.getCityAddress()
-        let carId=this.carId
-        let cityId=this.cityId
-        console.log(carId,cityId)
-        this.getDealer({carId,cityId})
-        // .then(res => {
-	    //       this.$loading.hide() // 隐藏loading
-	    //       // 其他操作
-	    //     })
-    }
->>>>>>> jyh
 };
 </script>
 <style lang="scss" scoped>
     .wrap-q {
         width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     header {
-        height: 32.8px;
-        line-height: 32.8px;
+        height: 30px;
+        line-height: 30px;
         width: 100%;
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: relative;
-        top: 0;
         p{
             color: #fff;
             font-size: 15px;
@@ -314,16 +242,16 @@ export default {
     }
     .flex-row{
         display: flex;
-        height: 79px;
-        padding: 15px 0;
+        height: 66px;
+        padding: 10px 0;
         li{
             flex-direction: column;
             flex: 1;
-            height: 79px;
+            height: 46px;
             text-align: center;
             img{
-                width: 33px;
-                height: 33px;
+                width: 30px;
+                height: 30px;
                 text-align: center;
             }
             span{
@@ -341,14 +269,16 @@ export default {
         li {
             list-style: initial;
             margin-left: 5px;
-            font-size: 12px;
+            font-size: 10px;
             color: silver;
         }
     }
     .content {
+        flex: 1;
         width: 100%;
-        height: 100%;
-        overflow: auto;
+        height: auto;
+        overflow-y: scroll;
+        background: #f4f4f4;
     }
     .q-info {
         width: 100%;
@@ -356,6 +286,7 @@ export default {
         padding: 16px 9px 12px;
         display: flex;
         position: relative;
+        background: #fff;
         img {
             width: 115px;
             height: 70px;
@@ -369,9 +300,8 @@ export default {
         }
         .flex-column p:first-child {
             font-size: 18px;
-            margin-top: 7px;
         }
-        .flex-column p:nth-child(2) {
+        .two {
             font-size: 16px;
             color: #333;
             margin: 13px 0 0;
@@ -471,5 +401,23 @@ export default {
     background: #fff;
     z-index: 100;
     overflow: auto;
+}
+.header{
+    height: 32px;
+    background: #fff;
+}
+.priceBtn{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  line-height: 50px;
+  background: #3aacff;
+  font-size: 17px;
+  padding: 1px 6px;
+  color: #fff;
+  text-align: center;
+}
+.supp-info{
+    height: 20px;
 }
 </style>

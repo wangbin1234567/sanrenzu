@@ -12,7 +12,7 @@
             <span>{{listItem.market_attribute.dealer_price_min}}起</span>
           </li>
           <div class="item-btn">
-            <button @click="handleChelun(listItem.car_id)">询问底价</button>
+            <button @click="handleChelun(listItem)">询问底价</button>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   // props:["list"],
   components: {},
@@ -33,8 +33,12 @@ export default {
     })
   },
   methods: {
-    handleChelun(car_id){
-       localStorage.setItem("2017.official.curId",car_id)
+ ...mapMutations({
+     setcarPage: "car/setcarPage"
+    }),
+    handleChelun(listItem){
+       this.setcarPage(listItem)
+       localStorage.setItem("2017.official.curId",listItem.car_id)
         this.$router.push("/quotation")
     }
   }

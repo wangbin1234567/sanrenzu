@@ -5,11 +5,7 @@
             <p>{{item.Count}}张</p>
         </div>
         <li v-for="(itemimg,key) in item.List" :key="key" @click="blowImage(item.Id,key)">
-<<<<<<< HEAD
-            <span src='' :style="{backgroundImage:'url('+itemimg.Url+')'}"></span>
-=======
             <img src='' :style="{backgroundImage:'url('+itemimg.Url+')'}">
->>>>>>> jyh
         </li>
     </div>
 </template>
@@ -39,23 +35,17 @@ export default {
             getMasterDataList:'carlist/getMasterDataList'
         }),
         addList(Id){
-<<<<<<< HEAD
-            let SerialID=this.$route.query.SerialID
-=======
+            localStorage.setItem("Id",Id)
             let SerialID=localStorage.getItem("id")
->>>>>>> jyh
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
             this.setCarAllImg()
+            this.$router.push("/url")
         },
         blowImage(Id,key){
             this.imgFalg(key)
-<<<<<<< HEAD
-            let SerialID=this.$route.query.SerialID
-=======
             let SerialID=localStorage.getItem("id")
->>>>>>> jyh
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
@@ -72,20 +62,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-<<<<<<< HEAD
-    li{
-        width: 33.3%;
-        height: 123px;
-        padding: 2px 2px;
-        span{
-            width: 100%;
-            height: 100%;
-            display: inline-block;
-            background-size: cover  
-        }
-    }
-=======
-    background: #fff;
     li{
         width: 123px;
         height: 123px;
@@ -99,10 +75,9 @@ export default {
     li:nth-child(3n+4) {
     margin-right: 0;
 }
-    li:nth-child(6n+6) {
+    li:nth-child(6n+5) {
     margin-bottom: 6px;
     }
->>>>>>> jyh
 }
 .image_ps{
     position: absolute;
@@ -110,16 +85,6 @@ export default {
     width:123px;
     top: 0;
     left: 0;
-<<<<<<< HEAD
-    color: #ffffff;
-    background: rgba(56,90,130,.5);
-    font-size: 13px;
-     text-align: center;
-    .image_ps_wan{
-        margin-top: 45px;
-        font-size: 14px;
-        margin-bottom: 3px;
-=======
     background: rgba(56,90,130,.5);
     text-align: center; 
     .image_ps_wan{
@@ -131,7 +96,6 @@ export default {
     p:nth-child(2){
          color: #ffffff;
         font-size: 13px;
->>>>>>> jyh
     }
 }
 </style>

@@ -2,17 +2,10 @@
     <div class="dealer-info">
         <p class="tip">选择报价经销商</p>
         <ul>
-<<<<<<< HEAD
-          <li data-hover="hover" data-id="8295" 
-          :class="{active: item.newsRemainingDays == 1}" 
-          @click="activeClick(item)" 
-          v-for="(item,index) in dealer" :key="index">
-=======
           <li data-hover="hover" data-id="8295" :class="{active: item.newsRemainingDays == 1}" @click="activeClick(item)" v-for="(item,index) in dealer" :key="index">
->>>>>>> jyh
             <p>
               <span>{{item.dealerShortName}}</span>
-              <span>万</span>
+              <span>{{item.promotePrice}}万</span>
             </p>
             <p>
               <span>{{item.address}}</span>
@@ -51,25 +44,6 @@
         }
         ul{
             background: #fff;
-<<<<<<< HEAD
-            padding: 0 10px;
-            li{
-                position: relative;
-                padding: 15px 0 15px 25px;
-                border-bottom: 1px solid #eee;
-                box-sizing: border-box;
-                height: 90px;
-                p:first-child {
-                    font-size: 16px;
-                    span:last-child {
-                        font-size: 14px;
-                        float: right;
-                        color: red;
-                    }
-                }
-                p:nth-child(2) {
-                    margin-top: 6px;
-=======
             padding: 0 9px;
             li{
                 position: relative;
@@ -87,22 +61,20 @@
                 }
                 p:nth-child(2) {
                     margin-top: 5px;
->>>>>>> jyh
                     font-size: 12px;
                     color: #a2a2a2;
                     span:first-child {
                         display: inline-block;
-<<<<<<< HEAD
-                        max-width: 254px;
-=======
                         max-width: 230px;
->>>>>>> jyh
                     }
                     span:nth-child(2) {
                         float: right;
                     }
                 }
             }
+            li:last-child {
+    border-bottom: none;
+}
         }
     }
     .dealer-info ul li:before {
@@ -119,11 +91,7 @@
         -webkit-transform: translate3d(0,-50%,0);
         transform: translate3d(0,-50%,0);
     }
-<<<<<<< HEAD
-    .dealer-info ul li.active:before {
-=======
     .dealer-info li.active:before {
->>>>>>> jyh
         background: #3aacff;
         border: none;
     }

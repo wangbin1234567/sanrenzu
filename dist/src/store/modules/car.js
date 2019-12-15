@@ -6,12 +6,9 @@ const state = {
     carList: {},
     current: "全部",
     year: ["全部"],
-<<<<<<< HEAD
-    currentList: []
-=======
     currentList: [],
-    carId: ""
->>>>>>> jyh
+    carId: "",
+    carPage: ""
 }
 //给车款排序
 function sortCarList(list) {
@@ -46,11 +43,7 @@ function formatCarList(list) {
             })
         }
     })
-<<<<<<< HEAD
-    // window.console.log(state.currentList)
-=======
     window.console.log(state.currentList)
->>>>>>> jyh
     return newList
 }
 const mutations = {  
@@ -73,13 +66,9 @@ const mutations = {
         currentList = sortCarList(currentList)
         currentList = formatCarList(currentList)
         state.currentList = currentList
+        state.carPage=currentList[0].list[0]
+        console.log(  state.carPage)
         localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
-<<<<<<< HEAD
-        // window.console.log(state.currentList)
-    },
-    setCurrent(state,payload){
-        state.current=payload
-=======
         window.console.log(state.currentList)
     },
     setCurrent(state,payload){
@@ -87,8 +76,14 @@ const mutations = {
     },
     setCarId(state,payload){
       state.carId=payload
-      localStorage.setItem("2017.official.curId",state.carId) 
->>>>>>> jyh
+      if(payload){
+           localStorage.setItem("2017.official.curId",state.carId)
+      }else{
+        localStorage.setItem("2017.official.curId","")
+      } 
+    },
+    setcarPage(state,payload){
+          state.carPage=payload
     }
 }
 const actions = {
