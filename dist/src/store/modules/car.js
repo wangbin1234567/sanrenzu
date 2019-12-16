@@ -3,11 +3,10 @@ import {
 } from "@/services/index.js"
 
 const state = {
-    carList: {},
+    carList: {},//详情页面基本数据
     current: "全部",
     year: ["全部"],
-    currentList: [],
-    carId: ""
+    currentList: [],//详情列表数据
 }
 //给车款排序
 function sortCarList(list) {

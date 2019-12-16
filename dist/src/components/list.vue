@@ -1,7 +1,7 @@
 <template>
   <div class="list-box">
         <!-- 列表数据展示 -->
-      <div v-if="currentList.length>0">
+      <div v-if="currentList.length">
             <div class="list-item" v-for="(item,index) of currentList" :key="index">
                 <div class="item-content">
                     <p>{{item.key}}</p>
@@ -20,6 +20,7 @@
                 </div>
             </div>
       </div>
+	
   </div>
 </template>
 <script>
