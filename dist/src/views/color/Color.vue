@@ -6,7 +6,7 @@
         <span v-for="(item, index, key) of colorList" :key="index" @click="handleC(item,key)" :class="{active: curIndex==key}">{{index}}</span>
       </p>
       <ul>
-        <li v-for="(v,i) in arr" :key="i" @click="clickColor(v.ColorId)">
+        <li v-for="(v,i) in arr" :key="i" @click="clickColor(v)">
           <span :style="{background: v.Value}"></span>
           {{v.Name}}
         </li>
@@ -43,8 +43,9 @@ export default {
       this.setArr(item)
       this.curIndex=key
     },
-    clickColor(colorId){
-      this.setColorId(colorId)
+    clickColor(v){
+      localStorage.setItem("colorName",v.Name)
+      this.setColorId(v.ColorId)
       this.$router.back("/img")
       // window.history.back();
     },

@@ -39,6 +39,12 @@ const state={
    },
    setCarId(state,payload){
     state.carId=payload
+   },
+   setColorId1(state){
+    state.colorId=""
+  },
+  setCarId1(state){
+    state.carId=""
    }
     }
    const actions= {
@@ -48,7 +54,7 @@ const state={
       params.ColorID=state.colorId
      }
      if(state.carId){
-      params.CarId=state.carId
+      params.CarID=state.carId
      }
      console.log(params)
        let res=await getMasterSeries(params)

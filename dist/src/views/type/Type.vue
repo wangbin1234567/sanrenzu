@@ -53,7 +53,9 @@ export default {
           this.getInfoAndListById(localStorage.getItem("id"))
       },
       clickType(listItem){
-        this.setCarId(listItem.carId)
+        this.setCarId(listItem.car_id)
+        console.log(listItem)
+        localStorage.setItem("carName",listItem.market_attribute.year+'款'+listItem.car_name)
         if(this.$route.query.carId){
           this.$router.back("/quotation")
           this.setcarPage(listItem)  

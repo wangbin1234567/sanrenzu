@@ -31,8 +31,7 @@
                 <img :src="list.Picture" />
                 <div class="flex-column">
                 <p>{{list.AliasName}}</p>
-                <p class="two">{{ carPage.market_attribute.year}}款 {{ carPage.car_name}}</p>
-                <p class="two" v-if="!sortArr1">车款</p>
+                <p class="two">{{fn(carPage)}}</p>
                 </div>
             </div>
             <div class="self-info">
@@ -59,7 +58,7 @@
             <Dealer :dealer="dealerList"/>
             <div class="supp-info"></div>
         </div> 
-        <div class="priceBtn" v-if="priceFlag" id="priceBtn">
+        <div class="priceBtn" v-if="priceFlag" id="priceBtn" @click="btnList()">
            询最低价
         </div>
          <!-- 验证弹窗 -->  
@@ -113,6 +112,10 @@ export default {
         })
     },
     methods: {
+          fn(carPage){
+              console.log(carPage)
+              return carPage?carPage.market_attribute.year+'款'+carPage.car_name: "车款"
+          },
         ...mapActions({
             getCityAddress: 'city/getCityAddress',
             getDealer: 'dealer/getDealer',
@@ -407,7 +410,7 @@ export default {
     background: #fff;
 }
 .priceBtn{
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   line-height: 50px;

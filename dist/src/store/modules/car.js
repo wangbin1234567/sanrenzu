@@ -67,7 +67,6 @@ const mutations = {
         currentList = formatCarList(currentList)
         state.currentList = currentList
         state.carPage=currentList[0].list[0]
-        console.log(  state.carPage)
         localStorage.setItem("2017.official.sortArr",JSON.stringify(state.currentList))
         window.console.log(state.currentList)
     },

@@ -3,7 +3,7 @@
       <div class="content">
         <div class="img" @click="handleImg">
           <img :src="carList.Picture" alt />
-          <span>{{carList.pic_group_count}}张图片</span>
+          <span>{{carList.pic_group_count}}张照片</span>
         </div>
         <div class="info">
             <p>{{carList.market_attribute.dealer_price}}</p> 
@@ -58,7 +58,9 @@ export default {
      ...mapMutations({
       setCurrent: "car/setCurrent",
       seriesfalg:'series/seriesfalg',
-      setCarId: "car/setCarId"
+      setCarId: "car/setCarId",
+      setColorId1: "series/setColorId1",
+      setCarId1: "series/setCarId1",
     }),
     chelun() {
       this.$router.push({
@@ -80,9 +82,15 @@ export default {
     },
     handleImg(){
       this.$router.push("/img")
+      this.setColorId1()
+      this.setCarId1()
     }
   },
 mounted() {
+  this.setColorId1()
+  this.setCarId1()
+  localStorage.setItem("carName","")
+  localStorage.setItem("colorName","")
   this.getInfoAndListById(this.SerialID)
    this.seriesfalg()
     this.getCityAddress()
