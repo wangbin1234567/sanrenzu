@@ -1,10 +1,10 @@
 
 <template>
     <div class="series_wrap">
-          <!-- 图片分类 -->
+        <!-- 图片分类 -->
         <header class="series_wrap_header">
-            <p @click="seriescolor">颜色</p>
-            <p @click="seriestype">车款</p>
+            <p @click="seriescolor"><span>{{fn(colorName)}}</span></p>
+            <p @click="seriestype"><span><em>{{fn1(carName)}}</em></span></p>
         </header>
 
         <!-- 根据颜色车款的不同渲染对应的图片列表 -->
@@ -32,8 +32,19 @@ export default {
         EnlargementImg,
         carAllImg
     },
-    
+    data(){
+      return {
+          colorName: localStorage.getItem("colorName"),
+          carName: localStorage.getItem("carName")
+      }
+    },
     methods:{
+        fn(colorName){
+          return colorName?colorName:"颜色"
+        },
+        fn1(carName){
+          return carName?carName:"车款"
+        },
         ...mapActions({
             getMasterSeries:'series/getMasterSeries'
         }),
@@ -53,10 +64,10 @@ export default {
             EnlargementImgfalg:state=>state.series.EnlargementImgfalg,
             carAllImg:state=>state.series.carAllImg
         })
-    },    
-    mounted(){
+    },
+     mounted(){
         let SerialID=localStorage.getItem("id")
-        this.getMasterSeries(SerialID)
+         this.getMasterSeries(SerialID)
     }
 }
 </script>
@@ -78,7 +89,6 @@ export default {
     background: #ffffff;
     color: #454545;
     align-items: center;
-    margin-bottom: 8px;
     p{
         flex: 5;
         font-size: 14px;
@@ -86,6 +96,21 @@ export default {
     }
     p:nth-child(2){
        border-left: 1px solid #ececec;
+       span{
+    max-width: 130px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.25;
+    font-size: 14px;
+    em{
+        text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    font-style: normal;
+    }
+       }
     }
     p:after {
     content: "";
@@ -95,7 +120,7 @@ export default {
     -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
     margin-left: 10px;
-    vertical-align: 5%;
+    vertical-align: 25%;
     padding: 8px 8px 0 0;
 }
 }
@@ -103,5 +128,6 @@ export default {
     flex: 1;
     overflow: auto;
     background: #fff;
+    margin-top: 10px;
 }
 </style>

@@ -14,7 +14,7 @@
                         <span v-else>暂无</span>
                     </li>
                     <div class="item-btn">
-                        <button @click="clickFloor(listItem.car_id)">询问底价</button>
+                        <button @click="clickFloor(litItem)">询问底价</button>
                     </div>
                     </div>
                 </div>
@@ -24,7 +24,8 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+/* eslint-disable */
+import { mapState,mapMutations} from "vuex";
 export default {
   computed: {
     ...mapState({
@@ -32,13 +33,16 @@ export default {
     })
   },
   methods: {
-
-    //点击询问底价按钮跳转到经销商列表页面
-    clickFloor(car_id){
-       localStorage.setItem("2017.official.curId",car_id)
+   // 点击询问底价按钮跳转到经销商列表页面
+    clickFloor(listItem){
+	    this.setcarPage(listItem)
+       localStorage.setItem("2017.official.curId",listItem.car_id)
         this.$router.push("/quotation")
-    }
-  }
+	},
+	...mapMutations({
+		setcarPage: "car/setcarPage"
+		}),
+	}
 };
 </script>
 <style scoped lang="scss">

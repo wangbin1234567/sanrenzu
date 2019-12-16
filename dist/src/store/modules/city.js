@@ -14,7 +14,7 @@ const mutations = {
     },
     setCityId(state,payload){
         state.cityId=payload
-        localStorage.setItem("cityId",state.cityId)
+        // localStorage.setItem("cityId",state.cityId)
     }
 }
 

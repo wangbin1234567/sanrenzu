@@ -7,6 +7,10 @@ Vue.use(VueRouter)
  
 const routes = [
   {
+    path: '/url',
+    component: () => import('../views/Img.vue')
+  },
+  {
     path: '/car',
     component: () => import('../views/car/Car.vue')
   },

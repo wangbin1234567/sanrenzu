@@ -27,7 +27,7 @@ instance.interceptors.response.use(function (response) {
         this.$notify({
             type: 'warning',
             message: response.text
-        }); 
+        });
     }
   }, function (error) {
     // Do something with response error

@@ -7,7 +7,7 @@
       </p>
       <div v-for="(item,index) in currentList" :key="index">
           <p class="tip">{{item.key}}</p>
-          <ul class="uls" v-for="(listItem,listIndex) in item.list" :key="listIndex" @click="clickType(listItem.car_id)">
+          <ul class="uls" v-for="(listItem,listIndex) in item.list" :key="listIndex" @click="clickType(listItem)">
               <li>
                   <p>
                     <span class="spnO">{{listItem.market_attribute.year}}款 {{listItem.car_name}}</span>  
@@ -44,17 +44,21 @@ export default {
     }),
      ...mapMutations({
       setCurrent: "car/setCurrent",
-      setCarId: "series/setCarId"
+      setCarId: "series/setCarId",
+      setcarPage: "car/setcarPage"
     }),
       tab(item,i){
         this.curIndex=i
           this.setCurrent(item)
           this.getInfoAndListById(localStorage.getItem("id"))
       },
-      clickType(carId){
-        this.setCarId(carId)
+      clickType(listItem){
+        this.setCarId(listItem.car_id)
+        console.log(listItem)
+        localStorage.setItem("carName",listItem.market_attribute.year+'款'+listItem.car_name)
         if(this.$route.query.carId){
-          this.$router.push("/quotation")
+          this.$router.back("/quotation")
+          this.setcarPage(listItem)  
         }else{
          this.$router.back("/img") 
         //  window.history.back()
@@ -88,6 +92,7 @@ export default {
   background: #fff;
   overflow-x: scroll;
   line-height: 38px;
+  height: 38px;
 }
 .type .c-type span {
   font-size: 15px;

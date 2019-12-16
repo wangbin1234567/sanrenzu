@@ -30,7 +30,7 @@ export default {
     },
     watch:{
         seriesIndex(){
-            if(this.seriesIndex%28===0){
+            if(this.seriesIndex%25===0){
                 let SerialID=localStorage.getItem("id")
                 let Id=this.curData.ID
                 let Page=Math.floor(this.seriesIndex/28)+1

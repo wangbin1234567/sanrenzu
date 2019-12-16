@@ -35,11 +35,13 @@ export default {
             getMasterDataList:'carlist/getMasterDataList'
         }),
         addList(Id){
+            localStorage.setItem("Id",Id)
             let SerialID=localStorage.getItem("id")
             let Page=this.Page
             let PageSize=this.PageSize
             this.getMasterDataList({SerialID,Id,Page,PageSize})
             this.setCarAllImg()
+            this.$router.push("/url")
         },
         blowImage(Id,key){
             this.imgFalg(key)
@@ -60,7 +62,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    background: #fff;
     li{
         width: 123px;
         height: 123px;
@@ -74,7 +75,7 @@ export default {
     li:nth-child(3n+4) {
     margin-right: 0;
 }
-    li:nth-child(6n+6) {
+    li:nth-child(6n+5) {
     margin-bottom: 6px;
     }
 }

@@ -95,8 +95,8 @@ export default {
         display: flex;
         margin-left: 5px;
         border-bottom: 1px solid #ddd;
-           align-items: center;
-    display: flex;
+        align-items: center;
+        display: flex;
         div{
             p{
                 font-size: 17px;
@@ -113,6 +113,9 @@ export default {
             width: 90px;
             margin: 0 5px 0 10px;
         }
+    }
+    li:last-child{
+border-bottom: none;
     }
 }
 </style>

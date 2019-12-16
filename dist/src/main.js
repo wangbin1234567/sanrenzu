@@ -9,7 +9,16 @@ Vue.config.productionTip = false
 import Vant from "vant"
 import 'vant/lib/index.css';
 
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
+Vue.use(MintUI)
+
 Vue.use(Vant);
+
+import { PullRefresh } from 'vant';
+
+Vue.use(PullRefresh);
 // import loading from './utils/loading.js' // 引入loading
 // Vue.use(loading) // 全局使用loading
 //配置图片懒加载

@@ -25,6 +25,8 @@ export default {
             console.log(this.$refs.offcialref.offsetHeight)
             this.$nextTick(()=>{
                 this.offsetTop=(window.innerHeight - this.$refs.offcialref.offsetHeight)/2
+                console.log(window.innerHeight - this.$refs.offcialref.offsetHeight)
+                console.log('this.offsetTop---------------',this.offsetTop)
             })
         }
     },

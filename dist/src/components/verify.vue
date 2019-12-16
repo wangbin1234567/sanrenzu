@@ -48,7 +48,7 @@ export default {
     top: 50%;
     left: 50%;
     margin-left: -135px;
-    margin-top: -41px;
+    margin-top: -50px;
     width: 270px;
     height: 104px;
     border-radius: 7px;
@@ -86,7 +86,7 @@ export default {
     top: 50%;
     left: 50%;
     margin-left: -157px;
-    margin-top: -85px;
+    margin-top: -95px;
     width: 315px;
     height: 191px;
     border-radius: 7px;

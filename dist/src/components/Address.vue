@@ -53,13 +53,14 @@ export default {
             
         })
         },
-        ...mapActions({ 
-                 getDealer: 'dealer/getDealer'
-        }),
+        // ...mapActions({ 
+        //          getDealer: 'dealer/getDealer'
+        // }),
         siteitemlist(){ 
-             let carId=localStorage.getItem("2017.official.curId") || ""
-             let cityId=localStorage.getItem("cityId") || ""
-             this.getDealer({carId,cityId})
+            //  let carId=localStorage.getItem("2017.official.curId") || ""
+            //  let cityId=localStorage.getItem("cityId") || ""
+            //  console.log(carId,cityId)
+            //  this.getDealer({carId,cityId})
           this.$emit("update:showAddress", false) 
         },
         removelist(){
