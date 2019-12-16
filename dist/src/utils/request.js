@@ -9,12 +9,12 @@ const instance = axios.create({
 
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
-        // Do something before request is sent
-        return config;
-    }, function (error) {
-        // Do something with request error
-        return Promise.reject(error);
-    }
+    // Do something before request is sent
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
 );
  
 // 响应拦截器
@@ -29,14 +29,14 @@ instance.interceptors.response.use(function (response) {
             message: response.text
         });
     }
-}, function (error) {
-        // Do something with response error
-        this.$notify({
-            type: 'warning',
-            message: error
-        });
-        // return Promise.reject(error);
-    }
+  }, function (error) {
+    // Do something with response error
+    this.$notify({
+        type: 'warning',
+        message: error
+    });
+    // return Promise.reject(error);
+  }
 );
 
 export default instance;

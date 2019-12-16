@@ -10,8 +10,9 @@ export let getMasterList=(MasterID)=>{
 export let getMasterStairSite=(CityID)=>{
     return request("/v1-city-alllist.html",{params:{provinceid:CityID}})
 }
-export let getMasterSeries=(SerialID)=>{
-    return request("/v2-car-getImageList.html",{params:{SerialID}})
+export let getMasterSeries=(params)=>{
+    console.log("/v2-car-getImageList.html",{params})
+    return request("/v2-car-getImageList.html",{params})
 }
 export let getMasterDataList=(SerialID,ImageID,Page,PageSize)=>{
     return request(`/v2-car-getCategoryImageList.html?SerialID=${SerialID}&ImageID=${ImageID}&Page=${Page}&PageSize=${PageSize}`)

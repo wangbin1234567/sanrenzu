@@ -60,6 +60,9 @@ export default {
         font-size: 16px;
     }
 }
+.item_list:last-child {
+     border-bottom: none;
+}
 .itemList{
     margin: 0 12px;
 }

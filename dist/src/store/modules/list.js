@@ -10,14 +10,14 @@ const mutations={
 const actions= {
     async getMasterList({commit},payload){
         let res=await getMasterList(payload)
-        // console.log(res)
+        console.log(res)
         commit('getDatalist',res.data)
     }
 }
 
-export default {
-  namespaced:true,
-  state,
-  mutations,
-  actions
-}
+    export default {
+      namespaced:true,
+      state,
+      mutations,
+      actions
+    }

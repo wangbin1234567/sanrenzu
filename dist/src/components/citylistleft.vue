@@ -1,24 +1,24 @@
+
 <template>
-    <li @click="revealCity(item.CityID)">
-        {{item.CityName}}
-    </li>
+
+        
+        <li @click="revealCity(item.CityID)">
+            {{item.CityName}}
+        </li>
 </template>
 
 <script>
 
 export default {
-    
 props:["item"],
 data(){
     return {
       
     }
 },
-
 methods:{
-    
     revealCity(CityID){
-        this.$emit("revealCitys",CityID)  
+        this.$emit("revealCitys",CityID)   
     }
 }
 }

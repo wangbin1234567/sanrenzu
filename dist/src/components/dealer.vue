@@ -2,19 +2,16 @@
     <div class="dealer-info">
         <p class="tip">选择报价经销商</p>
         <ul>
-            <li data-hover="hover" data-id="8295" 
-            :class="{active: item.newsRemainingDays == 1}" 
-            @click="activeClick(item)" 
-            v-for="(item,index) in dealer" :key="index">
-                <p>
-                    <span>{{item.dealerShortName}}</span>
-                    <span>万</span>
-                </p>
-                <p>
-                    <span>{{item.address}}</span>
-                    <span>售{{item.saleRange}}</span>
-                </p>
-            </li>
+          <li data-hover="hover" data-id="8295" :class="{active: item.newsRemainingDays == 1}" @click="activeClick(item)" v-for="(item,index) in dealer" :key="index">
+            <p>
+              <span>{{item.dealerShortName}}</span>
+              <span>{{item.promotePrice}}万</span>
+            </p>
+            <p>
+              <span>{{item.address}}</span>
+              <span>售{{item.saleRange}}</span>
+            </p>
+          </li>
         </ul>
       </div>
 </template>
@@ -47,34 +44,37 @@
         }
         ul{
             background: #fff;
-            padding: 0 10px;
+            padding: 0 9px;
             li{
                 position: relative;
-                padding: 15px 0 15px 25px;
+                padding: 13px 0 13px 27px;
                 border-bottom: 1px solid #eee;
                 box-sizing: border-box;
-                height: 90px;
+                height: 82px;
                 p:first-child {
-                    font-size: 16px;
+                    font-size: 15px;
                     span:last-child {
-                        font-size: 14px;
+                        font-size: 12px;
                         float: right;
-                        color: red;
+                        color: #ff0000;
                     }
                 }
                 p:nth-child(2) {
-                    margin-top: 6px;
+                    margin-top: 5px;
                     font-size: 12px;
                     color: #a2a2a2;
                     span:first-child {
                         display: inline-block;
-                        max-width: 254px;
+                        max-width: 230px;
                     }
                     span:nth-child(2) {
                         float: right;
                     }
                 }
             }
+            li:last-child {
+    border-bottom: none;
+}
         }
     }
     .dealer-info ul li:before {
@@ -91,7 +91,7 @@
         -webkit-transform: translate3d(0,-50%,0);
         transform: translate3d(0,-50%,0);
     }
-    .dealer-info ul li.active:before {
+    .dealer-info li.active:before {
         background: #3aacff;
         border: none;
     }

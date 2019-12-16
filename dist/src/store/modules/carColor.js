@@ -1,10 +1,16 @@
 import {getCarColor} from '@/services/index'
 const state = {
-    colorList: {}
+    colorList: {},
+    arr : []
 }
 const mutations = {
     updateColor(state, payload){
         state.colorList=payload
+        let obj=JSON.parse(JSON.stringify(state.colorList))
+        state.arr=Object.values(obj)[0]  
+    },
+    setArr(state,payload){
+        state.arr=payload
     }
 }
 

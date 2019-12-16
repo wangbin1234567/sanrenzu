@@ -1,18 +1,21 @@
 import {getCityAddress} from '@/services/index'
 const state = {
     address: "",
-    cityID:""
+    cityId: ""
 }
 const mutations = {
     updateAddress(state, payload){
-        state.address=payload.CityName
-        state.cityID = payload.CityID
+      state.address=payload.CityName
+      state.cityId=payload.CityID
+      localStorage.setItem("cityId",state.cityId)
     },
-    getListAddress(state, payload){
-        state.address=payload.CityName
-        state.cityID = payload.CityID
-        
+    setAddress(state,payload){
+        state.address=payload
     },
+    setCityId(state,payload){
+        state.cityId=payload
+        // localStorage.setItem("cityId",state.cityId)
+    }
 }
 
 const actions = {
