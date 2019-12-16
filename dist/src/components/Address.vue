@@ -24,7 +24,7 @@
 import CityListLeft from "@/components/citylistleft.vue"
 import CityListRight from "@/components/citylistright.vue"
 import axios from "axios"
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
     components:{
          CityListLeft,
