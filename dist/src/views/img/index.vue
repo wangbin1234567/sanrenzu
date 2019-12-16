@@ -3,11 +3,7 @@
     <div class="series_wrap">
 
         <header class="series_wrap_header">
-<<<<<<< HEAD
-            <p @click="seriescolor">颜色<span></span></p>
-=======
             <p @click="seriescolor">颜色</p>
->>>>>>> jyh
             <p @click="seriestype">车款</p>
         </header>
         <div class="main_series">
@@ -52,11 +48,7 @@ export default {
     },
     
     mounted(){
-<<<<<<< HEAD
-        let SerialID=this.$route.query.SerialID
-=======
         let SerialID=localStorage.getItem("id")
->>>>>>> jyh
         this.getMasterSeries(SerialID)
     }
 }
@@ -70,25 +62,13 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    background: #eee;
-=======
     background: #f4f4f4;
->>>>>>> jyh
 }
 .series_wrap_header{
     width: 100%;
     height: 40px;
     display: flex;
     background: #ffffff;
-<<<<<<< HEAD
-    p{
-        flex: 5;
-        font-size: 16px;
-        text-align: center;
-        line-height: 40px;
-    }
-=======
     color: #454545;
     align-items: center;
     margin-bottom: 8px;
@@ -111,23 +91,10 @@ export default {
     vertical-align: 5%;
     padding: 8px 8px 0 0;
 }
->>>>>>> jyh
 }
 .main_series{
     flex: 1;
     overflow: auto;
-<<<<<<< HEAD
-}
-// .magnify_img{
-//     width: 100%;
-//     height: 100%;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     background: red;
-// }
-=======
     background: #fff;
 }
->>>>>>> jyh
 </style>

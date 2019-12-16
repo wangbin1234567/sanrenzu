@@ -1,10 +1,6 @@
 <template>
-<<<<<<< HEAD
-    <div class="official_all_right" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" @click="officialVanish">
-=======
     <div class="official_all_right" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" @click="officialVanish"
     >
->>>>>>> jyh
          <div v-for="(items,index) in listMasterID" :key="index" class="official_header_item">
            <h5 @click="occlude">{{items.GroupName}}</h5>
                 <!-- 渲染右面链表图片 -->
@@ -41,10 +37,6 @@ export default {
             localStorage.setItem("id",SerialID)
         },
         touchstart(e){
-<<<<<<< HEAD
-             //获取手指按下的X与Y轴的坐标
-=======
->>>>>>> jyh
             this.startPageX=e.touches[0].pageX
             this.startPageY=e.touches[0].pageY
             // console.log(e.touches[0].pageX)
@@ -54,17 +46,9 @@ export default {
             // console.log(22)
         },
         touchend(e){
-<<<<<<< HEAD
-             //获取手指抬起的X与Y轴的坐标
-            let endPageX = e.changedTouches[0].clientX
-            let endPageY = e.changedTouches[0].clientY
-            // console.log(this.startPageY-endPageY*1)
-            //判断抬起的坐标减去按下的坐标大于80并且Y轴的按下坐标减去抬起的坐标。取绝对值变成正数。大于50，
-=======
             let endPageX = e.changedTouches[0].clientX
             let endPageY = e.changedTouches[0].clientY
             console.log(this.startPageY-endPageY*1)
->>>>>>> jyh
             if(endPageX-this.startPageX > 80 && Math.abs(this.startPageY-endPageY) < 50){
                  this.amendstatefalse()
             }
@@ -79,10 +63,6 @@ export default {
         return {
             startPageX:'',
             startPageY:''
-<<<<<<< HEAD
-            
-=======
->>>>>>> jyh
         }
     }
 }
@@ -93,11 +73,7 @@ export default {
     height: 100%;
     position: fixed;
     right: 0;
-<<<<<<< HEAD
-    top:0;
-=======
     top: 0;
->>>>>>> jyh
     z-index: 200;
     background: #ffffff;
     overflow-y: auto;

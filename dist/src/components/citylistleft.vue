@@ -1,46 +1,20 @@
-<<<<<<< HEAD
 <template>
     <li @click="revealCity(item.CityID)">
         {{item.CityName}}
     </li>
-=======
-
-<template>
-
-        
-        <li @click="revealCity(item.CityID)">
-            {{item.CityName}}
-        </li>
->>>>>>> jyh
 </template>
 
 <script>
 
 export default {
-<<<<<<< HEAD
-    
-=======
->>>>>>> jyh
-props:["item"],
-data(){
-    return {
-      
+    props:["item"],
+    methods:{
+        revealCity(CityID){
+            this.$emit("revealCitys",CityID)   
+        }
     }
-},
-<<<<<<< HEAD
+}
 
-methods:{
-    
-    revealCity(CityID){
-        this.$emit("revealCitys",CityID)  
-=======
-methods:{
-    revealCity(CityID){
-        this.$emit("revealCitys",CityID)   
->>>>>>> jyh
-    }
-}
-}
 </script>
 
 <style lang="scss" scoped>

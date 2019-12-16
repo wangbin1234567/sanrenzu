@@ -2,37 +2,21 @@
   <div class="wrap-q">
     <header @click="Tclick()">
         <p>可向多个商家咨询最低价，商家及时回复</p>
-<<<<<<< HEAD
-        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
-=======
         <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="" />
->>>>>>> jyh
     </header>
     <div class="q-tip" v-if="flog" @click="Tclick">
         <div>
             <div class="flex-row">
                 <li>
-<<<<<<< HEAD
-                    <img src="http://h5.chelun.com/2017/official/img/q-l.png">
-                    <span>安全高效</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-m.png"> 
-                    <span>省心省力</span>
-                </li> 
-                <li>
-                    <img src="http://h5.chelun.com/2017/official/img/q-r.png"> 
-=======
                     <img src="http://h5.chelun.com/2017/official/img/q-l.png" />
                     <span>安全高效</span>
                 </li> 
                 <li>
                     <img src="http://h5.chelun.com/2017/official/img/q-m.png" /> 
                     <span>省心省力</span>
-                </li> 
+                </li>
                 <li>
                     <img src="http://h5.chelun.com/2017/official/img/q-r.png" /> 
->>>>>>> jyh
                     <span>贴心服务</span>
                 </li>
             </div> 
@@ -42,13 +26,9 @@
         </div>
     </div>
     <div class="content">
-<<<<<<< HEAD
-        <div class="q-info" @click="typeClick">
-            <img :src="list.CoverPhoto" />
-=======
+        <div class="contentList"></div>
         <div class="q-info" @click="typeClick" v-if="list">
             <img :src="list.CoverPhoto.replace('{0}',3)" />
->>>>>>> jyh
             <div class="flex-column">
             <p>{{list.AliasName}}</p>
             <p>{{sortArr.market_attribute.year}}款 {{sortArr.car_name}}</p>
@@ -84,15 +64,9 @@
         @btnList="btnList"></Verify>  
     </div>
     <transition name="scroll-top">
-<<<<<<< HEAD
-        <div class="wrap" v-show="showAddress">
-            <Address :showAddress.sync = "showAddress"/>
-        </div>
-=======
          <div class="wrap" v-show="showAddress">
                 <Address :showAddress.sync="showAddress" />
          </div>
->>>>>>> jyh
     </transition>
   </div>
 </template>
@@ -101,21 +75,13 @@
 <script>
 import Dealer from '../../components/dealer'
 import Verify from "../../components/verify.vue"
-<<<<<<< HEAD
-import Address from "../site/index"
-=======
 import Address from "../../components/Address"
->>>>>>> jyh
 import {mapActions,mapState} from "vuex"
 export default {
     components:{
         Dealer,
         Verify,
-<<<<<<< HEAD
-        Address,
-=======
         Address
->>>>>>> jyh
     },
     data() {
         return {
@@ -129,30 +95,6 @@ export default {
             message:"",//弹窗中部信息
             hello:"",//弹窗按钮,
             showAddress: false,
-<<<<<<< HEAD
-        };
-    },
-    computed: {
-        ...mapState({
-            dealerList: state=>state.dealer.dealerList, 
-            address: state => state.city.address,
-            cityId: state => state.city.cityID,
-            
-        })
-    },
-    methods: {
-        ...mapActions({
-            getCityAddress: 'city/getCityAddress',
-            getDealer: 'dealer/getDealer',
-        }),
-        handleAddress(){
-            this.showAddress = true
-        },
-        btnLists(){
-            this.isUser=false
-            this.hello=""
-            this.message=""
-=======
             cityId: localStorage.getItem("cityId") || ""
         };
     },
@@ -164,21 +106,20 @@ export default {
    })
   },
     methods: {
-         ...mapActions({
-           getCityAddress: 'city/getCityAddress',
-           getDealer: 'dealer/getDealer'
-          }),
+        ...mapActions({
+            getCityAddress: 'city/getCityAddress',
+            getDealer: 'dealer/getDealer'
+        }),
         handleAddress(){
-           this.showAddress = true
+            this.showAddress = true
         },
-         btnLists(){
-              this.isUser=false 
-              this.hello=""
-              this.message=""
->>>>>>> jyh
+        btnLists(){
+            this.isUser=false;
+            this.hello="";
+            this.message="";
         },
         Tclick(){
-            this.flog = !this.flog
+            this.flog = !this.flog        
         },
         typeClick(){  
             this.$router.push({
@@ -188,28 +129,15 @@ export default {
                 }
             })
         },
-<<<<<<< HEAD
         btnList(){
             if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
                 this.message="请输入真实的中文姓名"
                 this.hello="好"
-                this.isUser=true
+                this.isUser=true   
             }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
                 this.isUser=true 
                 this.hello="好"
                 this.message="请输入正确的手机号"
-=======
-        btnList(){  
-           
-            if(!(/^[\u4e00-\u9fa5]{2,}$/.test(this.username))){
-                 this.message="请输入真实的中文姓名"
-                 this.hello="好"
-                 this.isUser=true   
-            }else if(!(/^1[34578]\d{9}$/.test(this.phone))){
-                 this.isUser=true 
-                 this.hello="好"
-                 this.message="请输入正确的手机号"
->>>>>>> jyh
             }else {
                 this.isUser=true
                 this.hello="确定"
@@ -218,16 +146,6 @@ export default {
             }
         }
     },
-<<<<<<< HEAD
-    mounted() {
-        this.getCityAddress()
-        let carId = this.carId;
-        let cityId = this.cityId;
-        console.log(carId,cityId,"===========???????????");
-        
-        this.getDealer({carId,cityId})
-    },
-=======
     // created() {
     // 	this.$loading.show() // 显示loading
     // },
@@ -236,13 +154,8 @@ export default {
         let carId=this.carId
         let cityId=this.cityId
         console.log(carId,cityId)
-        this.getDealer({carId,cityId})
-        // .then(res => {
-	    //       this.$loading.hide() // 隐藏loading
-	    //       // 其他操作
-	    //     })
+        this.getDealer({carId,cityId})                
     }
->>>>>>> jyh
 };
 </script>
 <style lang="scss" scoped>
@@ -257,12 +170,12 @@ export default {
         background: #79cd92;
         text-align: center;
         z-index: 99;
-        position: relative;
+        position: fixed;
         top: 0;
         p{
             color: #fff;
             font-size: 15px;
-            display: inline-block
+            display: inline-block;
         }
         img{
             width: 16.55px;
@@ -350,6 +263,10 @@ export default {
         height: 100%;
         overflow: auto;
     }
+    .contentList{
+        width: 100%;
+        height: 32px;
+    }
     .q-info {
         width: 100%;
         height: 100px;
@@ -369,12 +286,11 @@ export default {
         }
         .flex-column p:first-child {
             font-size: 18px;
-            margin-top: 7px;
         }
         .flex-column p:nth-child(2) {
             font-size: 16px;
             color: #333;
-            margin: 13px 0 0;
+            margin: 6px 0 0;
         }
     }
     .q-info:before {
