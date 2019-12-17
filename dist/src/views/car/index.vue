@@ -57,7 +57,6 @@ export default {
     }),
      ...mapMutations({
       setCurrent: "car/setCurrent",
-      seriesfalg:'series/seriesfalg'
     }),
     chelun() {
       this.$router.push({
@@ -71,7 +70,9 @@ export default {
     tab(item,index) {
       this.curIndex=index
       this.setCurrent(item)
+      window._hmt.push(['_trackEvent', '首页', '点击', item])
       this.getInfoAndListById(this.SerialID);
+      // series/seriesfalg
     },
     handleImg(){
       let SerialID=this.SerialID
@@ -80,7 +81,6 @@ export default {
   },
 mounted() {
   this.getInfoAndListById(this.SerialID)
-  this.seriesfalg()
 }
 };
 </script>

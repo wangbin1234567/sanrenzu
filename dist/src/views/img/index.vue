@@ -73,7 +73,6 @@ export default {
 .series_wrap{
     // overflow-y: auto;
     top: 0;
-    background: red;
     width: 100%;
     height: 100%;
 }

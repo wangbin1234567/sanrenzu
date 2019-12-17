@@ -6,7 +6,6 @@ import home from "./modules/home"
 import list from "./modules/list"
 import car from "./modules/car"
 import series from "./modules/series"
-import carlist from "./modules/carlist"
 import carColor from "./modules/carColor"
 import quotation from "./modules/quotation"
 import dealer from "./modules/dealer"
@@ -22,7 +21,6 @@ export default new Vuex.Store({
     list,
     car,
     series,
-    carlist,
     carColor,
     quotation,
     dealer,
