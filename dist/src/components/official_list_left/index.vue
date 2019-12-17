@@ -12,7 +12,6 @@
 
 <script>
 import { mapMutations,mapActions} from "vuex"
-import {debounce} from "@/utils/util.js"
 export default {
     props:["item"],
     data(){
@@ -27,7 +26,6 @@ export default {
             amendstate:"home/amendstate"
         }),
         listitemclick(MasterID){
-            console.log(debounce)
             // this.amendstate()
             // this.getMasterList(MasterID)
             this.amendstate()

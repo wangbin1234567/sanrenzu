@@ -28,14 +28,13 @@ export default {
         },
         touchstart(e){
             this.getOffheight=(window.outerHeight - this.$refs.offcialref.offsetHeight)/2
-            let y = e.changedTouches[0].pageY-this.getOffheight
+            let y = e.changedTouches[0].clientY-this.getOffheight
             let index = Math.floor(y/18)-1
             document.getElementById(this.dataList[index].lets).scrollIntoView(true);
         },
         touchmove(e){
-             let y = e.changedTouches[0].pageY-this.getOffheight
+             let y = e.changedTouches[0].clientY-this.getOffheight
             let index = Math.floor(y/18)-1
-     
             if(index > this.dataList.length-1){
                 index=this.dataList.length-1
             }else if(index<1){
