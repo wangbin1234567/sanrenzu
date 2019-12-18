@@ -26,7 +26,6 @@
             </div>
         </div>
         <div class="content" @scroll="onscroll($event)">
-            <!-- <div class="header"></div> -->
             <div class="q-info" @click="typeClick" v-if="Object.keys(list).length">
                 <img :src="list.Picture" />
                 <div class="flex-column">
@@ -112,10 +111,10 @@ export default {
         })
     },
     methods: {
-          fn(carPage){
-              console.log(carPage)
-              return carPage?carPage.market_attribute.year+'款'+carPage.car_name: "车款"
-          },
+        fn(carPage){
+            // console.log(carPage)
+            return carPage?carPage.market_attribute.year+'款'+carPage.car_name: "车款"
+        },
         ...mapActions({
             getCityAddress: 'city/getCityAddress',
             getDealer: 'dealer/getDealer',
@@ -156,8 +155,8 @@ export default {
             }
         },
         onscroll(e){
-            console.log(e.target.scrollTop)
-            console.log(document.getElementById("priceBtn"))
+            // console.log(e.target.scrollTop)
+            // console.log(document.getElementById("priceBtn"))
             if(e.target.scrollTop>321){
              this.priceFlag=true     
             }else{
@@ -170,7 +169,7 @@ export default {
         let carId = this.carId;
         // let cityId = localStorage.getItem("cityId")
         let cityId=this.cityId || localStorage.getItem("cityId")
-        console.log(carId,cityId,"===========???????????");
+        // console.log(carId,cityId,"===========???????????");
         
         this.getDealer({carId,cityId})
     },
@@ -339,15 +338,17 @@ export default {
         ul li {
             font-size: 16px;
             height: 44px;
-            line-height: 44px;
+            line-height: 40px;
             border-bottom: 1px solid #eee;
             input {
                 font-size: 16px;
                 padding-right: 10px;
                 width: 88%;
                 text-align: right;
+                box-sizing: border-box;
                 color: #555;
                 outline: none;
+                -webkit-appearance: none;
                 border: none;
             }
             span:nth-child(2) {

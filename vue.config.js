@@ -1,4 +1,4 @@
 module.exports={
-  publicPath: "/1704B/jiayonghong/",
+  publicPath: "/1704B/wangbin/",
   productionSourceMap: false  
 }
